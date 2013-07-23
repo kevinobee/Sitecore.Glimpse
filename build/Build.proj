@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Go" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup>
+    <ProjectName>Sitecore.Glimpse</ProjectName>
+  </PropertyGroup>
+  
+  <Import Project="$(MSBuildProjectDirectory)\Build.tasks" />
+  <Import Project="$(MSBuildProjectDirectory)\$(ProjectName).versions.targets" />
+
+  <!-- Read in environment properties from Ship.environment.props if present -->
+  <Import Project="$(MSBuildProjectDirectory)\$(ProjectName).environment.props" Condition="Exists('$(MSBuildProjectDirectory)\$(ProjectName).environment.props')" />
+
+  <!-- Provide defaults for values for environment properties if Ship.environment.props is not present -->
+  <PropertyGroup>
+    <TestWebsitePath Condition="$(TestWebsitePath) == ''">D:\Websites\glimpsetest\Website</TestWebsitePath>
+    <TestWebsiteUrl Condition="$(TestWebsiteUrl) == ''">http://glimpsetest/</TestWebsiteUrl>
+    <LibsSrcPath Condition="$(LibsSrcPath) == ''">D:\LibsSrc\6\6.6\Update-5</LibsSrcPath>
+  </PropertyGroup>
+  
+  <PropertyGroup>
+    <Configuration Condition="$(Configuration) == ''">Release</Configuration>
+    <ProjectRoot>$(MSBuildProjectDirectory)\..</ProjectRoot>
+    <LibsDestPath>$(ProjectRoot)\lib</LibsDestPath>
+    <PackagingPath>$(MSBuildProjectDirectory)\packaging</PackagingPath>
+    <ArtifactsPath>$(ProjectRoot)\artifacts</ArtifactsPath>
+    <AnalysisResultsPath>$(ArtifactsPath)\CodeAnalysis</AnalysisResultsPath>
+    <BuildResultsPath>$(ArtifactsPath)\Build</BuildResultsPath>
+    <TestResultsPath>$(ArtifactsPath)\TestResults</TestResultsPath>
+    <PackageResultsPath>$(ArtifactsPath)\Packages</PackageResultsPath>
+    <NuGetToolsPath>$(ProjectRoot)\.nuget</NuGetToolsPath>
+    <NuGetExePath>$(NuGetToolsPath)\nuget.exe</NuGetExePath>
+    <OutputHtmlFile>$(TestResultsPath)\TestResults.html</OutputHtmlFile>
+    <OutputXmlFile>$(TestResultsPath)\TestResults.xml</OutputXmlFile>
+    <ToolsPath>$(ProjectRoot)\tools</ToolsPath>
+    <XunitPath>$(ProjectRoot)\packages\xunit.1.9.1\lib\net20</XunitPath>
+    <CurlPath>$(ToolsPath)\curl</CurlPath>
+    <CurlExePath>$(CurlPath)\curl.exe</CurlExePath>
+  </PropertyGroup>
+
+  <UsingTask
+    AssemblyFile="$(XunitPath)\xunit.runner.msbuild.dll"
+    TaskName="Xunit.Runner.MSBuild.xunit"/>
+  
+  <PropertyGroup>
+    <!-- Build number is of the format (CurrentYear - VersionStartYear + 1)(2 digit month)(2 digit day) -->
+    <BuildDate>$([MSBuild]::Add(1, $([MSBuild]::Subtract($([System.DateTime]::Now.Year), $(VersionStartYear)))))$([System.DateTime]::Now.ToString("MMdd"))</BuildDate>
+    <Revision Condition="$(BUILD_NUMBER) != ''">$(BUILD_NUMBER)</Revision>
+    <Revision Condition="$(BUILD_NUMBER) == ''">0</Revision>
+    <PrereleaseTagWithSeparator Condition="$(PRERELEASE) != ''">.$([System.DateTime]::Now.ToString("yyMMdd"))</PrereleaseTagWithSeparator>
+    <Version>$(MajorVersion).$(MinorVersion).$(PatchVersion)</Version>
+    <FileVersion>$(MajorVersion).$(MinorVersion).$(BuildDate).$(Revision)</FileVersion>
+    <PackageVersion>$(MajorVersion).$(MinorVersion).$(PatchVersion)$(PrereleaseTagWithSeparator)</PackageVersion>
+  </PropertyGroup>
+
+  <Target Name="CopyLibs">
+    <ItemGroup>
+<!--      <LibFiles Include="$(LibsSrcPath)\Sitecore.Client.dll" />-->
+      <LibFiles Include="$(LibsSrcPath)\Sitecore.Kernel.dll" />
+<!--      <LibFiles Include="$(LibsSrcPath)\Sitecore.Logging.dll" />-->
+<!--      <LibFiles Include="$(LibsSrcPath)\Sitecore.Update.dll" />-->
+<!--      <LibFiles Include="$(LibsSrcPath)\Sitecore.Zip.dll" />-->
+    </ItemGroup>
+      
+      <Copy
+          SourceFiles="@(LibFiles)"
+          DestinationFolder="$(LibsDestPath)"
+        />
+  </Target>
+  
+  <Target Name="Clean">
+    <RemoveDir Directories="$(ArtifactsPath)"  />
+  </Target>
+
+  <Target Name="Init" DependsOnTargets="Clean; CopyLibs">
+    <MakeDir Directories="$(ArtifactsPath)" Condition="!Exists('$(ArtifactsPath)')" />
+    <MakeDir Directories="$(AnalysisResultsPath)" Condition="!Exists('$(AnalysisResultsPath)')" />
+    <MakeDir Directories="$(PackageResultsPath)" Condition="!Exists('$(PackageResultsPath)')" />        
+    <MakeDir Directories="$(TestResultsPath)" Condition="!Exists('$(TestResultsPath)')" />
+  </Target>
+
+  <Target Name="Build" DependsOnTargets="Init">
+    <MSBuild Projects="$(ProjectRoot)\$(ProjectName).sln"
+             Targets="Build"
+             Properties="Configuration=$(Configuration);OutDir=$(BuildResultsPath)\" />
+  </Target>
+  
+  <Target Name="RunCodeAnalysis" DependsOnTargets="Init" Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v11.0\CodeAnalysis\fxcoptask.dll')">
+    <ItemGroup>
+      <AnalysisProjects Include="$(ProjectRoot)\src\..\*.csproj" />
+    </ItemGroup>
+
+    <MSBuild Projects="%(AnalysisProjects.Identity)"
+             Targets="ReBuild"
+             Properties="RunCodeAnalysis=true;Configuration=$(Configuration);OutDir=$(AnalysisResultsPath)\" />
+
+    <!-- Remove the build artifacts -->
+    <ItemGroup>
+      <FilesToDelete Include="$(AnalysisResultsPath)\*.dll;$(AnalysisResultsPath)\*.pdb"/>
+    </ItemGroup>
+
+    <Delete Files="@(FilesToDelete)" />
+  </Target>
+  
+  <ItemGroup>
+    <RegexTransform Include="$(ProjectRoot)\src\Common\CommonVersionInfo.cs">
+      <Find>AssemblyVersion\("\d+\.\d+\.\d+"\)</Find>
+      <ReplaceWith>AssemblyVersion("$(Version)")</ReplaceWith>
+    </RegexTransform>
+    <RegexTransform Include="$(ProjectRoot)\src\Common\CommonVersionInfo.cs">
+      <Find>AssemblyFileVersion\("\d+\.\d+\.\d+\.\d+"\)</Find>
+      <ReplaceWith>AssemblyFileVersion("$(FileVersion)")</ReplaceWith>
+    </RegexTransform>
+    <RegexTransform Include="$(ProjectRoot)\src\Common\CommonVersionInfo.cs">
+      <Find>AssemblyInformationalVersion\("\d+\.\d+\.\d+(-\w+\d*(-\d+)?)?"\)</Find>
+      <ReplaceWith>AssemblyInformationalVersion("$(PackageVersion)")</ReplaceWith>
+    </RegexTransform>
+  </ItemGroup>
+
+  <Target Name="UpdateVersion">
+    <RegexTransform Items="@(RegexTransform)" />
+  </Target>
+
+  <Target Name="RunSmokeTests" DependsOnTargets="Build">
+    <PropertyGroup>
+      <TestPackagePath>$([System.IO.Path]::GetFullPath('$(ProjectRoot)\tests\acceptance-test\package.update'))</TestPackagePath>
+    </PropertyGroup>
+    <ItemGroup>
+      <ProjectSrcAssemblies Include="$(BuildResultsPath)\Sitecore*.dll; " Exclude="$(BuildResultsPath)\*.Test.dll" />
+    </ItemGroup>
+
+    <Copy
+              SourceFiles="@(ProjectSrcAssemblies)"
+              DestinationFolder="$(TestWebsitePath)\bin"
+        />    
+  
+    <!-- Site root page -->
+    <Exec Command="$(CurlExePath) $(TestWebsiteUrl)" />
+    
+  </Target>
+  
+  <Target Name="RunUnitTests" DependsOnTargets="Build">
+    <ItemGroup>
+      <TestAssemblies Include="$(BuildResultsPath)\*.Test.dll" Exclude="$(BuildResultsPath)\*.Intg.Test.dll" />
+    </ItemGroup>
+
+    <xunit
+        Assemblies="@(TestAssemblies)"
+        WorkingFolder="$(XunitPath)"
+        Xml="$(OutputXmlFile)"
+        Html="$(OutputHtmlFile)"/>
+
+  </Target>       
+  
+  <Target Name="RunTests" DependsOnTargets="RunUnitTests; ">
+  </Target>
+
+  <Target Name="StdPackage">
+    <Exec 
+        Command="$(NuGetExePath) pack $(PackagingPath)\$(ProjectName).nuspec -Verbosity detailed -Version $(PackageVersion) -OutputDirectory $(PackageResultsPath)" />
+  </Target>
+  
+  <Target Name="Go" DependsOnTargets="RunCodeAnalysis; Build; RunTests; StdPackage">
+  </Target>
+
+  <Target Name="GoCI" DependsOnTargets="UpdateVersion; Build">
+  </Target>
+  
+</Project>
