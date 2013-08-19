@@ -55,11 +55,7 @@
 
   <Target Name="CopyLibs">
     <ItemGroup>
-<!--      <LibFiles Include="$(LibsSrcPath)\Sitecore.Client.dll" />-->
       <LibFiles Include="$(LibsSrcPath)\Sitecore.Kernel.dll" />
-<!--      <LibFiles Include="$(LibsSrcPath)\Sitecore.Logging.dll" />-->
-<!--      <LibFiles Include="$(LibsSrcPath)\Sitecore.Update.dll" />-->
-<!--      <LibFiles Include="$(LibsSrcPath)\Sitecore.Zip.dll" />-->
     </ItemGroup>
       
       <Copy
