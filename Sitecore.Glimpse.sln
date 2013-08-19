@@ -8,9 +8,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{33043060
 		build.cmd = build.cmd
 		build\Build.proj = build\Build.proj
 		build\Build.tasks = build\Build.tasks
+		build\environment.props = build\environment.props
 		build\README.md = build\README.md
-		build\Sitecore.Glimpse.environment.props = build\Sitecore.Glimpse.environment.props
-		build\Sitecore.Glimpse.versions.targets = build\Sitecore.Glimpse.versions.targets
+		build\versions.targets = build\versions.targets
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{47B95AB0-A787-4853-B9B4-CC16714240A6}"

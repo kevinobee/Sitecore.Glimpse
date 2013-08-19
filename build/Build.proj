@@ -6,21 +6,21 @@
   </PropertyGroup>
   
   <Import Project="$(MSBuildProjectDirectory)\Build.tasks" />
-  <Import Project="$(MSBuildProjectDirectory)\$(ProjectName).versions.targets" />
+  <Import Project="$(MSBuildProjectDirectory)\versions.targets" />
 
-  <!-- Read in environment properties from Ship.environment.props if present -->
-  <Import Project="$(MSBuildProjectDirectory)\$(ProjectName).environment.props" Condition="Exists('$(MSBuildProjectDirectory)\$(ProjectName).environment.props')" />
+  <!-- Read in environment properties from environment.props if present -->
+  <Import Project="$(MSBuildProjectDirectory)\environment.props" Condition="Exists('$(MSBuildProjectDirectory)\$(ProjectName).environment.props')" />
 
-  <!-- Provide defaults for values for environment properties if Ship.environment.props is not present -->
+  <!-- Provide defaults for values for environment properties if environment.props is not present -->
   <PropertyGroup>
     <TestWebsitePath Condition="$(TestWebsitePath) == ''">D:\Websites\glimpsetest\Website</TestWebsitePath>
     <TestWebsiteUrl Condition="$(TestWebsiteUrl) == ''">http://glimpsetest/</TestWebsiteUrl>
-    <LibsSrcPath Condition="$(LibsSrcPath) == ''">D:\LibsSrc\6\6.6\Update-5</LibsSrcPath>
+    <LibsSrcPath Condition="$(LibsSrcPath) == ''">C:\LibsSrc\6\6.6\Update-5</LibsSrcPath>
   </PropertyGroup>
   
   <PropertyGroup>
     <Configuration Condition="$(Configuration) == ''">Release</Configuration>
-    <ProjectRoot>$(MSBuildProjectDirectory)\..</ProjectRoot>
+    <ProjectRoot>$([System.IO.Path]::GetFullPath('$(MSBuildProjectDirectory)\..'))</ProjectRoot>
     <LibsDestPath>$(ProjectRoot)\lib</LibsDestPath>
     <PackagingPath>$(MSBuildProjectDirectory)\packaging</PackagingPath>
     <ArtifactsPath>$(ProjectRoot)\artifacts</ArtifactsPath>
@@ -123,7 +123,7 @@
 
   <Target Name="RunSmokeTests" DependsOnTargets="Build">
     <PropertyGroup>
-      <TestPackagePath>$([System.IO.Path]::GetFullPath('$(ProjectRoot)\tests\acceptance-test\package.update'))</TestPackagePath>
+      <TestPackagePath>$(ProjectRoot)\tests\acceptance-test\package.update</TestPackagePath>
     </PropertyGroup>
     <ItemGroup>
       <ProjectSrcAssemblies Include="$(BuildResultsPath)\Sitecore*.dll; " Exclude="$(BuildResultsPath)\*.Test.dll" />
