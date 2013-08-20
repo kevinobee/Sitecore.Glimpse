@@ -6,12 +6,23 @@ namespace Sitecore.Glimpse.Test
 {
     public class SitecoreGlimpseShould
     {
+        private readonly SitecoreTab _sut;
+
+        public SitecoreGlimpseShould()
+        {
+            _sut = new SitecoreTab();
+        }
+
         [Fact]
         public void Provide_a_sitecore_tab()
         {
-            var sut = new SitecoreTab();
-
-            Assert.IsAssignableFrom<ITab>(sut);
+            Assert.IsAssignableFrom<ITab>(_sut);
+        }
+    
+        [Fact]
+        public void Name_tab_Sitecore()
+        {
+            Assert.Equal("Sitecore", _sut.Name);
         }
     }
 }
