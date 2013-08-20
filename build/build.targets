@@ -106,7 +106,7 @@
   <Target Name="RunTests" DependsOnTargets="RunUnitTests; ">
   </Target>
 
-  <Target Name="StdPackage">
+  <Target Name="StdPackage" DependsOnTargets="Build">
     <Exec
         Command="$(NuGetExePath) pack $(PackagingPath)\$(ProjectName).nuspec -Verbosity detailed -Version $(PackageVersion) -OutputDirectory $(PackageResultsPath)" />
   </Target>
