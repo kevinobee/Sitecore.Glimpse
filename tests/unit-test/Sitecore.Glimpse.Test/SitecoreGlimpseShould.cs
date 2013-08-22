@@ -11,7 +11,7 @@ namespace Sitecore.Glimpse.Test
 
         public SitecoreGlimpseShould()
         {
-            _sut = new SitecoreTab();
+            _sut = new SitecoreTab(new FakeSitecoreRequest());
         }
 
         [Fact]

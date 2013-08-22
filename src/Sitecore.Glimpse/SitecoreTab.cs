@@ -1,6 +1,7 @@
 ﻿using System;
 
 using Glimpse.Core.Extensibility;
+using Sitecore.Glimpse.Infrastructure;
 
 namespace Sitecore.Glimpse
 {
@@ -9,9 +10,8 @@ namespace Sitecore.Glimpse
         private readonly ISitecoreRequest _sitecoreRequest;
 
         public SitecoreTab()
-            : this(new FakeSitecoreRequest())
+            : this(new SitecoreRequest())  // TODO Poor mans DI will cause a circular reference here ...
         {
-
         }
 
         public SitecoreTab(ISitecoreRequest sitecoreRequest)
@@ -44,27 +44,6 @@ namespace Sitecore.Glimpse
         public override string Name
         {
             get { return "Sitecore"; }
-        }
-    }
-
-    public interface ISitecoreRequest
-    {
-        object[] GetData();
-    }
-
-    public class FakeSitecoreRequest : ISitecoreRequest
-    {
-        public object[] GetData()
-        {
-            return new object[] { "foo" };
-        }
-    }
-
-    public class SitecoreRequest : ISitecoreRequest
-    {
-        public object[] GetData()
-        {
-            throw new NotImplementedException();
         }
     }
 }

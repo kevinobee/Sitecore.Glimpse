@@ -9,7 +9,7 @@
   <Import Project="$(MSBuildProjectDirectory)\build.targets" />
 
   <!-- Read in environment properties from environment.props if present -->
-  <Import Project="$(MSBuildProjectDirectory)\environment.props" Condition="Exists('$(MSBuildProjectDirectory)\$(ProjectName).environment.props')" />
+  <Import Project="$(MSBuildProjectDirectory)\environment.props" Condition="Exists('$(MSBuildProjectDirectory)\environment.props')" />
 
   <!-- Provide defaults for values for environment properties if environment.props is not present -->
   <PropertyGroup>

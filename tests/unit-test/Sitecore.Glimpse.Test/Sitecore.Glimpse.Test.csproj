@@ -53,6 +53,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FakeSitecoreRequest.cs" />
     <Compile Include="SitecoreGlimpseShould.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -60,6 +61,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\src\Sitecore.Glimpse.Core\Sitecore.Glimpse.Core.csproj">
+      <Project>{7A573B93-5410-4B9C-832E-3B034E49383E}</Project>
+      <Name>Sitecore.Glimpse.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\src\Sitecore.Glimpse\Sitecore.Glimpse.csproj">
       <Project>{656D13BC-6958-4995-80D5-AB7D0FDF854D}</Project>
       <Name>Sitecore.Glimpse</Name>
