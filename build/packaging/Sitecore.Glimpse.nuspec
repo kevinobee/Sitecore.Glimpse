@@ -22,5 +22,7 @@
     <file src="..\..\artifacts\Build\Sitecore.Glimpse.pdb" target="lib\net40" />
     <file src="..\..\artifacts\Build\Sitecore.Glimpse.Core.dll" target="lib\net40" />
     <file src="..\..\artifacts\Build\Sitecore.Glimpse.Core.pdb" target="lib\net40" />
+    
+    <file src="..\..\src\Sitecore.Glimpse\content\**\*" target="content" />
   </files>
 </package>

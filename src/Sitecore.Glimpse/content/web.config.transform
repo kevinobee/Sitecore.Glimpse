@@ -1,0 +1,9 @@
+﻿<configuration>
+  <glimpse defaultRuntimePolicy="On" endpointBaseUri="~/Glimpse.axd">
+    <runtimePolicies>
+      <uris>
+        <add regex=".*/sitecore.*"/>
+      </uris>
+    </runtimePolicies>
+  </glimpse>
+</configuration>
