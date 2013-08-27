@@ -8,8 +8,8 @@
     <projectUrl>https://github.com/kevinobee/Sitecore.Glimpse</projectUrl>
     <iconUrl>https://secure.gravatar.com/avatar/dd3d0f6dd07cbf52325c74c293866410</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Sitecore Glimpse</description> <!-- TODO -->
-    <releaseNotes>This is a development release version of the package.</releaseNotes>
+    <description>Sitecore Glimpse</description>
+    <releaseNotes>Hide Glimpse within Sitecore Page Editor</releaseNotes>
     <tags>Sitecore Glimpse Debugger</tags>
     <language>en-GB</language>
     <dependencies>

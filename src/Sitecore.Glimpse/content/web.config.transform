@@ -3,6 +3,8 @@
     <runtimePolicies>
       <uris>
         <add regex=".*/sitecore.*"/>
+        <add regex=".*\?.*sc_mode=edit.*" />
+        <add regex=".*\?.*sc_mode=preview.*" />
       </uris>
     </runtimePolicies>
   </glimpse>
