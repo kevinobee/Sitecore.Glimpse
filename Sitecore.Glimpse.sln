@@ -33,6 +33,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "lib", "lib", "{BFDC90B2-65F
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "packaging", "packaging", "{05F4023A-A4F6-4844-8175-8D7E04C63913}"
 	ProjectSection(SolutionItems) = preProject
+		build\packaging\Sitecore.Glimpse.Mvc3.nuspec = build\packaging\Sitecore.Glimpse.Mvc3.nuspec
 		build\packaging\Sitecore.Glimpse.nuspec = build\packaging\Sitecore.Glimpse.nuspec
 	EndProjectSection
 EndProject
@@ -54,6 +55,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Glimpse.Infrastructure", "src\Sitecore.Glimpse.Infrastructure\Sitecore.Glimpse.Infrastructure.csproj", "{13D0192C-3E97-44FF-AF0F-914F0D254A0D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Glimpse.Core", "src\Sitecore.Glimpse.Core\Sitecore.Glimpse.Core.csproj", "{7A573B93-5410-4B9C-832E-3B034E49383E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Glimpse.Mvc3", "src\Sitecore.Glimpse.Mvc3\Sitecore.Glimpse.Mvc3.csproj", "{4F2D2415-64CA-4D33-9D9F-5937DFFDEBF8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -77,6 +80,10 @@ Global
 		{7A573B93-5410-4B9C-832E-3B034E49383E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7A573B93-5410-4B9C-832E-3B034E49383E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7A573B93-5410-4B9C-832E-3B034E49383E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F2D2415-64CA-4D33-9D9F-5937DFFDEBF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F2D2415-64CA-4D33-9D9F-5937DFFDEBF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F2D2415-64CA-4D33-9D9F-5937DFFDEBF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F2D2415-64CA-4D33-9D9F-5937DFFDEBF8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -86,6 +93,7 @@ Global
 		{0E821D5A-760E-4D95-9F45-63840E6BED6B} = {F0717179-F14B-4667-8D5A-5980EC935F0F}
 		{13D0192C-3E97-44FF-AF0F-914F0D254A0D} = {F0717179-F14B-4667-8D5A-5980EC935F0F}
 		{7A573B93-5410-4B9C-832E-3B034E49383E} = {F0717179-F14B-4667-8D5A-5980EC935F0F}
+		{4F2D2415-64CA-4D33-9D9F-5937DFFDEBF8} = {F0717179-F14B-4667-8D5A-5980EC935F0F}
 		{05F4023A-A4F6-4844-8175-8D7E04C63913} = {33043060-6D33-4018-9F77-A36E70771C93}
 		{923D9377-9025-425B-9698-1A38947CA973} = {2A29E5BC-9DE1-4299-AFD9-86F1CC77B921}
 		{99792E2E-1BA6-4B15-9115-619FD1D474C7} = {923D9377-9025-425B-9698-1A38947CA973}

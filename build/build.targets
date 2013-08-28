@@ -109,6 +109,9 @@
   <Target Name="StdPackage" DependsOnTargets="Build">
     <Exec
         Command="$(NuGetExePath) pack $(PackagingPath)\$(ProjectName).nuspec -Verbosity detailed -Version $(PackageVersion) -OutputDirectory $(PackageResultsPath)" />
+
+    <Exec
+      Command="$(NuGetExePath) pack $(PackagingPath)\$(ProjectName).Mvc3.nuspec -Verbosity detailed -Version $(PackageVersion) -OutputDirectory $(PackageResultsPath)" />
   </Target>
 
   <Target Name="Go" DependsOnTargets="RunCodeAnalysis; Build; RunTests; StdPackage">

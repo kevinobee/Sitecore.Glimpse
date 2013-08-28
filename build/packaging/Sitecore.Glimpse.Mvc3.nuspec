@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Sitecore.Glimpse.Mvc3</id>
+    <version>0.0.0</version>
+    <authors>Kevin Obee</authors>
+    <owners>kevinobee</owners>
+    <projectUrl>https://github.com/kevinobee/Sitecore.Glimpse</projectUrl>
+    <iconUrl>https://secure.gravatar.com/avatar/dd3d0f6dd07cbf52325c74c293866410</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Sitecore Glimpse MVC3</description>
+    <releaseNotes>Add MVC3 support to Sitecore.Glimpse</releaseNotes>
+    <tags>Sitecore Glimpse Debugger</tags>
+    <language>en-GB</language>
+    <dependencies>
+      <dependency id="Sitecore.Glimpse" version="0.1.1" />
+      <dependency id="Glimpse.Mvc3" version="1.3.3" />
+    </dependencies>
+  </metadata>
+  <files>
+    <!--<file src="..\..\artifacts\Build\Sitecore.Glimpse.dll" target="lib\net40" />
+    <file src="..\..\artifacts\Build\Sitecore.Glimpse.pdb" target="lib\net40" />-->
+    <!--<file src="..\..\artifacts\Build\Sitecore.Glimpse.Core.dll" target="lib\net40" />
+    <file src="..\..\artifacts\Build\Sitecore.Glimpse.Core.pdb" target="lib\net40" />
+    <file src="..\..\artifacts\Build\Sitecore.Glimpse.Infrastructure.dll" target="lib\net40" />
+    <file src="..\..\artifacts\Build\Sitecore.Glimpse.Infrastructure.pdb" target="lib\net40" />-->    
+    
+    <file src="..\..\src\Sitecore.Glimpse.Mvc3\content\**\*" target="content" />
+  </files>
+</package>
