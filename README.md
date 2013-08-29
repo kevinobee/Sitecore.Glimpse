@@ -1,11 +1,16 @@
 # Sitecore.Glimpse
 
-Sitecore.Glimpse is ...
+Sitecore.Glimpse is an Glimpse extension that provides runtime web diagnostics for Sitecore sites.
 
+This project includes the following NuGet packages:
+
+* Sitecore.Glimpse
+* Sitecore.Glimpse.Mvc3 (extension for those wanting to use Sitecore's MVC capability)
 
 ## Instructions for Use
 
-This is an early proof of concept and as such packages have not been pushed to NuGet.org
+Either pull the package(s) from the NuGet gallery or clone the GitHub repos to get the latest code.
+
 
 ### Building the Package
 
@@ -23,11 +28,14 @@ Run the following powershell command in the package manager console of the Visua
 
     install-package Sitecore.Glimpse -Source <path>
 
+
 Where `<path>` is the path to the  `artifacts\Packages\` folder that was produced by the build command.
 
 Installing the package will do the following:
 
-TODO
+* Add a module into the ASP.NET pipeline
+* Add a handler endpoint that by default be addressable via /Glimpse.axd
+* A configuration section at the end of your web.config where the behaviour of the extension can be customised
 
 
 ### Uninstalling the Package
@@ -38,19 +46,9 @@ Run the following commands:
 
 
 
-
-### Tools
-
-POSTMAN is a powerful HTTP client that runs as a Chrome browser extension and greatly helps with testing test REST web services. Find out more <http://www.getpostman.com/> 
-
-References:
-
-http://curl.haxx.se/docs/httpscripting.html - see section 4.3 File Upload POST 
-
-
 ## Contributing to the Project
 
-If you are interested in contributing to the growth and development of Sitecore.Ship in even a small way, please read the notes below.
+If you are interested in contributing to the growth and development of Sitecore.Glimpse in even a small way, please read the notes below.
 
 The project can be built and tested from the command line by entering:
 
@@ -64,11 +62,11 @@ The `build.proj` file contains a set of smoke tests to verify that the Sitecore.
 
 In order to run these smoke tests you will need to:
 
-* Have a local install of Sitecore 6.6.
+* Have a local install of Sitecore.
 
-* Set the *TestWebsitePath* and *TestWebsiteUrl* in the **build\Sitecore.Glimpse.environment.props** to reference the local Sitecore 6.6 website.
+* Set the *TestWebsitePath* and *TestWebsiteUrl* in the **build\environment.props** to reference the local Sitecore website.
 
-* Ensure that the test website has the Ship package installed by running the following in the Package Manager Console:
+* Ensure that the test website has the Sitecore.Glimpse package installed by running the following in the Package Manager Console:
 
     install-package Sitecore.Glimpse -Source `<path to folder containing your sitecore.glimpse nupkg file>`
 
@@ -76,6 +74,6 @@ You can then run the smoke tests by entering:
 
     .\build RunSmokeTests
 
-A series of curl commands fire off HTTP requests to the Sitecore.Ship service routes and the results are printed out to the console. Each of these commands should execute successfully before you send a pull request back to the main project.
+Curl commands will fire off HTTP requests to the test website to verify that the site is still responding as intended. These commands should execute successfully before you send a pull request back to the main project.
 
 Your participation in the project is very much welcomed.
