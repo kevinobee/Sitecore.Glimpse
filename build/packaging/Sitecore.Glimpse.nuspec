@@ -9,7 +9,7 @@
     <iconUrl>https://secure.gravatar.com/avatar/dd3d0f6dd07cbf52325c74c293866410</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Sitecore Glimpse</description>
-    <releaseNotes>Hide Glimpse within Sitecore Page Editor</releaseNotes>
+    <releaseNotes>Released Sitecore.Glimpse.Mvc3 package</releaseNotes>
     <tags>Sitecore Glimpse Debugger</tags>
     <language>en-GB</language>
     <dependencies>
