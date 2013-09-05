@@ -9,7 +9,7 @@
     <iconUrl>https://secure.gravatar.com/avatar/dd3d0f6dd07cbf52325c74c293866410</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Sitecore Glimpse MVC3</description>
-    <releaseNotes>Add MVC3 support to Sitecore.Glimpse</releaseNotes>
+    <releaseNotes>MVC Routes tab reinstated</releaseNotes>
     <tags>Sitecore Glimpse Debugger</tags>
     <language>en-GB</language>
     <dependencies>
@@ -18,13 +18,6 @@
     </dependencies>
   </metadata>
   <files>
-    <!--<file src="..\..\artifacts\Build\Sitecore.Glimpse.dll" target="lib\net40" />
-    <file src="..\..\artifacts\Build\Sitecore.Glimpse.pdb" target="lib\net40" />-->
-    <!--<file src="..\..\artifacts\Build\Sitecore.Glimpse.Core.dll" target="lib\net40" />
-    <file src="..\..\artifacts\Build\Sitecore.Glimpse.Core.pdb" target="lib\net40" />
-    <file src="..\..\artifacts\Build\Sitecore.Glimpse.Infrastructure.dll" target="lib\net40" />
-    <file src="..\..\artifacts\Build\Sitecore.Glimpse.Infrastructure.pdb" target="lib\net40" />-->    
-    
-    <file src="..\..\src\Sitecore.Glimpse.Mvc3\content\**\*" target="content" />
+    <!--<file src="..\..\src\Sitecore.Glimpse.Mvc3\content\**\*" target="content" />-->
   </files>
 </package>

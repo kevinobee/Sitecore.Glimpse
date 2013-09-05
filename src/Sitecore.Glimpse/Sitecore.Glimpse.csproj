@@ -58,6 +58,7 @@
     <Compile Include="SitecoreTab.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="content\web.config.install.xdt" />
     <None Include="content\web.config.transform">
       <SubType>Designer</SubType>
     </None>

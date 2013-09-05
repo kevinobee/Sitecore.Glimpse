@@ -1,4 +1,5 @@
-﻿<configuration>
+﻿<?xml version="1.0"?>
+<configuration>
   <glimpse defaultRuntimePolicy="On" endpointBaseUri="~/Glimpse.axd">
     <runtimePolicies>
       <uris>
