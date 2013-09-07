@@ -13,9 +13,34 @@
 
   <!-- Provide defaults for values for environment properties if environment.props is not present -->
   <PropertyGroup>
-    <TestWebsitePath Condition="$(TestWebsitePath) == ''">D:\Websites\glimpsetest\Website</TestWebsitePath>
+    <TestWebsitePath Condition="$(TestWebsitePath) == ''">C:\Websites\glimpsetest\Website</TestWebsitePath>
     <TestWebsiteUrl Condition="$(TestWebsiteUrl) == ''">http://glimpsetest/</TestWebsiteUrl>
     <LibsSrcPath Condition="$(LibsSrcPath) == ''">C:\LibsSrc\6\6.6\Update-5</LibsSrcPath>
   </PropertyGroup>
+
+  <ItemGroup>
+    <LibFiles Include="$(LibsSrcPath)\Sitecore.Kernel.dll" />
+  </ItemGroup>
+
+  <Target Name="RunSmokeTests" DependsOnTargets="Build">
+    <PropertyGroup>
+      <TestPackagePath>$(ProjectRoot)\tests\acceptance-test\package.update</TestPackagePath>
+    </PropertyGroup>
+    <ItemGroup>
+      <ProjectSrcAssemblies Include="$(BuildResultsPath)\Sitecore*.dll; " Exclude="$(BuildResultsPath)\*.Test.dll" />
+    </ItemGroup>
+
+    <Copy
+          SourceFiles="@(ProjectSrcAssemblies)"
+          DestinationFolder="$(TestWebsitePath)\bin"
+        />
+
+    <!-- Site root page -->
+    <Exec Command="$(CurlExePath) $(TestWebsiteUrl)" />
+
+    <!-- Glimpse config page -->
+    <Exec Command="$(CurlExePath) $(TestWebsiteUrl)/Glimpse.axd" />
+
+  </Target>
  
 </Project>

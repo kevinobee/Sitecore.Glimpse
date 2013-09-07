@@ -9,10 +9,6 @@
     TaskName="Xunit.Runner.MSBuild.xunit"/>
   
   <Target Name="CopyLibs">
-    <ItemGroup>
-      <LibFiles Include="$(LibsSrcPath)\Sitecore.Kernel.dll" />
-    </ItemGroup>
-
     <Copy
         SourceFiles="@(LibFiles)"
         DestinationFolder="$(LibsDestPath)"
@@ -32,7 +28,7 @@
 
   <Target Name="Build" DependsOnTargets="Init">
     <MSBuild Projects="$(ProjectRoot)\$(ProjectName).sln"
-             Targets="Build"
+             Targets="ReBuild"
              Properties="Configuration=$(Configuration);OutDir=$(BuildResultsPath)\" />
   </Target>
 
@@ -82,24 +78,6 @@
         WorkingFolder="$(XunitPath)"
         Xml="$(OutputXmlFile)"
         Html="$(OutputHtmlFile)"/>
-
-  </Target>
-
-  <Target Name="RunSmokeTests" DependsOnTargets="Build">
-    <PropertyGroup>
-      <TestPackagePath>$(ProjectRoot)\tests\acceptance-test\package.update</TestPackagePath>
-    </PropertyGroup>
-    <ItemGroup>
-      <ProjectSrcAssemblies Include="$(BuildResultsPath)\Sitecore*.dll; " Exclude="$(BuildResultsPath)\*.Test.dll" />
-    </ItemGroup>
-
-    <Copy
-              SourceFiles="@(ProjectSrcAssemblies)"
-              DestinationFolder="$(TestWebsitePath)\bin"
-        />
-
-    <!-- Site root page -->
-    <Exec Command="$(CurlExePath) $(TestWebsiteUrl)" />
 
   </Target>
 
