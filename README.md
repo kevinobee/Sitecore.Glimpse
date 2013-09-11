@@ -6,6 +6,7 @@ This project includes the following NuGet packages:
 
 * Sitecore.Glimpse
 * Sitecore.Glimpse.Mvc3 (extension for those wanting to use Sitecore's MVC capability)
+* Sitecore.Glimpse.Mvc4 (supports the ASP.NET MVC4 release)
 
 ## Instructions for Use
 
