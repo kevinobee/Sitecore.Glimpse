@@ -10,7 +10,7 @@ namespace Sitecore.Glimpse
         private readonly ISitecoreRequest _sitecoreRequest;
 
         public SitecoreTab()
-            : this(new SitecoreRequest())  // TODO Poor mans DI will cause a circular reference here ...
+            : this(new SitecoreRequest())
         {
         }
 

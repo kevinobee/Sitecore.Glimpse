@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <LibFiles Include="$(LibsSrcPath)\Sitecore.Kernel.dll" />
+    <LibFiles Include="$(LibsSrcPath)\Sitecore.Analytics.dll" />
   </ItemGroup>
 
   <Target Name="RunSmokeTests" DependsOnTargets="Build">
