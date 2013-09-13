@@ -1,363 +1,478 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+
+using Sitecore.Data.Items;
+using Sitecore.Layouts;
 
 namespace Sitecore.Glimpse.Infrastructure
 {
     public class SitecoreRequest : ISitecoreRequest
     {
-        public object GetData()
+        public RequestData GetData()
         {
-            var glimpseContext = new List<object[]>()
+            try
             {
-                new object[] 
-                {
-                    "Sitecore Context Property", "Value" 
-                }
+                return GetSitecoreData();
+            }
+            catch (Exception)
+            {
+                // TODO catch Sitecore specific errors and log exception details..
+
+                return null;
+            }
+        }
+
+        private static RequestData GetSitecoreData()
+        {
+            var data = new RequestData();
+
+            data.Add(DataKey.Request, GetRequest());
+            data.Add(DataKey.Diagnostics, GetDiagnostics());
+            data.Add(DataKey.Culture, GetCulture());
+            data.Add(DataKey.Language, GetLanguage());
+            data.Add(DataKey.Domain, GetDomain());
+            data.Add(DataKey.Device, GetDevice());
+            data.Add(DataKey.User, GetUser());
+            data.Add(DataKey.Database, GetDatabase());
+            data.Add(DataKey.Site, GetSite());
+            data.Add(DataKey.ItemVisualization, GetItemVisualization());
+            data.Add(DataKey.ItemTemplate, GetItemTemplate());
+            data.Add(DataKey.Item, GetItem());
+
+            return data;
+        }
+
+        private static FieldList GetCulture()
+        {
+            return GetCulture(Context.Culture);
+        }
+
+        private static FieldList GetCulture(CultureInfo culture)
+        {
+            var data = new FieldList();
+
+            data.AddField("Name", culture.Name);
+            data.AddField("Parent", culture.Parent);
+            data.AddField("Display Name", culture.DisplayName);
+            data.AddField("English Name", culture.EnglishName);
+            data.AddField("Native Name", culture.NativeName);
+            data.AddField("Two Letter ISO Language Name", culture.TwoLetterISOLanguageName);
+            data.AddField("Three Letter Windows Language Name", culture.ThreeLetterWindowsLanguageName);
+            data.AddField("Three Letter ISO Language Name", culture.ThreeLetterISOLanguageName);
+
+            return data;
+        }
+
+        private static FieldList GetLanguage()
+        {
+            var language = Context.Language;
+
+            var data = new FieldList();
+
+            data.AddField("Name", language.Name);
+            data.AddField("DisplayName", language.GetDisplayName());
+            data.AddField("CultureInfo", GetCulture(language.CultureInfo).Fields);
+
+            if (language.Origin != null && language.Origin.ItemId != (Data.ID)null)
+            {
+                data.AddField("Origin Item Id", language.Origin.ItemId.Guid);
+            }
+
+            return data;
+        }
+
+        private static FieldList GetItemVisualization()
+        {
+            var itemVisualization = Context.Item.Visualization;
+            var device = Context.Device;
+
+            var layoutItem = itemVisualization.GetLayout(device);
+            var renderings = itemVisualization.GetRenderings(device, true);
+
+            var data = new FieldList();
+
+            data.AddField("Layout", GetLayout(layoutItem).Fields);
+            data.AddField("Renderings", GetRenderings(renderings));
+
+            return data;
+        }
+
+        private static IList<object[]> GetRenderings(IEnumerable<RenderingReference> renderings)
+        {
+            var renderingResults = new List<object[]>
+            {
+                new object[] { "Placeholder", "Display Name", "Unique ID", "Rendering ID", "Cacheable", "Conditions", "DataSource", "Parameters", "MultiVariateTest" }
             };
 
-            AddSiteContext(glimpseContext);
+            renderingResults.AddRange(renderings.Select(rendering => new object[]
+                {
+                    rendering.Settings.Placeholder, 
+                    GetDisplayName(rendering),
+                    rendering.UniqueId, 
+                    rendering.RenderingID.Guid, 
+                    rendering.Settings.Caching.Cacheable, 
+                    rendering.Settings.Conditions, 
+                    rendering.Settings.DataSource, 
+                    rendering.Settings.Parameters, 
+                    rendering.Settings.MultiVariateTest
+                }));
 
-            AddDatabaseContext(glimpseContext);
-
-            AddItemContext(glimpseContext);
-
-            AddItemTemplateContext(glimpseContext);
-
-            AddItemVisualizationContext(glimpseContext);
-
-            AddLanguageContext(glimpseContext);
-
-            AddCultureContext(glimpseContext);
-
-            AddDeviceContext(glimpseContext);
-
-            AddDomainContext(glimpseContext);
-
-            AddDiagnosticsContext(glimpseContext);
-
-            // Sitecore.Context.Page
-            // AddPageContext(glimpseContext);
-
-            AddRequestContext(glimpseContext);
-
-            AddUserContext(glimpseContext);
-
-            // Sitecore.Context.Resources          
-            
-          
-            return glimpseContext;
+            return renderingResults;
         }
 
-        /// <summary>
-        /// Add Sitecore.Context.Request
-        /// </summary>
-        /// <param name="glimpseContext"></param>
-        private static void AddRequestContext(List<object[]> glimpseContext)
+        private static string GetDisplayName(RenderingReference rendering)
         {
-            try
-            {
-                glimpseContext.Add(
-                    new object[] 
-                    { 
-                        "Request", SitecoreProperties.SitecorePropertiesBusiness.GetRequestPropertiesFull(Sitecore.Context.Request)
-                    });
-            }
-            catch (Exception ex)
-            {
-                glimpseContext.Add(
-                    new object[] 
-                    { 
-                        "Request Plugin Exception", ex
-                    });
-            }
+            return (rendering.RenderingItem != null &&
+                    !string.IsNullOrEmpty(rendering.RenderingItem.DisplayName))
+                       ? rendering.RenderingItem.DisplayName
+                       : string.Empty;
         }
 
-        /// <summary>
-        /// Add Sitecore.Context.User
-        /// </summary>
-        /// <param name="glimpseContext"></param>
-        private static void AddUserContext(List<object[]> glimpseContext)
+        private static FieldList GetLayout(LayoutItem layoutItem)
         {
-            try
-            {
-                glimpseContext.Add(
-                    new object[] 
-                    { 
-                        "User", SitecoreProperties.SitecorePropertiesBusiness.GetUserPropertiesFull(Sitecore.Context.User)
-                    });
-            }
-            catch (Exception ex)
-            {
-                glimpseContext.Add(
-                    new object[] 
-                    { 
-                        "User Plugin Exception", ex
-                    });
-            }
-        }
-       
+            var data = new FieldList();
 
-        private static void AddPageContext(List<object[]> glimpseContext)
+            data.AddField("Display Name", layoutItem.DisplayName);
+            data.AddField("File Path", layoutItem.FilePath);
+            data.AddField("ID", layoutItem.ID.Guid.ToString());
+            // TODO new object[] { "Control", layoutItem.Control },
+
+            return data;
+        }
+
+        private static FieldList GetDiagnostics()
         {
-            try
-            {
-                glimpseContext.Add(
-                    new object[] 
-                    { 
-                        "Page", SitecoreProperties.SitecorePropertiesBusiness.GetPagePropertiesFull(Sitecore.Context.Page)
-                    });
-            }
-            catch (Exception ex)
-            {
-                glimpseContext.Add(
-                    new object[] 
-                    { 
-                        "Page Plugin Exception", ex
-                    });
-            }
+            var diag = Context.Diagnostics;
+
+            var data = new FieldList();
+
+            data.AddField("Debugging", diag.Debugging);
+            data.AddField("Profiling", diag.Profiling);
+            data.AddField("Tracing", diag.Tracing);
+            data.AddField("Show Rendering Info", diag.ShowRenderingInfo);
+            data.AddField("Draw Rendering Borders", diag.DrawRenderingBorders);
+
+            return data;
         }
 
-        /// <summary>
-        /// Add Sitecore.Context.Diagnostics
-        /// </summary>
-        /// <param name="glimpseContext"></param>
-        private static void AddDiagnosticsContext(List<object[]> glimpseContext)
+        private static FieldList GetDevice()
         {
-            try
+            var device = Context.Device;
+
+            var data = new FieldList();
+
+            data.AddField("Name", device.Name);
+            data.AddField("Display Name", device.DisplayName);
+            data.AddField("Id", device.ID.Guid);
+            data.AddField("Query String", device.QueryString);
+            data.AddField("Agent", device.Agent);
+
+            if (device.FallbackDevice != null)
             {
-                glimpseContext.Add(
-                    new object[] 
-                    { 
-                        "Diagnostics", SitecoreProperties.SitecorePropertiesBusiness.GetDiagnosticsPropertiesFull(Sitecore.Context.Diagnostics)
-                    });
+                data.AddField("Fallback Device Name", device.FallbackDevice.Name);
             }
-            catch (Exception ex)
-            {
-                glimpseContext.Add(
-                    new object[] 
-                    { 
-                        "Diagnostics Plugin Exception", ex
-                    });
-            }
+
+            data.AddField("Icon", device.Icon);
+            data.AddField("Is Default", device.IsDefault);
+            data.AddField("Is Valid", device.IsValid);
+            // new object[] { "Capabilities.Browser", di.Capabilities.Browser},
+            // new object[] { "Properties", di.Capabilities.Properties.AllKeys}
+            // new object[] { "ArchiveNames" , db.ArchiveNames }
+
+            return data;
         }
 
-        /// <summary>
-        /// Add Sitecore.Context.Domain
-        /// </summary>
-        /// <param name="glimpseContext"></param>
-        private static void AddDomainContext(List<object[]> glimpseContext)
+        private static FieldList GetItemTemplate()
         {
-            try
+            var template = Context.Item.Template;
+
+            var data = new FieldList();
+
+            data.AddField("Name", template.Name);
+            data.AddField("Display Name", template.DisplayName);
+            data.AddField("Full Name", template.FullName);
+            data.AddField("ID", template.ID.Guid);
+            data.AddField("Base Templates", template.BaseTemplates.Select(t => t.Name));
+
+            if (template.StandardValues != null)
             {
-                glimpseContext.Add(
-                    new object[] 
-                    { 
-                        "Domain", SitecoreProperties.SitecorePropertiesBusiness.GetDomainPropertiesFull(Sitecore.Context.Domain)
-                    });
+                data.AddField("Standard Values", template.StandardValues.Paths.FullPath);
             }
-            catch (Exception ex)
-            {
-                glimpseContext.Add(
-                    new object[] 
-                    { 
-                        "Domain Plugin Exception", ex
-                    });
-            }
+
+            data.AddField("Own Fields", GetTemplateFieldProperties(template.OwnFields));
+            data.AddField("Fields", GetTemplateFieldProperties(template.Fields));
+            data.AddField("Template InnerItem", GetItem(template.InnerItem).Fields);
+
+            return data;
         }
 
-        /// <summary>
-        /// Add Sitecore.Context.Item
-        /// </summary>
-        /// <param name="glimpseContext"></param>
-        private static void AddItemContext(List<object[]> glimpseContext)
+        private static List<object[]> GetTemplateFieldProperties(IEnumerable<TemplateFieldItem> fields)
         {
-            try
+            var groupedResults = new List<object[]>
             {
-                glimpseContext.Add(
-                    new object[] 
-                    { 
-                        "Item", SitecoreProperties.SitecorePropertiesBusiness.GetItemPropertiesFull(Sitecore.Context.Item)
-                    });
-            }
-            catch (Exception ex)
+                new object[] { "Section", "Fields" }
+            };
+
+            var groupedFields = fields
+                .GroupBy(f => new { f.Section.Sortorder, f.Section.DisplayName })
+                .OrderBy(g => g.Key.Sortorder)
+                .ThenBy(g => g.Key.DisplayName);
+
+            foreach (var group in groupedFields)
             {
-                glimpseContext.Add(
-                    new object[] 
-                    { 
-                        "Item Plugin Exception", ex
-                    });
+                var results = new List<object[]>
+                {
+                    new object[] { "Field Name", "Title", "Field Type", "Unversioned", "Shared", "Source" }
+                };
+
+                results.AddRange(
+                    group.OrderBy(f => f.Sortorder)
+                        .Select(f =>
+                            new object[] { f.Name, f.Title, f.Type, f.Unversioned, f.Shared, f.Source }));
+
+                groupedResults.Add(new object[] { string.Format("{0}", group.Key.DisplayName), results });
             }
+
+            return groupedResults;
         }
 
-        /// <summary>
-        /// Add Sitecore.Context.Item.Template
-        /// </summary>
-        /// <param name="glimpseContext"></param>
-        private static void AddItemTemplateContext(List<object[]> glimpseContext)
+
+        private static FieldList GetRequest()
         {
-            try
+            var request = Context.Request;
+
+            var data = new FieldList();
+
+            data.AddField("FilePath", request.FilePath);
+            data.AddField("ItemPath", request.ItemPath);
+
+            if (request.QueryString.AllKeys.Any())
             {
-                glimpseContext.Add(
-                    new object[] 
-                    { 
-                        "Item Template", SitecoreProperties.SitecorePropertiesBusiness.GetTemplatePropertiesFull(Sitecore.Context.Item.Template)
-                    });
+                var queryString = new FieldList();
+
+                foreach (var key in request.QueryString.AllKeys)
+                {
+                    queryString.AddField(key, request.QueryString.GetValues(key));
+                }
+
+                data.AddField("QueryString", queryString);
             }
-            catch (Exception ex)
-            {
-                glimpseContext.Add(
-                    new object[] 
-                    { 
-                        "Item Template Plugin Exception", ex
-                    });
-            }
+
+            return data;
         }
 
-        /// <summary>
-        /// Add Sitecore.Context.Item.Template
-        /// </summary>
-        /// <param name="glimpseContext"></param>
-        private static void AddItemVisualizationContext(List<object[]> glimpseContext)
+        private static FieldList GetDomain()
         {
-            try
-            {
-                glimpseContext.Add(
-                    new object[] 
-                    { 
-                        "Item Visualization", SitecoreProperties.SitecorePropertiesBusiness.GetVisualizationPropertiesFull(
-                            Sitecore.Context.Item.Visualization, Sitecore.Context.Device)
-                    });
-            }
-            catch (Exception ex)
-            {
-                glimpseContext.Add(
-                    new object[] 
-                    { 
-                        "Item Template Plugin Exception", ex
-                    });
-            }
+            var domain = Context.Domain;
+
+            var data = new FieldList();
+
+            data.AddField("Name", domain.Name);
+            data.AddField("Is Default", domain.IsDefault);
+            data.AddField("Account Prefix", domain.AccountPrefix);
+            data.AddField("Anonymous User Name", domain.AnonymousUserName);
+            data.AddField("Default Profile Item ID", domain.DefaultProfileItemID);
+            data.AddField("Ensure Anonymous User", domain.EnsureAnonymousUser);
+            data.AddField("Everyone Role Name", domain.EveryoneRoleName);
+            data.AddField("Locally Managed", domain.LocallyManaged);
+            data.AddField("Anonymous User Email Pattern", domain.AnonymousUserEmailPattern);
+            data.AddField("Account Name Validation", domain.AccountNameValidation);
+            data.AddField("Member Pattern", domain.MemberPattern);
+
+            return data;
         }
 
-        /// <summary>
-        /// Add Sitecore.Context.Language
-        /// </summary>
-        /// <param name="glimpseContext"></param>
-        private static void AddLanguageContext(List<object[]> glimpseContext)
+        private static FieldList GetUser()
         {
-            try
-            {
-                glimpseContext.Add(
-                    new object[] 
-                    { 
-                        "Language", SitecoreProperties.SitecorePropertiesBusiness.GetLanguagePropertiesFull(Sitecore.Context.Language)
-                    });
-            }
-            catch (Exception ex)
-            {
-                glimpseContext.Add(
-                    new object[] 
-                    { 
-                        "Language Plugin Exception", ex
-                    });
-            }
+            var user = Context.User;
+
+            var data = new FieldList();
+
+            data.AddField("Name", user.Name);
+            data.AddField("DisplayName", user.DisplayName);
+            data.AddField("Roles", user.Roles.Select(r => r.Name));
+            // TODO new object[] { "AccountType", u.AccountType},
+            data.AddField("Description", user.Description);
+            data.AddField("Domain Name", user.GetDomainName());
+            data.AddField("IsAdministrator", user.IsAdministrator);
+            data.AddField("IsAuthenticated", user.IsAuthenticated);
+            data.AddField("LocalName", user.LocalName);
+            // TODO new object[] { "Profile", u.Profile},
+
+            return data;
         }
 
-        /// <summary>
-        /// Add Sitecore.Context.Culture
-        /// </summary>
-        /// <param name="glimpseContext"></param>
-        private static void AddCultureContext(List<object[]> glimpseContext)
+        private static FieldList GetDatabase()
         {
-            try
-            {
-                glimpseContext.Add(
-                    new object[] 
-                    { 
-                        "Culture", SitecoreProperties.SitecorePropertiesBusiness.GetCulturePropertiesFull(Sitecore.Context.Culture)
-                    });
-            }
-            catch (Exception ex)
-            {
-                glimpseContext.Add(
-                    new object[] 
-                    { 
-                        "Culture Plugin Exception", ex
-                    });
-            }
+            var database = Context.Database;
+
+            var data = new FieldList();
+
+            data.AddField("Name", database.Name);
+            data.AddField("Connection String Name", database.ConnectionStringName);
+            data.AddField("Read Only", database.ReadOnly);
+            data.AddField("Protected", database.Protected);
+            data.AddField("Security Enabled", database.SecurityEnabled);
+            data.AddField("Proxies Enabled", database.ProxiesEnabled);
+            data.AddField("Publish Virtual Items", database.PublishVirtualItems);
+            data.AddField("HasContentItem", database.HasContentItem);
+            // TODO new object[] { "ArchiveNames" , db.ArchiveNames }
+
+            return data;
         }
 
-        /// <summary>
-        /// Add Sitecore.Context.Device
-        /// </summary>
-        /// <param name="glimpseContext"></param>
-        private static void AddDeviceContext(List<object[]> glimpseContext)
+        private static FieldList GetSite()
         {
-            try
-            {
-                glimpseContext.Add(
-                    new object[] 
-                    { 
-                        "Device", SitecoreProperties.SitecorePropertiesBusiness.GetDevicePropertiesFull(Sitecore.Context.Device)
-                    });
-            }
-            catch (Exception ex)
-            {
-                glimpseContext.Add(
-                    new object[] 
-                    { 
-                        "Device Plugin Exception", ex
-                    });
-            }
+            var site = Context.Site;
+
+            var data = new FieldList();
+
+            data.AddField("Name", site.Name);
+            data.AddField("HostName", site.HostName);
+            data.AddField("TargetHostName", site.TargetHostName);
+            data.AddField("Language", site.Language);
+            data.AddField("Database", site.Properties["database"]);
+            data.AddField("Device", site.Device);
+            data.AddField("RootPath", site.RootPath);
+            data.AddField("StartItem", site.StartItem);
+            data.AddField("StartPath", site.StartPath);
+            data.AddField("PhysicalFolder", site.PhysicalFolder);
+            data.AddField("VirtualFolder", site.VirtualFolder);
+            data.AddField("LoginPage", site.LoginPage);
+            data.AddField("RequireLogin", site.RequireLogin);
+            data.AddField("AllowDebug", site.AllowDebug);
+            data.AddField("EnableAnalytics", site.EnableAnalytics);
+            data.AddField("EnableDebugger", site.EnableDebugger);
+            data.AddField("EnablePreview", site.EnablePreview);
+            data.AddField("EnableWorkflow", site.EnableWorkflow);
+            data.AddField("EnableWebEdit", site.EnableWebEdit);
+            data.AddField("FilterItems", site.FilterItems);
+            data.AddField("CacheHtml", site.CacheHtml);
+            data.AddField("CacheMedia", site.CacheMedia);
+            data.AddField("MediaCachePath", site.MediaCachePath);
+            data.AddField("XmlControlPage", site.XmlControlPage);
+
+            return data;
         }
 
-        /// <summary>
-        /// Add Sitecore.Context.Database
-        /// </summary>
-        /// <param name="glimpseContext"></param>
-        private static void AddDatabaseContext(List<object[]> glimpseContext)
+        private static FieldList GetItem()
         {
-            try
+            var item = Context.Item;
+
+            var data = new FieldList();
+
+            var itemValues = GetItem(item);
+
+            foreach (var field in itemValues.Fields)
             {
-                glimpseContext.Add(
-                    new object[] 
-                    { 
-                        "Database", SitecoreProperties.SitecorePropertiesBusiness.GetDatabaseProperties(Sitecore.Context.Database)
-                    });
+                data.AddField(field.Key, field.Value);
             }
-            catch (Exception ex)
-            {
-                glimpseContext.Add(
-                    new object[] 
-                    { 
-                        "Database Plugin Exception", ex
-                    });
-            }
+
+            data.AddField("Fields", GeFieldsProperties(item));
+            data.AddField("Extended Properties", GetExtendedProperties(item).Fields);
+
+            return data;
         }
 
-        /// <summary>
-        /// Add Sitecore.Context.Site
-        /// </summary>
-        /// <param name="glimpseContext"></param>
-        private static void AddSiteContext(List<object[]> glimpseContext)
+        private static FieldList GetItem(Item item)
         {
-            try
+            var data = new FieldList();
+
+            data.AddField("Name", item.Name);
+            data.AddField("Display Name", item.DisplayName);
+            data.AddField("Language Name", item.Language.Name);
+            data.AddField("Template Name", item.Template.Name);
+
+            if (item.Parent != null)
             {
-                glimpseContext.Add(
-                    new object[] 
-                    { 
-                        "Site",  SitecoreProperties.SitecorePropertiesBusiness.GetSiteProperties(Sitecore.Context.Site)
-                    });
+                data.AddField("Parent Name", item.Parent.Name);
             }
-            catch (Exception ex)
-            {
-                glimpseContext.Add(
-                    new object[] 
-                    { 
-                        "Site Plugin Exception", ex
-                    });
-            }
+
+            data.AddField("Full Path", item.Paths.FullPath);
+            data.AddField("Version Number", item.Version.Number);
+            data.AddField("ID", item.ID.Guid);
+            data.AddField("Parent ID", item.ParentID.Guid);
+            data.AddField("Template ID", item.TemplateID.Guid);
+
+            return data;
         }
 
-        
+        private static List<object[]> GeFieldsProperties(Item item)
+        {
+            var result = new List<object[]>
+                {
+                    new object[] { "Section" , "Fields" }
+                };
+
+            item.Fields.ReadAll();
+
+            var groupedFields = item.Fields
+                .GroupBy(f => new { f.SectionSortorder, f.SectionDisplayName })
+                .OrderBy(g => g.Key.SectionSortorder)
+                .ThenBy(g => g.Key.SectionDisplayName);
+
+            foreach (var group in groupedFields)
+            {
+                var results = new List<object[]>
+                {
+                    new object[] { "Field Title", "Field Type", "Value", "Contains Standard Value", "Inherits Value", "Unversioned", "Shared" }
+                };
+
+                results.AddRange(
+                    group.OrderBy(f => f.Sortorder)
+                        .Select(f =>
+                            new object[] { !string.IsNullOrEmpty(f.Title) ? f.Title : f.DisplayName, f.Type, f.Value, f.ContainsStandardValue, f.InheritsValueFromOtherItem, f.Unversioned, f.Shared }));
+
+                result.Add(new object[] 
+                {
+                    string.Format("{0}", group.Key.SectionDisplayName), results
+                });
+            }
+
+            return result;
+        }
+
+        private static FieldList GetExtendedProperties(Item item)
+        {
+            var data = new FieldList();
+
+            data.AddField("Key", item.Key);
+            data.AddField("Has Children", item.HasChildren);
+
+            if ((item.Children != null) && item.HasChildren)
+            {
+                data.AddField("Children", item.Children.Count);
+            }
+
+            if (item.Branch != null)
+            {
+                data.AddField("Branch Name", item.Branch.Name);
+                data.AddField("Branch Id", item.BranchId.Guid);
+            }
+
+            data.AddField("Short Description", item.Appearance.ShortDescription);
+            data.AddField("Long Description", item.Appearance.LongDescription);
+
+            data.AddField("Originator Id", item.OriginatorId.Guid);
+            data.AddField("Uri", item.Uri);
+            data.AddField("Full Path", item.Paths.FullPath);
+            data.AddField("Long ID", item.Paths.LongID);
+            data.AddField("Hidden", item.Appearance.Hidden);
+            data.AddField("Read Only", item.Appearance.ReadOnly);
+            data.AddField("Sort order", item.Appearance.Sortorder);
+            data.AddField("Style", item.Appearance.Style);
+            data.AddField("Is Clone", item.IsClone);
+            data.AddField("Is Item Clone", item.IsItemClone);
+            data.AddField("Source Uri", item.SourceUri);
+            data.AddField("Created", item.Statistics.Created);
+            data.AddField("Created By", item.Statistics.CreatedBy);
+            data.AddField("Updated", item.Statistics.Updated);
+            data.AddField("Updated By", item.Statistics.UpdatedBy);
+            data.AddField("Revision", item.Statistics.Revision);
+
+            return data;
+        }
     }
 }

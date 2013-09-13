@@ -42,9 +42,11 @@
   <ItemGroup>
     <Compile Include="DataKey.cs" />
     <Compile Include="ISitecoreRequest.cs" />
-    <Compile Include="Model\Goal.cs" />
-    <Compile Include="Model\PageHolder.cs" />
-    <Compile Include="Model\Pattern.cs" />
+    <Compile Include="Model\Analytics\Goal.cs" />
+    <Compile Include="Model\Analytics\PageHolder.cs" />
+    <Compile Include="Model\Analytics\Pattern.cs" />
+    <Compile Include="FieldList.cs" />
+    <Compile Include="RequestData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

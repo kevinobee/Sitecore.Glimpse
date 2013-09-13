@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+
 using Glimpse.Core.Extensibility;
 using Glimpse.Core.Tab.Assist;
 using Sitecore.Glimpse.Infrastructure;
@@ -24,7 +24,7 @@ namespace Sitecore.Glimpse.Analytics
         {
             try
             {
-                var sitecoreData = (IDictionary<string, object>) _sitecoreRequest.GetData();
+                var sitecoreData = _sitecoreRequest.GetData();
 
                 if (sitecoreData == null) return null;
 

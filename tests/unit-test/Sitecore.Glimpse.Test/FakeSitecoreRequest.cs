@@ -2,9 +2,11 @@
 {
     public class FakeSitecoreRequest : ISitecoreRequest
     {
-        public object GetData()
+        public RequestData GetData()
         {
-            return new object[] { "foo-bar" };
+            var data = new RequestData();
+            data.Add(DataKey.Item, "foo-bar");
+            return data;
         }
     }
 }

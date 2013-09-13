@@ -1,14 +1,13 @@
-using System.Collections.Generic;
 using Glimpse.Core.Tab.Assist;
-using Sitecore.Glimpse.Model;
+using Sitecore.Glimpse.Model.Analytics;
 
 namespace Sitecore.Glimpse.Analytics
 {
     public class PageViewsSection
     {
-        public static TabSection Create(IDictionary<string, object> sitecoreData)
+        public static TabSection Create(RequestData requestData)
         {
-            var lastPages = (PageHolder[]) sitecoreData[DataKey.LastPages];
+            var lastPages = (PageHolder[]) requestData[DataKey.LastPages];
 
             if ((lastPages == null) || (lastPages.Length == 0)) return null;
 

@@ -6,14 +6,13 @@ using System.Linq;
 using Sitecore.Analytics;
 using Sitecore.Analytics.Data.Items;
 using Sitecore.Data;
-
-using Sitecore.Glimpse.Model;
+using Sitecore.Glimpse.Model.Analytics;
 
 namespace Sitecore.Glimpse.Infrastructure
 {
     public class SitecoreAnalyticsForRequest : ISitecoreRequest
     {
-        public object GetData()
+        public RequestData GetData()
         {
             try
             {
@@ -27,24 +26,23 @@ namespace Sitecore.Glimpse.Infrastructure
             return null;
         }
 
-        private static Dictionary<string, object> GetAnalyticsData()
+        private static RequestData GetAnalyticsData()
         {
             if (Tracker.CurrentVisit != null)
             {
                 // Dont just consider the currentvisit load data from all visits
                 Tracker.Visitor.LoadAll();
 
-                var data = new Dictionary<string, object>
-                    {
-                        {DataKey.IsNewVisitor, GetVisitType()},
-                        {DataKey.EngagementValue, GetEngagementValue()},
-                        {DataKey.TrafficType, GetTrafficType()},
-                        {DataKey.Campaign, GetCampaign()},
-                        {DataKey.Goals, GetGoals(5)},
-                        {DataKey.LastPages, GetLastPages(5)},
-                        {DataKey.Pattern, GetMatchingPattern()},
-                        {DataKey.Profiles, GetProfiles()}
-                    };
+                var data = new RequestData();
+
+                data.Add(DataKey.Profiles, GetProfiles());
+                data.Add(DataKey.Pattern, GetMatchingPattern());
+                data.Add(DataKey.LastPages, GetLastPages(5));
+                data.Add(DataKey.Goals, GetGoals(5));
+                data.Add(DataKey.Campaign, GetCampaign());
+                data.Add(DataKey.TrafficType, GetTrafficType());
+                data.Add(DataKey.EngagementValue, GetEngagementValue());
+                data.Add(DataKey.IsNewVisitor, GetVisitType());
 
                 return data;
             }

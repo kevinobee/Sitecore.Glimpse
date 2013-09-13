@@ -59,8 +59,11 @@
     <Compile Include="Analytics\PatternsSection.cs" />
     <Compile Include="Analytics\ProfilesSection.cs" />
     <Compile Include="Analytics\SitecoreAnalyticsTab.cs" />
+    <Compile Include="BaseSection.cs" />
     <Compile Include="GlimpseSecurityPolicy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RequestSection.cs" />
+    <Compile Include="Section.cs" />
     <Compile Include="SitecoreTab.cs" />
   </ItemGroup>
   <ItemGroup>

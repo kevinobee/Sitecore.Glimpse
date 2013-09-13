@@ -49,19 +49,6 @@
     <Compile Include="SitecoreAnalyticsForRequest.cs" />
     <Compile Include="SitecoreRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SitecoreProperties\GetCultureProperties.cs" />
-    <Compile Include="SitecoreProperties\GetDatabaseProperties.cs" />
-    <Compile Include="SitecoreProperties\GetDeviceProperties.cs" />
-    <Compile Include="SitecoreProperties\GetDiagnosticsProperties.cs" />
-    <Compile Include="SitecoreProperties\GetDomainProperties.cs" />
-    <Compile Include="SitecoreProperties\GetItemProperties.cs" />
-    <Compile Include="SitecoreProperties\GetLanguageProperties.cs" />
-    <Compile Include="SitecoreProperties\GetPageProperties.cs" />
-    <Compile Include="SitecoreProperties\GetRequestProperties.cs" />
-    <Compile Include="SitecoreProperties\GetSiteProperties.cs" />
-    <Compile Include="SitecoreProperties\GetTemplateProperties.cs" />
-    <Compile Include="SitecoreProperties\GetUserProperties.cs" />
-    <Compile Include="SitecoreProperties\GetVisualizationProperties.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Sitecore.Glimpse.Core\Sitecore.Glimpse.Core.csproj">

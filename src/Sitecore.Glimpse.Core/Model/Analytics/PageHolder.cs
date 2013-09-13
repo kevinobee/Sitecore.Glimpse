@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Sitecore.Glimpse.Model
+namespace Sitecore.Glimpse.Model.Analytics
 {
     public class PageHolder
     {

@@ -1,6 +1,5 @@
-﻿using System.Linq;
-using Glimpse.Core.Extensibility;
-using Newtonsoft.Json.Linq;
+﻿using Glimpse.Core.Extensibility;
+
 using Xunit;
 
 namespace Sitecore.Glimpse.Test
@@ -32,22 +31,6 @@ namespace Sitecore.Glimpse.Test
             var data = _sut.GetData(null);
 
             Assert.NotNull(data);
-        }
-
-        [Fact]
-        public void Returns_an_object_array_value_from_GetData()
-        {
-            var data = _sut.GetData(null);
-
-            Assert.IsAssignableFrom<object[]>(data);
-        }
-
-        [Fact]
-        public void Return_Sitecore_information_in_returned_object_from_GetData()
-        {
-            dynamic data = _sut.GetData(null);
-
-            Assert.True(data[1][0][0].Contains("foo"));
         }
     }
 }

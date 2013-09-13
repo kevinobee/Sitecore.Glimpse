@@ -1,14 +1,14 @@
-using System.Collections.Generic;
 using Glimpse.Core.Tab.Assist;
-using Sitecore.Glimpse.Model;
+
+using Sitecore.Glimpse.Model.Analytics;
 
 namespace Sitecore.Glimpse.Analytics
 {
     public class GoalsSection
     {
-        public static TabSection Create(IDictionary<string, object> sitecoreData)
+        public static TabSection Create(RequestData requestData)
         {
-            var goals = (Goal[]) sitecoreData[DataKey.Goals];
+            var goals = (Goal[]) requestData[DataKey.Goals];
 
             if ((goals == null) || (goals.Length == 0)) return null; 
             

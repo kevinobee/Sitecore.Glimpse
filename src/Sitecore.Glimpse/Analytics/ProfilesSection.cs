@@ -1,13 +1,14 @@
 using System.Collections.Generic;
+
 using Glimpse.Core.Tab.Assist;
 
 namespace Sitecore.Glimpse.Analytics
 {
     public class ProfilesSection
     {
-        public static TabSection Create(IDictionary<string, object> sitecoreData)
+        public static TabSection Create(RequestData requestData)
         {
-            var profiles = (List<KeyValuePair<string, float>>) sitecoreData[DataKey.Profiles];
+            var profiles = (List<KeyValuePair<string, float>>) requestData[DataKey.Profiles];
 
             if ((profiles == null) || (profiles.Count == 0)) return null; 
             

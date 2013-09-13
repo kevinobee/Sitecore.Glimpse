@@ -1,14 +1,13 @@
-using System.Collections.Generic;
 using Glimpse.Core.Tab.Assist;
-using Sitecore.Glimpse.Model;
+using Sitecore.Glimpse.Model.Analytics;
 
 namespace Sitecore.Glimpse.Analytics
 {
     public class PatternsSection
     {
-        public static TabSection Create(IDictionary<string, object> sitecoreData)
+        public static TabSection Create(RequestData requestData)
         {
-            var pattern = (Pattern) sitecoreData[DataKey.Pattern];
+            var pattern = (Pattern) requestData[DataKey.Pattern];
 
             if (pattern == null) return null;
 
