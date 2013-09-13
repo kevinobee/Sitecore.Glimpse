@@ -4,10 +4,9 @@ using System.Globalization;
 using System.Linq;
 
 using Sitecore.Analytics;
-using Sitecore.Analytics.Data.DataAccess.DataSets;
 using Sitecore.Analytics.Data.Items;
 using Sitecore.Data;
-using Sitecore.Data.Items;
+
 using Sitecore.Glimpse.Model;
 
 namespace Sitecore.Glimpse.Infrastructure
@@ -16,25 +15,40 @@ namespace Sitecore.Glimpse.Infrastructure
     {
         public object GetData()
         {
+            try
+            {
+                return GetAnalyticsData();
+            }
+            catch (InvalidOperationException exception)
+            {
+                if (! exception.Message.Contains("Could not get pipeline: loadVisitor")) throw;
+            }
+            
+            return null;
+        }
+
+        private static Dictionary<string, object> GetAnalyticsData()
+        {
             if (Tracker.CurrentVisit != null)
             {
                 // Dont just consider the currentvisit load data from all visits
                 Tracker.Visitor.LoadAll();
 
-                var data = new Dictionary<string, object>();
-
-                data.Add(DataKey.IsNewVisitor, GetVisitType());
-                data.Add(DataKey.EngagementValue, GetEngagementValue());
-                data.Add(DataKey.TrafficType, GetTrafficType());
-                data.Add(DataKey.Campaign, GetCampaign());
-                data.Add(DataKey.Goals, GetGoals(5));
-                data.Add(DataKey.LastPages, GetLastPages(5));
-                data.Add(DataKey.Pattern, GetMatchingPattern());
-                data.Add(DataKey.Profiles, GetProfiles());
+                var data = new Dictionary<string, object>
+                    {
+                        {DataKey.IsNewVisitor, GetVisitType()},
+                        {DataKey.EngagementValue, GetEngagementValue()},
+                        {DataKey.TrafficType, GetTrafficType()},
+                        {DataKey.Campaign, GetCampaign()},
+                        {DataKey.Goals, GetGoals(5)},
+                        {DataKey.LastPages, GetLastPages(5)},
+                        {DataKey.Pattern, GetMatchingPattern()},
+                        {DataKey.Profiles, GetProfiles()}
+                    };
 
                 return data;
             }
-            
+
             return null;
         }
 
