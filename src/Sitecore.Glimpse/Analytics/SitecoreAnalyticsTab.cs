@@ -6,7 +6,7 @@ using Sitecore.Glimpse.Infrastructure;
 
 namespace Sitecore.Glimpse.Analytics
 {
-    public class SitecoreAnalyticsTab : TabBase
+    public class SitecoreAnalyticsTab : TabBase, IDocumentation
     {
         private readonly ISitecoreRequest _sitecoreRequest;
 
@@ -64,5 +64,7 @@ namespace Sitecore.Glimpse.Analytics
         {
             get { return "Sitecore Analytics"; }
         }
+
+        public string DocumentationUri { get { return "https://github.com/kevinobee/Sitecore.Glimpse/wiki"; } }
     }
 }

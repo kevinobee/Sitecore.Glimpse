@@ -5,7 +5,7 @@ using Sitecore.Glimpse.Infrastructure;
 
 namespace Sitecore.Glimpse
 {
-    public class SitecoreTab : TabBase
+    public class SitecoreTab : TabBase, IDocumentation
     {
         private readonly ISitecoreRequest _sitecoreRequest;
 
@@ -45,5 +45,7 @@ namespace Sitecore.Glimpse
         {
             get { return "Sitecore"; }
         }
+
+        public string DocumentationUri { get { return "https://github.com/kevinobee/Sitecore.Glimpse/wiki"; } }
     }
 }
