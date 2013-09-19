@@ -3,7 +3,7 @@
     public class CultureSection : BaseSection
     {
         public CultureSection(RequestData requestData)
-            : base(requestData, DataKey.Culture, "Culture")
+            : base(requestData, DataKey.Culture)
         {
         }
     }
@@ -11,7 +11,7 @@
     public class LanguageSection : BaseSection
     {
         public LanguageSection(RequestData requestData)
-            : base(requestData, DataKey.Language, "Language")
+            : base(requestData, DataKey.Language)
         {
         }
     }
@@ -19,7 +19,7 @@
     public class ItemVisualizationSection : BaseSection
     {
         public ItemVisualizationSection(RequestData requestData)
-            : base(requestData, DataKey.ItemVisualization, "Visualization")
+            : base(requestData, DataKey.ItemVisualization)
         {
         }
     }
@@ -27,7 +27,7 @@
     public class DiagnosticsSection : BaseSection
     {
         public DiagnosticsSection(RequestData requestData)
-            : base(requestData, DataKey.Diagnostics, "Diagnostics")
+            : base(requestData, DataKey.Diagnostics)
         {
         }
     }
@@ -35,7 +35,7 @@
     public class DeviceSection : BaseSection
     {
         public DeviceSection(RequestData requestData)
-            : base(requestData, DataKey.Device, "Device")
+            : base(requestData, DataKey.Device)
         {
         }
     }
@@ -43,7 +43,7 @@
     public class ItemTemplateSection : BaseSection
     {
         public ItemTemplateSection(RequestData requestData)
-            : base(requestData, DataKey.ItemTemplate, "Template")
+            : base(requestData, DataKey.ItemTemplate)
         {
         }
     }
@@ -51,7 +51,7 @@
     public class DomainSection : BaseSection
     {
         public DomainSection(RequestData requestData)
-            : base(requestData, DataKey.Domain, "Domain")
+            : base(requestData, DataKey.Domain)
         {
         }
     }
@@ -59,7 +59,7 @@
     public class DatabaseSection : BaseSection
     {
         public DatabaseSection(RequestData requestData)
-            : base(requestData, DataKey.Database, "Database")
+            : base(requestData, DataKey.Database)
         {
         }
     }
@@ -67,7 +67,7 @@
     public class UserSection : BaseSection
     {
         public UserSection(RequestData requestData)
-            : base(requestData, DataKey.User, "User")
+            : base(requestData, DataKey.User)
         {
         }
     }
@@ -75,15 +75,7 @@
     public class SiteSection : BaseSection
     {
         public SiteSection(RequestData requestData)
-            : base(requestData, DataKey.Site, "Site")
-        {
-        }
-    }
-
-    public class ItemSection : BaseSection
-    {
-        public ItemSection(RequestData requestData)
-            : base(requestData, DataKey.Item, "Item")
+            : base(requestData, DataKey.Site)
         {
         }
     }

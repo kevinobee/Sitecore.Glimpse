@@ -7,13 +7,15 @@ namespace Sitecore.Glimpse
     {
         protected readonly RequestData RequestData;
         private readonly DataKey _dataKey;
-        private readonly string _sectionName;
 
-        protected BaseSection(RequestData requestData, DataKey dataKey, string sectionName)
+        protected BaseSection(RequestData requestData, DataKey dataKey)
         {
             RequestData = requestData;
             _dataKey = dataKey;
-            _sectionName = sectionName;
+        }
+
+        protected BaseSection()
+        {
         }
 
         protected static void DisplayFields(KeyValuePair<string, object>[] fields, TabSection section)
@@ -26,15 +28,20 @@ namespace Sitecore.Glimpse
 
         public virtual TabSection Create()
         {
-            var fieldList = (FieldList)RequestData[_dataKey];
+            return CreateSection(RequestData, _dataKey);
+        }
+
+        protected TabSection CreateSection(RequestData requestData, DataKey dataKey)
+        {
+            var fieldList = (FieldList)requestData[dataKey];
 
             if (fieldList == null) return null;
 
-            var section = new TabSection(_sectionName + " Property", "Value");
+            var section = new TabSection("Property", "Value");
 
             DisplayFields(fieldList.Fields, section);
 
-            return section;
+            return section;            
         }
     }
 }

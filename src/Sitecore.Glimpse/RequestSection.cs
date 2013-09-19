@@ -9,7 +9,7 @@ namespace Sitecore.Glimpse
         const string QueryStringKey = "QueryString";
 
         public RequestSection(RequestData requestData)
-            : base(requestData, DataKey.Request, "Request")
+            : base(requestData, DataKey.Request)
         {
         }
 
