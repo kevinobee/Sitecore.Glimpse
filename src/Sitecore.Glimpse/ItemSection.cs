@@ -1,4 +1,5 @@
-﻿using Glimpse.Core.Tab.Assist;
+﻿using System.Linq;
+using Glimpse.Core.Tab.Assist;
 
 namespace Sitecore.Glimpse
 {
@@ -17,7 +18,16 @@ namespace Sitecore.Glimpse
             var section = new TabSection("Item", "Value");
 
             var itemSection = base.Create();
-            if (itemSection != null) section.AddRow().Column("Properties").Column(itemSection);
+            if (itemSection != null)
+            {
+//                section.AddRow()
+//                       .Column("Item")
+//                       .Column(
+//                           itemSection.Rows.Where(x => x.Columns.First().Data.ToString() == "Full Path")
+//                                      .Select(x => x.Columns.Last().Data));
+
+                section.AddRow().Column("Properties").Column(itemSection);
+            }
 
             var itemTemplate = new ItemTemplateSection(_requestData).Create();
             if (itemTemplate != null) section.AddRow().Column("Template").Column(itemTemplate);

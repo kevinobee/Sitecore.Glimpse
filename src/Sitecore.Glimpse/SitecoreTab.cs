@@ -1,5 +1,4 @@
 ﻿using System;
-
 using Glimpse.Core.Extensibility;
 using Glimpse.Core.Tab.Assist;
 
@@ -29,7 +28,11 @@ namespace Sitecore.Glimpse
 
                 if (! sitecoreData.HasData()) return null;
 
-                var plugin = Plugin.Create("Sitecore", "Value");
+                var itemSummary = new ItemSummary(sitecoreData).Create();
+
+                if (string.IsNullOrEmpty(itemSummary)) return null;
+
+                var plugin = Plugin.Create("Item", itemSummary);
 
                 var itemSection = new ItemSection(sitecoreData).Create();
                 var contextSection = new ContextSection(sitecoreData).Create();
