@@ -40,7 +40,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Constants.cs" />
     <Compile Include="DataKey.cs" />
+    <Compile Include="ILog.cs" />
     <Compile Include="ISitecoreRequest.cs" />
     <Compile Include="Model\Analytics\Goal.cs" />
     <Compile Include="Model\Analytics\PageHolder.cs" />

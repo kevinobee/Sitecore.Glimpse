@@ -73,7 +73,7 @@ namespace Sitecore.Glimpse.Analytics
             get { return "Sitecore Analytics"; }
         }
 
-        public string DocumentationUri { get { return "https://github.com/kevinobee/Sitecore.Glimpse/wiki"; } }
+        public string DocumentationUri { get { return Constants.Wiki.Url; } }
     }
 
     public class AnalyicsOverviewSection : BaseSection

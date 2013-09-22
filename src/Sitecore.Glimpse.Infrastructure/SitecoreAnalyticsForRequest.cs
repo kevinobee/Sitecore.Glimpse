@@ -11,15 +11,26 @@ namespace Sitecore.Glimpse.Infrastructure
 {
     public class SitecoreAnalyticsForRequest : ISitecoreRequest
     {
+        private readonly ILog _logger;
+
+        public SitecoreAnalyticsForRequest(ILog logger)
+        {
+            _logger = logger;
+        }
+
+        public SitecoreAnalyticsForRequest() : this(new TraceLogger())
+        {           
+        }
+
         public RequestData GetData()
         {
             try
             {
                 return GetAnalyticsData();
             }
-            catch (InvalidOperationException exception)
+            catch (Exception exception)
             {
-                if (! exception.Message.Contains("Could not get pipeline: loadVisitor")) throw;
+                _logger.Write(string.Format("Failed to load Sitecore Analytics Glimpse data - {0}", exception.Message));
             }
             
             return null;
@@ -124,7 +135,7 @@ namespace Sitecore.Glimpse.Infrastructure
                     .Where(x => Context.Database.GetItem(new ID(x.PageEventDefinitionId)).Fields["IsGoal"].Value == "1")
                     .OrderByDescending(x => x.DateTime)
                     .Take(numberOfGoals)
-                    .Select(x => new Goal() { Name = Context.Database.GetItem(new ID(x.PageEventDefinitionId)).Name, Timestamp = x.DateTime});
+                    .Select(x => new Goal { Name = Context.Database.GetItem(new ID(x.PageEventDefinitionId)).Name, Timestamp = x.DateTime});
 
                 return pageEvents.ToArray();
 
@@ -158,7 +169,7 @@ namespace Sitecore.Glimpse.Infrastructure
 
         private static string GetTrafficType()
         {
-            var trafficTypes = Context.Database.GetItem(SitecoreGlobals.Analytics.TrafficTypes);
+            var trafficTypes = Context.Database.GetItem(Constants.Sitecore.Analytics.TrafficTypes);
             var items = trafficTypes.Axes.GetDescendants()
                                          .FirstOrDefault(p => p.Fields["Value"].Value == Tracker.CurrentVisit.TrafficType.ToString(CultureInfo.InvariantCulture));
             return items.Name;

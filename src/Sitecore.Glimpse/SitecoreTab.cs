@@ -56,6 +56,6 @@ namespace Sitecore.Glimpse
             get { return "Sitecore"; }
         }
 
-        public string DocumentationUri { get { return "https://github.com/kevinobee/Sitecore.Glimpse/wiki"; } }
+        public string DocumentationUri { get { return Constants.Wiki.Url; } }
     }
 }

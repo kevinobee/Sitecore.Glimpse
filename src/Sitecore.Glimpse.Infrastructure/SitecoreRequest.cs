@@ -10,18 +10,29 @@ namespace Sitecore.Glimpse.Infrastructure
 {
     public class SitecoreRequest : ISitecoreRequest
     {
+        private readonly ILog _logger;
+
+        public SitecoreRequest(ILog logger)
+        {
+            _logger = logger;
+        }
+
+        public SitecoreRequest() : this(new TraceLogger())
+        {
+        }
+
         public RequestData GetData()
         {
             try
             {
                 return GetSitecoreData();
             }
-            catch (Exception)
+            catch (Exception exception)
             {
-                // TODO catch Sitecore specific errors and log exception details..
-
-                return null;
+                _logger.Write(string.Format("Failed to load Sitecore Glimpse data - {0}", exception.Message));
             }
+
+            return null;
         }
 
         private static RequestData GetSitecoreData()
