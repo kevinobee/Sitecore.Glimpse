@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SitecoreGlobals.cs" />
     <Compile Include="SitecoreAnalyticsForRequest.cs" />
     <Compile Include="SitecoreRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

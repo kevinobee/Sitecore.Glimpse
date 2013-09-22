@@ -1,82 +1,134 @@
-﻿namespace Sitecore.Glimpse
+﻿using Glimpse.Core.Tab.Assist;
+
+namespace Sitecore.Glimpse
 {
     public class CultureSection : BaseSection
     {
         public CultureSection(RequestData requestData)
-            : base(requestData, DataKey.Culture)
+            : base(requestData)
         {
+        }
+
+        public override TabSection Create()
+        {
+            return CreateSection(DataKey.Culture);
         }
     }
 
     public class LanguageSection : BaseSection
     {
         public LanguageSection(RequestData requestData)
-            : base(requestData, DataKey.Language)
+            : base(requestData)
         {
+        }
+
+        public override TabSection Create()
+        {
+            return CreateSection(DataKey.Language);
         }
     }
 
     public class ItemVisualizationSection : BaseSection
     {
         public ItemVisualizationSection(RequestData requestData)
-            : base(requestData, DataKey.ItemVisualization)
+            : base(requestData)
         {
+        }
+
+        public override TabSection Create()
+        {
+            return CreateSection(DataKey.ItemVisualization);
         }
     }
 
     public class DiagnosticsSection : BaseSection
     {
         public DiagnosticsSection(RequestData requestData)
-            : base(requestData, DataKey.Diagnostics)
+            : base(requestData)
         {
+        }
+
+        public override TabSection Create()
+        {
+            return CreateSection(DataKey.Diagnostics);
         }
     }
 
     public class DeviceSection : BaseSection
     {
         public DeviceSection(RequestData requestData)
-            : base(requestData, DataKey.Device)
+            : base(requestData)
         {
+        }
+
+        public override TabSection Create()
+        {
+            return CreateSection(DataKey.Device);
         }
     }
 
     public class ItemTemplateSection : BaseSection
     {
         public ItemTemplateSection(RequestData requestData)
-            : base(requestData, DataKey.ItemTemplate)
+            : base(requestData)
         {
+        }
+
+        public override TabSection Create()
+        {
+            return CreateSection(DataKey.ItemTemplate);
         }
     }
 
     public class DomainSection : BaseSection
     {
         public DomainSection(RequestData requestData)
-            : base(requestData, DataKey.Domain)
+            : base(requestData)
         {
+        }
+
+        public override TabSection Create()
+        {
+            return CreateSection(DataKey.Domain);
         }
     }
 
     public class DatabaseSection : BaseSection
     {
         public DatabaseSection(RequestData requestData)
-            : base(requestData, DataKey.Database)
+            : base(requestData)
         {
+        }
+
+        public override TabSection Create()
+        {
+            return CreateSection(DataKey.Database);
         }
     }
 
     public class UserSection : BaseSection
     {
         public UserSection(RequestData requestData)
-            : base(requestData, DataKey.User)
+            : base(requestData)
         {
+        }
+
+        public override TabSection Create()
+        {
+            return CreateSection(DataKey.User);
         }
     }
 
     public class SiteSection : BaseSection
     {
         public SiteSection(RequestData requestData)
-            : base(requestData, DataKey.Site)
+            : base(requestData)
         {
+        }
+
+        public override TabSection Create()
+        {
+            return CreateSection(DataKey.Site);
         }
     }
 }

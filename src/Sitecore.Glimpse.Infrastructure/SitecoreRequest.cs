@@ -137,7 +137,6 @@ namespace Sitecore.Glimpse.Infrastructure
             data.AddField("Display Name", layoutItem.DisplayName);
             data.AddField("File Path", layoutItem.FilePath);
             data.AddField("ID", layoutItem.ID.Guid.ToString());
-            // TODO new object[] { "Control", layoutItem.Control },
 
             return data;
         }
@@ -293,13 +292,11 @@ namespace Sitecore.Glimpse.Infrastructure
             data.AddField("Name", user.Name);
             data.AddField("DisplayName", user.DisplayName);
             data.AddField("Roles", user.Roles.Select(r => r.Name));
-            // TODO new object[] { "AccountType", u.AccountType},
             data.AddField("Description", user.Description);
             data.AddField("Domain Name", user.GetDomainName());
             data.AddField("IsAdministrator", user.IsAdministrator);
             data.AddField("IsAuthenticated", user.IsAuthenticated);
             data.AddField("LocalName", user.LocalName);
-            // TODO new object[] { "Profile", u.Profile},
 
             return data;
         }
@@ -318,7 +315,6 @@ namespace Sitecore.Glimpse.Infrastructure
             data.AddField("Proxies Enabled", database.ProxiesEnabled);
             data.AddField("Publish Virtual Items", database.PublishVirtualItems);
             data.AddField("HasContentItem", database.HasContentItem);
-            // TODO new object[] { "ArchiveNames" , db.ArchiveNames }
 
             return data;
         }

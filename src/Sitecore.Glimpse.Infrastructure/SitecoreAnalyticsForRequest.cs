@@ -4,7 +4,6 @@ using System.Globalization;
 using System.Linq;
 
 using Sitecore.Analytics;
-using Sitecore.Analytics.Data.Items;
 using Sitecore.Data;
 using Sitecore.Glimpse.Model.Analytics;
 
@@ -30,7 +29,6 @@ namespace Sitecore.Glimpse.Infrastructure
         {
             if (Tracker.CurrentVisit != null)
             {
-                // Dont just consider the currentvisit load data from all visits
                 Tracker.Visitor.LoadAll();
 
                 var data = new RequestData();
@@ -52,63 +50,67 @@ namespace Sitecore.Glimpse.Infrastructure
 
         private static List<KeyValuePair<string, float>> GetProfiles()
         {
-            if (Tracker.CurrentVisit != null)
-            {
-                var evaluatorTypeProfile = Context.Database.GetItem("95056025-5410-43DF-BB8C-67F8FEC8F45E");  // TODO const
+            // TODO reintroduce generic functionality
 
-                if (evaluatorTypeProfile != null)
-                {
-                    if (Tracker.CurrentVisit.Profiles != null)
-                    {
-                        var results = new List<KeyValuePair<string, float>>();
+            //if (Tracker.CurrentVisit != null)
+            //{
+            //    var evaluatorTypeProfile = Context.Database.GetItem("95056025-5410-43DF-BB8C-67F8FEC8F45E");  // TODO const /sitecore/system/Marketing Center/Profiles/Product Interest - OfficeCore specific
+
+            //    if (evaluatorTypeProfile != null)
+            //    {
+            //        if (Tracker.CurrentVisit.Profiles != null)
+            //        {
+            //            var results = new List<KeyValuePair<string, float>>();
                         
-                        var selected = from profile in Tracker.Visitor.DataSet.Profiles
-                                       where profile.ProfileName.Equals(evaluatorTypeProfile.Name, StringComparison.OrdinalIgnoreCase)
-                                       select profile;
+            //            var selected = from profile in Tracker.Visitor.DataSet.Profiles
+            //                           where profile.ProfileName.Equals(evaluatorTypeProfile.Name, StringComparison.OrdinalIgnoreCase)
+            //                           select profile;
 
-                        var groupedproffiles = selected.GroupBy(x => x.ProfileName);
+            //            var groupedproffiles = selected.GroupBy(x => x.ProfileName);
 
-                        foreach (var profile in groupedproffiles)
-                        {
-                            var profileItem = new ProfileItem(Context.Database.GetItem("/sitecore/system/Marketing Center/Profiles/" + profile.Key));  // TODO const
-                            foreach (var key in profileItem.Keys)
-                            {
-                                var firstOrDefault = Tracker.CurrentVisit.Profiles.FirstOrDefault(x => x.ProfileName.Equals(profile.Key));
-                                if (firstOrDefault != null)
-                                {
-                                    results.Add(new KeyValuePair<string, float>(key.KeyName, firstOrDefault.Values[key.KeyName]));
-                                }
-                            }
-                        }
+            //            foreach (var profile in groupedproffiles)
+            //            {
+            //                var profileItem = new ProfileItem(Context.Database.GetItem("/sitecore/system/Marketing Center/Profiles/" + profile.Key));  // TODO const - OfficeCore specific
+            //                foreach (var key in profileItem.Keys)
+            //                {
+            //                    var firstOrDefault = Tracker.CurrentVisit.Profiles.FirstOrDefault(x => x.ProfileName.Equals(profile.Key));
+            //                    if (firstOrDefault != null)
+            //                    {
+            //                        results.Add(new KeyValuePair<string, float>(key.KeyName, firstOrDefault.Values[key.KeyName]));
+            //                    }
+            //                }
+            //            }
 
-                        return results;
-                    }
-                }
-            }
+            //            return results;
+            //        }
+            //    }
+            //}
 
             return null;
         }
 
         private static Pattern GetMatchingPattern()
         {
-            if (Tracker.CurrentVisit != null)
-            {
-                var evaluatorTypeProfile = Context.Database.GetItem("95056025-5410-43DF-BB8C-67F8FEC8F45E");  // TODO const
-                // show the pattern match if there is one.
+            // TODO reintroduce generic functionality
 
-                var personaProfile = Tracker.CurrentVisit.Profiles.FirstOrDefault(profile => profile.ProfileName == evaluatorTypeProfile.Name);
-                if (personaProfile != null)
-                {
-                    // load the details about the matching pattern
-                    var i = Context.Database.GetItem(new ID(personaProfile.PatternId));
-                    if (i != null)
-                    {
-                        return new Pattern(i.Fields["Name"].Value, 
-                                           i.Fields["Image"].Value,
-                                           i.Fields["Description"].Value);
-                    }
-                }
-            }
+//            if (Tracker.CurrentVisit != null)
+//            {
+//                var evaluatorTypeProfile = Context.Database.GetItem("95056025-5410-43DF-BB8C-67F8FEC8F45E");  // TODO const /sitecore/system/Marketing Center/Profiles/Product Interest - OfficeCore specific
+//                // show the pattern match if there is one.
+//
+//                var personaProfile = Tracker.CurrentVisit.Profiles.FirstOrDefault(profile => profile.ProfileName == evaluatorTypeProfile.Name);
+//                if (personaProfile != null)
+//                {
+//                    // load the details about the matching pattern
+//                    var i = Context.Database.GetItem(new ID(personaProfile.PatternId));
+//                    if (i != null)
+//                    {
+//                        return new Pattern(i.Fields["Name"].Value, 
+//                                           i.Fields["Image"].Value,
+//                                           i.Fields["Description"].Value);
+//                    }
+//                }
+//            }
 
             return null;
         }
@@ -117,19 +119,14 @@ namespace Sitecore.Glimpse.Infrastructure
         {
             if (Tracker.CurrentVisit != null)
             {
-                // TODO KERN: Query the Sitecore Context rather than doing a join on the tables
+                // TODO: Query the Sitecore Context rather than doing a join on the tables
                 var pageEvents = Tracker.Visitor.DataContext.PageEvents
-                    .Where(x => Sitecore.Context.Database.GetItem(new ID(x.PageEventDefinitionId)).Fields["IsGoal"].Value == "1")
+                    .Where(x => Context.Database.GetItem(new ID(x.PageEventDefinitionId)).Fields["IsGoal"].Value == "1")
                     .OrderByDescending(x => x.DateTime)
                     .Take(numberOfGoals)
                     .Select(x => new Goal() { Name = Context.Database.GetItem(new ID(x.PageEventDefinitionId)).Name, Timestamp = x.DateTime});
 
                 return pageEvents.ToArray();
-
-//                VisitorDataSet.PageEventsRow[] pageEvents = Tracker.Visitor.DataContext.PageEvents
-//                                            .Select(pe => new Goal() { Event = pe, ScItem = Sitecore.Context.Database.GetItem(new ID(pe.PageEventDefinitionId)) })
-//                                            .Where(i => i.ScItem["IsGoal"] == "1")
-//                                            .OrderByDescending(i => i.Event.DateTime).Take(numberOfGoals);
 
             }
 
@@ -147,7 +144,7 @@ namespace Sitecore.Glimpse.Infrastructure
             return pages;
         }
 
-        private static string GetCampaign()
+        private static string GetCampaign()  // TODO how do we demo a campaign with OfficeCore
         {
             if (!Tracker.CurrentVisit.IsCampaignIdNull())
             {
@@ -156,13 +153,12 @@ namespace Sitecore.Glimpse.Infrastructure
                 return campaign.Name;
             }
 
-            return "--";
+            return null;
         }
 
         private static string GetTrafficType()
         {
-            // get the traffic types folder by id so we can iterate through its decendants
-            var trafficTypes = Context.Database.GetItem("7E265978-8C1B-419D-BC06-0B5D101F04DF");  // TODO add to constants
+            var trafficTypes = Context.Database.GetItem(SitecoreGlobals.Analytics.TrafficTypes);
             var items = trafficTypes.Axes.GetDescendants()
                                          .FirstOrDefault(p => p.Fields["Value"].Value == Tracker.CurrentVisit.TrafficType.ToString(CultureInfo.InvariantCulture));
             return items.Name;

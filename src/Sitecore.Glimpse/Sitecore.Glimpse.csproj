@@ -53,6 +53,7 @@
     <Compile Include="..\Common\CommonVersionInfo.cs">
       <Link>Properties\CommonVersionInfo.cs</Link>
     </Compile>
+    <Compile Include="Analytics\AnalticsSummary.cs" />
     <Compile Include="Analytics\GoalsSection.cs" />
     <Compile Include="Analytics\OverviewSection.cs" />
     <Compile Include="Analytics\PageViewsSection.cs" />

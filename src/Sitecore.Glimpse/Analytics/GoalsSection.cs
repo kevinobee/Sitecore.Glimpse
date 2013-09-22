@@ -4,11 +4,16 @@ using Sitecore.Glimpse.Model.Analytics;
 
 namespace Sitecore.Glimpse.Analytics
 {
-    public class GoalsSection
+    public class GoalsSection: BaseSection
     {
-        public static TabSection Create(RequestData requestData)
+        public GoalsSection(RequestData requestData)
+            : base(requestData)
         {
-            var goals = (Goal[]) requestData[DataKey.Goals];
+        }
+
+        public override TabSection Create()
+        {
+            var goals = (Goal[]) RequestData[DataKey.Goals];
 
             if ((goals == null) || (goals.Length == 0)) return null; 
             

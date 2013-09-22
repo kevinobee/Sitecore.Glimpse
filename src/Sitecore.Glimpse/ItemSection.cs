@@ -1,38 +1,28 @@
-﻿using System.Linq;
-using Glimpse.Core.Tab.Assist;
+﻿using Glimpse.Core.Tab.Assist;
 
 namespace Sitecore.Glimpse
 {
     public class ItemSection : BaseSection
     {
-        private readonly RequestData _requestData;
-
         public ItemSection(RequestData requestData)
-            : base(requestData, DataKey.Item)
+            : base(requestData)
         {
-            _requestData = requestData;
         }
 
         public override TabSection Create()
         {
             var section = new TabSection("Item", "Value");
 
-            var itemSection = base.Create();
+            var itemSection = CreateSection(DataKey.Item);
             if (itemSection != null)
             {
-//                section.AddRow()
-//                       .Column("Item")
-//                       .Column(
-//                           itemSection.Rows.Where(x => x.Columns.First().Data.ToString() == "Full Path")
-//                                      .Select(x => x.Columns.Last().Data));
-
                 section.AddRow().Column("Properties").Column(itemSection);
             }
 
-            var itemTemplate = new ItemTemplateSection(_requestData).Create();
+            var itemTemplate = new ItemTemplateSection(RequestData).Create();
             if (itemTemplate != null) section.AddRow().Column("Template").Column(itemTemplate);
 
-            var itemVisualization = new ItemVisualizationSection(_requestData).Create();
+            var itemVisualization = new ItemVisualizationSection(RequestData).Create();
             if (itemVisualization != null) section.AddRow().Column("Visualization").Column(itemVisualization);
 
             return section;

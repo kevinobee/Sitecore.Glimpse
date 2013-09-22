@@ -3,11 +3,15 @@ using Sitecore.Glimpse.Model.Analytics;
 
 namespace Sitecore.Glimpse.Analytics
 {
-    public class PageViewsSection
+    public class PageViewsSection : BaseSection
     {
-        public static TabSection Create(RequestData requestData)
+        public PageViewsSection(RequestData requestData) : base(requestData)
         {
-            var lastPages = (PageHolder[]) requestData[DataKey.LastPages];
+        }
+
+        public override TabSection Create()
+        {
+            var lastPages = (PageHolder[]) RequestData[DataKey.LastPages];
 
             if ((lastPages == null) || (lastPages.Length == 0)) return null;
 
