@@ -14,14 +14,21 @@ namespace Sitecore.Glimpse
 
         public string Create()
         {
-            var fieldList = (FieldList)_sitecoreData[DataKey.Item];
+            var fieldList = GetKeyValue(DataKey.Item);
 
             if (fieldList == null) return null;
 
-            var fullPath = fieldList.Fields.FirstOrDefault(x => x.Key.ToString(CultureInfo.InvariantCulture) == "Full Path");
-            var templateName = fieldList.Fields.FirstOrDefault(x => x.Key.ToString(CultureInfo.InvariantCulture) == "Template Name");
+            var fullPath = fieldList.GetField("Full Path");
+            var templateName = fieldList.GetField("Template Name");
 
-            return string.Format("{0} [ {1} ]", fullPath.Value, templateName.Value);
+            if (fullPath == null || templateName == null) return null;
+
+            return string.Format("{0} [ {1} ]", fullPath, templateName);
+        }
+
+        private FieldList GetKeyValue(DataKey key)  // TODO refactor
+        {
+            return (FieldList)_sitecoreData.GetKeyValue(key);
         }
     }
 }

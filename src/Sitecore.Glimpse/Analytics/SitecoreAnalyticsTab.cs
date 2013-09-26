@@ -26,7 +26,7 @@ namespace Sitecore.Glimpse.Analytics
             {
                 var sitecoreData = _sitecoreRequest.GetData();
 
-                if (sitecoreData == null) return null;
+                if (!sitecoreData.HasData()) return null;
 
                 var analticsSummary = new AnalticsSummary(sitecoreData).Create();
 

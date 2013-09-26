@@ -11,7 +11,7 @@ namespace Sitecore.Glimpse
         {
             get
             {
-                return _requestData[dataKey];
+                return GetKeyValue(dataKey);
             }
             set
             {
@@ -31,6 +31,11 @@ namespace Sitecore.Glimpse
             if (_requestData.All(x => x.Value == null)) return false;
 
             return true;
+        }
+
+        public object GetKeyValue(DataKey key)
+        {
+            return _requestData.ContainsKey(key) ? _requestData[key] : null;
         }
     }
 }

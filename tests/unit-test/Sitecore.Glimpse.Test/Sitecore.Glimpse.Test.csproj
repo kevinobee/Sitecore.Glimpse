@@ -54,7 +54,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FakeSitecoreRequest.cs" />
-    <Compile Include="SitecoreGlimpseShould.cs" />
+    <Compile Include="Analytics\SitecoreAnalyticsTabShould.cs" />
+    <Compile Include="SitecoreGlimpseTabShould.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
