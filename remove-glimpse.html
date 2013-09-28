@@ -1,0 +1,114 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Sitecore.Glimpse - GitHub Page</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+</head>
+<body>
+<div id="header">
+    <nav>
+        <li class="fork"><a href="https://github.com/kevinobee/Sitecore.Glimpse">View On GitHub</a></li>
+        <li class="downloads"><a href="https://github.com/kevinobee/Sitecore.Glimpse/zipball/master">ZIP</a></li>
+        <li class="downloads"><a href="https://github.com/kevinobee/Sitecore.Glimpse/tarball/master">TAR</a></li>
+        <li class="title">DOWNLOADS</li>
+    </nav>
+</div>
+<!-- end header -->
+
+<div class="wrapper">
+
+    <section>
+        <div id="title">
+            <h1><a href="/">Sitecore.Glimpse</a></h1>
+
+            <p>Web diagnostics for Sitecore.</p>
+            <hr>
+            <span class="credits left">Project maintained by <a href="https://github.com/kevinobee">kevinobee</a></span>
+            <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a
+                    href="https://twitter.com/michigangraham">mattgraham</a></span>
+        </div>
+
+        <h1>
+            <a name="removing-sitecoreglimpse" class="anchor" href="#removing-sitecoreglimpse"><span class="octicon octicon-link"></span></a>Removing Sitecore.Glimpse
+        </h1>
+
+        <p>There are a few approaches that can be applied to <a href="#block-access-via-a-security-policy">secure</a>, <a href="#disabling-glimpse-without-removal">disable</a> or <a href="#uninstalling-sitecoreglimpse">remove</a> Glimpse. The following sections will discuss each of these options in turn.</p>
+
+        <hr/>
+
+        <h2>
+            <a name="block-access-via-a-security-policy" class="anchor" href="#block-access-via-a-security-policy"><span class="octicon octicon-link"></span></a>Block access via a Security Policy</h2>
+
+        <p>Policies dictate what Glimpse is allowed to do to any given request. Policies can be disabled and customised to fit your requirements.</p>
+        <p>Refer to the Glimpse <a href="http://getglimpse.com/Help/Configuration">Policy Management</a> documentation for more information.</p>
+
+        <hr/>
+
+        <h2>
+            <a name="disabling-glimpse-without-removal" class="anchor" href="#disabling-glimpse-without-removal"><span class="octicon octicon-link"></span></a>Disabling Glimpse without removal</h2>
+
+        <p>If you wish to leave Glimpse installed in your web application code but want to ensure that it cannot respond to any HTTP requests then you can comment out or remove the two references to the <code>Glimpse.AspNet.HttpModule</code> in the web.config.</p>
+        <pre>
+&lt;system.webServer&gt;
+    &lt;modules&gt;
+        &lt;add name="Glimpse" type="Glimpse.AspNet.HttpModule, Glimpse.AspNet" preCondition="integratedMode"/&gt;
+        ...
+    &lt;modules&gt;
+    ...
+&lt;system.webServer&gt;
+...
+&lt;system.web&gt;
+    ...
+    &lt;httpModules&gt;
+        &lt;add name="Glimpse" type="Glimpse.AspNet.HttpModule, Glimpse.AspNet"/&gt;
+        ...
+    &lt;/httpModules&gt;
+    ...
+&lt;/system.web&gt;
+</pre>
+
+        <hr/>
+
+        <h2>
+            <a name="uninstalling-sitecoreglimpse" class="anchor" href="#uninstalling-sitecoreglimpse"><span class="octicon octicon-link"></span></a>Uninstalling Sitecore.Glimpse</h2>
+
+        <p>To remove just the Sitecore extension to Glimpse run the following command in the Package Manager Console:</p>
+
+<pre>
+    uninstall-package sitecore.glimpse
+</pre>
+
+        <p>To then completely remove glimpse from your web application run the following commands:</p>
+
+<pre>
+    uninstall-package glimpse.aspnet
+    uninstall-package glimpse
+</pre>
+
+        <p><strong>Note:</strong> when uninstalling <code>glimpse.aspnet</code> the following line will need to be added back into the <code>&lt;system.webServer&gt;</code> section.</p>
+
+<pre>
+    &lt;validation validateIntegratedModeConfiguration="false" /&gt;
+</pre>
+
+        <a href="#removing-sitecoreglimpse">Back to top...</a>
+</section>
+
+<!--[if !IE]>
+<script>fixScale(document);</script><![endif]-->
+
+</body>
+</html>
