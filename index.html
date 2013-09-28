@@ -1,0 +1,133 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Sitecore.glimpse by kevinobee</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  </head>
+  <body>
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="https://github.com/kevinobee/Sitecore.Glimpse">View On GitHub</a></li>
+          <li class="downloads"><a href="https://github.com/kevinobee/Sitecore.Glimpse/zipball/master">ZIP</a></li>
+          <li class="downloads"><a href="https://github.com/kevinobee/Sitecore.Glimpse/tarball/master">TAR</a></li>
+          <li class="title">DOWNLOADS</li>
+        </nav>
+      </div><!-- end header -->
+
+    <div class="wrapper">
+
+      <section>
+        <div id="title">
+          <h1>Sitecore.glimpse</h1>
+          <p>A Glimpse extension that provides runtime web diagnostics for Sitecore sites.</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/kevinobee">kevinobee</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
+        </div>
+
+        <h1>
+<a name="sitecoreglimpse" class="anchor" href="#sitecoreglimpse"><span class="octicon octicon-link"></span></a>Sitecore.Glimpse</h1>
+
+<p>Sitecore.Glimpse is an Glimpse extension that provides runtime web diagnostics for Sitecore sites.</p>
+
+<p>This project includes the following NuGet packages:</p>
+
+<ul>
+<li>Sitecore.Glimpse</li>
+<li>Sitecore.Glimpse.Mvc3 (extension for those wanting to use Sitecore's MVC capability)</li>
+<li>Sitecore.Glimpse.Mvc4 (supports the ASP.NET MVC4 release)</li>
+</ul><h2>
+<a name="instructions-for-use" class="anchor" href="#instructions-for-use"><span class="octicon octicon-link"></span></a>Instructions for Use</h2>
+
+<p>Either pull the package(s) from the NuGet gallery or clone the GitHub repos to get the latest code.</p>
+
+<h3>
+<a name="building-the-package" class="anchor" href="#building-the-package"><span class="octicon octicon-link"></span></a>Building the Package</h3>
+
+<p>Follow these simple steps:</p>
+
+<ul>
+<li><p>Clone this repository to your local file system</p></li>
+<li><p>You will need to specify the location of your Sitecore assemblies. This can be down in the <code>build\build.proj</code> file. Set the LibsSrcPath to where your Sitecore assemblies are located.</p></li>
+<li><p>From a command prompt type <code>.\build</code> and press Enter</p></li>
+</ul><h3>
+<a name="installing-the-package" class="anchor" href="#installing-the-package"><span class="octicon octicon-link"></span></a>Installing the Package</h3>
+
+<p>Ensure that the website project is set to run with .NET Framework 4.0</p>
+
+<p>Run the following powershell command in the package manager console of the Visual Studio solution for the target website:</p>
+
+<pre><code>install-package Sitecore.Glimpse -Source &lt;path&gt;
+</code></pre>
+
+<p>Where <code>&lt;path&gt;</code> is the path to the  <code>artifacts\Packages\</code> folder that was produced by the build command.</p>
+
+<p>Installing the package will do the following:</p>
+
+<ul>
+<li>Add a module into the ASP.NET pipeline</li>
+<li>Add a handler endpoint that by default be addressable via /Glimpse.axd</li>
+<li>A configuration section at the end of your web.config where the behaviour of the extension can be customised</li>
+</ul><h3>
+<a name="uninstalling-the-package" class="anchor" href="#uninstalling-the-package"><span class="octicon octicon-link"></span></a>Uninstalling the Package</h3>
+
+<p>Run the following commands:</p>
+
+<pre><code>uninstall-package Sitecore.Glimpse
+</code></pre>
+
+<h2>
+<a name="contributing-to-the-project" class="anchor" href="#contributing-to-the-project"><span class="octicon octicon-link"></span></a>Contributing to the Project</h2>
+
+<p>If you are interested in contributing to the growth and development of Sitecore.Glimpse in even a small way, please read the notes below.</p>
+
+<p>The project can be built and tested from the command line by entering:</p>
+
+<pre><code>.\build
+</code></pre>
+
+<p>Please ensure that there are no compilation or test failures and no code analysis warnings are being reported.</p>
+
+<h3>
+<a name="running-the-smoke-tests" class="anchor" href="#running-the-smoke-tests"><span class="octicon octicon-link"></span></a>Running the Smoke Tests</h3>
+
+<p>The <code>build.proj</code> file contains a set of smoke tests to verify that the Sitecore.Glimpse features all run successfully when the package has been installed in a Sitecore website.</p>
+
+<p>In order to run these smoke tests you will need to:</p>
+
+<ul>
+<li><p>Have a local install of Sitecore.</p></li>
+<li><p>Set the <em>TestWebsitePath</em> and <em>TestWebsiteUrl</em> in the <strong>build\environment.props</strong> to reference the local Sitecore website.</p></li>
+<li>
+<p>Ensure that the test website has the Sitecore.Glimpse package installed by running the following in the Package Manager Console:</p>
+
+<p>install-package Sitecore.Glimpse -Source <code>&lt;path to folder containing your sitecore.glimpse nupkg file&gt;</code></p>
+</li>
+</ul><p>You can then run the smoke tests by entering:</p>
+
+<pre><code>.\build RunSmokeTests
+</code></pre>
+
+<p>Curl commands will fire off HTTP requests to the test website to verify that the site is still responding as intended. These commands should execute successfully before you send a pull request back to the main project.</p>
+
+<p>Your participation in the project is very much welcomed.</p>
+      </section>
+
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>
