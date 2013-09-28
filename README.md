@@ -8,6 +8,11 @@ This project includes the following NuGet packages:
 * Sitecore.Glimpse.Mvc3 (extension for those wanting to use Sitecore's MVC capability)
 * Sitecore.Glimpse.Mvc4 (supports the ASP.NET MVC4 release)
 
+## View the GitHub Pages
+
+Take a look at the [Sitecore.Glimpse](http://kevinobee.github.io/Sitecore.Glimpse/) GitHub pages for all of the documentation on the extension and information on how to participate in the project.
+
+
 ## Instructions for Use
 
 Either pull the package(s) from the NuGet gallery or clone the GitHub repos to get the latest code.
@@ -37,44 +42,3 @@ Installing the package will do the following:
 * Add a module into the ASP.NET pipeline
 * Add a handler endpoint that by default be addressable via /Glimpse.axd
 * A configuration section at the end of your web.config where the behaviour of the extension can be customised
-
-
-### Uninstalling the Package
-
-Run the following commands:
-
-    uninstall-package Sitecore.Glimpse
-
-
-
-## Contributing to the Project
-
-If you are interested in contributing to the growth and development of Sitecore.Glimpse in even a small way, please read the notes below.
-
-The project can be built and tested from the command line by entering:
-
-    .\build
-
-Please ensure that there are no compilation or test failures and no code analysis warnings are being reported.
-
-### Running the Smoke Tests
-
-The `build.proj` file contains a set of smoke tests to verify that the Sitecore.Glimpse features all run successfully when the package has been installed in a Sitecore website.
-
-In order to run these smoke tests you will need to:
-
-* Have a local install of Sitecore.
-
-* Set the *TestWebsitePath* and *TestWebsiteUrl* in the **build\environment.props** to reference the local Sitecore website.
-
-* Ensure that the test website has the Sitecore.Glimpse package installed by running the following in the Package Manager Console:
-
-    install-package Sitecore.Glimpse -Source `<path to folder containing your sitecore.glimpse nupkg file>`
-
-You can then run the smoke tests by entering:
-
-    .\build RunSmokeTests
-
-Curl commands will fire off HTTP requests to the test website to verify that the site is still responding as intended. These commands should execute successfully before you send a pull request back to the main project.
-
-Your participation in the project is very much welcomed.
