@@ -25,9 +25,7 @@ obj/
 _ReSharper*/
 TestResults
 
-*/.idea/*.iws
-*/.idea/workspace.xml
-*/.idea/tasks.xml
+.idea/*
 
 #Project specific ignores
 build/environment.props
