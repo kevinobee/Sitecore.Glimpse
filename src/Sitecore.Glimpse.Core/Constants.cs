@@ -12,7 +12,7 @@
 
         public class Wiki
         {
-            public const string Url = "https://github.com/kevinobee/Sitecore.Glimpse/wiki";
+            public const string Url = "http://kevinobee.github.io/Sitecore.Glimpse/";
         }
     }
 }

@@ -36,7 +36,7 @@ namespace Sitecore.Glimpse.Test
         [Fact]
         public void Return_Wiki_Url_For_IDocumentation()
         {
-            Assert.Equal("https://github.com/kevinobee/Sitecore.Glimpse/wiki", _sut.DocumentationUri);
+            Assert.Equal("http://kevinobee.github.io/Sitecore.Glimpse/", _sut.DocumentationUri);
         }
 
         [Fact]
