@@ -1,0 +1,105 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Sitecore.Glimpse - Getting Started</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+</head>
+<body>
+
+<div id="header">
+    <nav>
+        <li class="fork"><a href="https://github.com/kevinobee/Sitecore.Glimpse">View On GitHub</a></li>
+        <li class="downloads"><a href="https://github.com/kevinobee/Sitecore.Glimpse/zipball/master">ZIP</a></li>
+        <li class="downloads"><a href="https://github.com/kevinobee/Sitecore.Glimpse/tarball/master">TAR</a></li>
+        <li class="title">DOWNLOADS</li>
+    </nav>
+</div>
+<!-- end header -->
+
+<div class="wrapper">
+    <section>
+        <div id="title">
+            <h1><a href="/Sitecore.Glimpse/">Sitecore.Glimpse</a></h1>
+
+            <p>Web diagnostics for Sitecore</p>
+            <hr>
+            <span class="credits left">Project maintained by <a href="https://github.com/kevinobee">kevinobee</a></span>
+            <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a
+                    href="https://twitter.com/michigangraham">mattgraham</a></span>
+        </div>
+
+        <h1>
+            <a name="getting-started" class="anchor" href="#getting-started"><span
+                    class="octicon octicon-link"></span></a>Getting Started
+        </h1>
+
+        <p>This page will explain how to get started with Sitecore.Glimpse.</p>
+
+        <p>You can either pull the latest packages from the NuGet gallery straight into your Visual Studio project
+            or if you wish to work with your own copy of the Sitecore.Glimpse code then clone the <a href="https://github.com/kevinobee/Sitecore.Glimpse">GitHub repository</a> to get the latest code.</p>
+
+        <h3>
+            <a name="building-the-package" class="anchor" href="#building-the-package"><span
+                    class="octicon octicon-link"></span></a>Building the Package</h3>
+
+        <p>Follow these simple steps:</p>
+
+        <ul>
+            <li><p>Clone this repository to your local file system</p></li>
+            <li><p>You will need to specify the location of your Sitecore assemblies. This can be down in the <code>build\build.proj</code>
+                file. Set the LibsSrcPath to where your Sitecore assemblies are located.</p></li>
+            <li><p>From a command prompt type <code>.\build</code> and press Enter</p></li>
+        </ul>
+        <h3>
+            <a name="installing-the-package" class="anchor" href="#installing-the-package"><span
+                    class="octicon octicon-link"></span></a>Installing the Package</h3>
+
+        <p>Ensure that the website project is set to run with .NET Framework 4.0</p>
+
+        <p>Run the following powershell command in the package manager console of the Visual Studio solution for the
+            target website:</p>
+
+<pre><code>install-package Sitecore.Glimpse -Source &lt;path&gt;
+</code></pre>
+
+        <p>Where <code>&lt;path&gt;</code> is the path to the <code>artifacts\Packages\</code> folder that was produced
+            by the build command.</p>
+
+        <p>Installing the package will do the following:</p>
+
+        <ul>
+            <li>Add a module into the ASP.NET pipeline</li>
+            <li>Add a handler endpoint that by default be addressable via /Glimpse.axd</li>
+            <li>A configuration section at the end of your web.config where the behaviour of the extension can be
+                customised
+            </li>
+        </ul>
+
+</section>
+
+    <footer>
+        <nav>
+            <a href="/Sitecore.Glimpse/" title="Back to the Home page"><b>HOME</b></a> | <a href="#" title="To the top of this page"><b>BACK TO TOP</b></a>
+        </nav>
+    </footer>
+
+</div>
+<!--[if !IE]>
+<script>fixScale(document);</script><![endif]-->
+
+</body>
+</html>
