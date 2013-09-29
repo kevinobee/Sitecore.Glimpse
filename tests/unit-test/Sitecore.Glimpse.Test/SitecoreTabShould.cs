@@ -4,12 +4,12 @@ using Xunit;
 
 namespace Sitecore.Glimpse.Test
 {
-    public class SitecoreGlimpseTabShould
+    public class SitecoreTabShould
     {
         private readonly SitecoreTab _sut;
         private readonly Mock<ISitecoreRequest> _requestDataProvider;
 
-        public SitecoreGlimpseTabShould()
+        public SitecoreTabShould()
         {
             _requestDataProvider = new Mock<ISitecoreRequest>();
             _sut = new SitecoreTab(_requestDataProvider.Object);
