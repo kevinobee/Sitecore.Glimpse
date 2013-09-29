@@ -34,3 +34,6 @@ lib/*.pdb
 # Build ignores
 /msbuild.log
 /artifacts
+
+# WebStorm ignores
+.idea/*
