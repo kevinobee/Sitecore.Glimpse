@@ -54,6 +54,8 @@
     <Compile Include="Model\Analytics\PageHolder.cs" />
     <Compile Include="Model\Analytics\Pattern.cs" />
     <Compile Include="FieldList.cs" />
+    <Compile Include="Model\Analytics\PatternCard.cs" />
+    <Compile Include="Model\Analytics\Profile.cs" />
     <Compile Include="RequestData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

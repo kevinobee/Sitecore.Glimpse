@@ -4,7 +4,7 @@ using Sitecore.Glimpse.Model.Analytics;
 
 namespace Sitecore.Glimpse.Analytics
 {
-    public class GoalsSection: BaseSection
+    public class GoalsSection : BaseSection
     {
         public GoalsSection(RequestData requestData)
             : base(requestData)

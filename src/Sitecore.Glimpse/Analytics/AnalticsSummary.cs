@@ -1,4 +1,8 @@
-﻿namespace Sitecore.Glimpse.Analytics
+﻿using System.Linq;
+using System.Text;
+using Sitecore.Glimpse.Model.Analytics;
+
+namespace Sitecore.Glimpse.Analytics
 {
     public class AnalticsSummary
     {
@@ -11,17 +15,28 @@
 
         public string Create()
         {
-//            var fieldList = (FieldList)_sitecoreData[DataKey.Item];
-//
-//            if (fieldList == null) return null;
-//
-//            var fullPath = fieldList.Fields.FirstOrDefault(x => x.Key.ToString(CultureInfo.InvariantCulture) == "Full Path");
-//            var templateName = fieldList.Fields.FirstOrDefault(x => x.Key.ToString(CultureInfo.InvariantCulture) == "Template Name");
+            return "Insight" + GetProfileInsight();
+        }
 
-            return "Insight";
+        private string GetProfileInsight()
+        {
+            var profiles = (Profile[]) _sitecoreData[DataKey.Profiles];
 
-//            return string.Format("{0} [ {1} ]", fullPath.Value, templateName.Value);
+            if ((profiles == null) || (!profiles.Any(x => x.IsMatch))) return null;
 
+            var matchingProfiles = profiles.Where(x => x.IsMatch).Select(x => new {x.Name, x.Dimension});
+
+            var builder = new StringBuilder();
+            foreach (var matchingProfile in matchingProfiles)
+            {
+                if (builder.Length == 0)
+                {
+                    builder.Append(" - ");
+                }
+                builder.AppendFormat("[{0} - {1}] ", matchingProfile.Dimension, matchingProfile.Name);
+            }
+
+            return builder.ToString();
         }
     }
 }

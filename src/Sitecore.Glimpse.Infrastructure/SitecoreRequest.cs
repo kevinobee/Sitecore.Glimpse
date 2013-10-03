@@ -187,9 +187,6 @@ namespace Sitecore.Glimpse.Infrastructure
             data.AddField("Icon", device.Icon);
             data.AddField("Is Default", device.IsDefault);
             data.AddField("Is Valid", device.IsValid);
-            // new object[] { "Capabilities.Browser", di.Capabilities.Browser},
-            // new object[] { "Properties", di.Capabilities.Properties.AllKeys}
-            // new object[] { "ArchiveNames" , db.ArchiveNames }
 
             return data;
         }

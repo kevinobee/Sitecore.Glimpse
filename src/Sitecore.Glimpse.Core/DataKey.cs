@@ -4,7 +4,6 @@
     {
         Item,
         Goals,
-        Pattern,
         Profiles,
         LastPages,
         Campaign,

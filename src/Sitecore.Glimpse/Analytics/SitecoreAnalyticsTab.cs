@@ -36,27 +36,18 @@ namespace Sitecore.Glimpse.Analytics
                 var plugin = Plugin.Create("Visitor", analticsSummary);
                 plugin.AddRow().Column("Overview").Column(analyicsOverviewSection).Selected();
 
+                var profilesSection = new ProfilesSection(sitecoreData).Create();
                 var goalsSection = new GoalsSection(sitecoreData).Create();
                 var pageViewsSection = new PageViewsSection(sitecoreData).Create();
 
+                if (profilesSection != null)
+                    plugin.Section("Profiles", profilesSection);
+                
                 if (goalsSection != null)
                     plugin.AddRow().Column("Goals").Column(goalsSection).Info();
 
                 if (pageViewsSection != null)
                     plugin.AddRow().Column("Page Views").Column(pageViewsSection).Quiet();
-
-
-                // TODO reinstate the profile and pattern sections to run with generic DMS implementations rather than Officecore specific IDs
-
-//                var patternsSection = PatternsSection.Create(sitecoreData);
-//                var profilesSection = ProfilesSection.Create(sitecoreData);
-//
-//
-//                if (patternsSection != null) 
-//                    plugin.Section("Pattern", patternsSection);
-//
-//                if (profilesSection != null) 
-//                    plugin.Section("Profiles", profilesSection);
 
                 return plugin;
             }

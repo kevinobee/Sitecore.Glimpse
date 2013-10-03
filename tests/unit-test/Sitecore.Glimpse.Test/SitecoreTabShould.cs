@@ -76,8 +76,8 @@ namespace Sitecore.Glimpse.Test
             dynamic data = _sut.GetData(null);
 
             string summaryRow = data.Rows[0].Columns[1].Data;
-            Assert.Contains("[Full Path, /sitecore/content/foo]", summaryRow);
-            Assert.Contains("[Template Name, Bar]", summaryRow);
+            Assert.Contains("/sitecore/content/foo", summaryRow);
+            Assert.Contains("Bar", summaryRow);
         }
     }
 }

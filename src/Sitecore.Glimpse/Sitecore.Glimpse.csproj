@@ -57,7 +57,6 @@
     <Compile Include="Analytics\AnalyicsOverviewSection.cs" />
     <Compile Include="Analytics\GoalsSection.cs" />
     <Compile Include="Analytics\PageViewsSection.cs" />
-    <Compile Include="Analytics\PatternsSection.cs" />
     <Compile Include="Analytics\ProfilesSection.cs" />
     <Compile Include="Analytics\SitecoreAnalyticsTab.cs" />
     <Compile Include="BaseSection.cs" />

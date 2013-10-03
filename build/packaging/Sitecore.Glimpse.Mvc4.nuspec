@@ -5,7 +5,7 @@
     <version>0.0.0</version>
     <authors>Kevin Obee</authors>
     <owners>kevinobee</owners>
-    <projectUrl>https://github.com/kevinobee/Sitecore.Glimpse</projectUrl>
+    <projectUrl>http://kevinobee.github.io/Sitecore.Glimpse/</projectUrl>
     <iconUrl>https://secure.gravatar.com/avatar/dd3d0f6dd07cbf52325c74c293866410</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Sitecore Glimpse MVC4</description>

@@ -1,22 +1,52 @@
-using System.Collections.Generic;
+using System.Linq;
 
 using Glimpse.Core.Tab.Assist;
+using Sitecore.Glimpse.Model.Analytics;
 
 namespace Sitecore.Glimpse.Analytics
 {
-    public class ProfilesSection
+    public class ProfilesSection : BaseSection
     {
-        public static TabSection Create(RequestData requestData)
+        public ProfilesSection(RequestData requestData)
+            : base(requestData)
+        {            
+        }
+
+        public override TabSection Create()
         {
-            var profiles = (List<KeyValuePair<string, float>>) requestData[DataKey.Profiles];
+            var profiles = (Profile[]) RequestData[DataKey.Profiles];
 
-            if ((profiles == null) || (profiles.Count == 0)) return null; 
-            
-            var section = new TabSection("Key", "Value");
+            if ((profiles == null) || (!profiles.Any(x => x.IsMatch))) return null;
+         
+            var section = new TabSection();
 
-            foreach (var profile in profiles)
+            var maxProfiles = profiles.GroupBy(x => x.Dimension).Select(group => group.Count()).Max();
+
+            var firstRow = section.AddRow().Column("Dimension");
+            for (var i = 0; i < maxProfiles; i++)
             {
-                section.AddRow().Column(profile.Key).Column(profile.Value);
+                firstRow.Column("");
+            }
+
+            foreach (var profileDimension in profiles.Select(x => x.Dimension).Distinct())
+            {
+                var row = section.AddRow().Column(profileDimension);
+                var dimension = profileDimension;
+                var pc = profiles.Where(x => x.Dimension == dimension).ToArray();
+                
+                for (var i = 0; i < maxProfiles; i++)
+                {
+                    if (i < pc.Count())
+                    {
+                        var profile = pc[i];
+                        row.Column(profile.Name)
+                            .UnderlineIf(profile.IsMatch);
+                    }
+                    else
+                    {
+                        row.Column("");
+                    }
+                }
             }
 
             return section;

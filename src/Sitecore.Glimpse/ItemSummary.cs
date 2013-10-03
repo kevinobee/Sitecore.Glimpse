@@ -1,7 +1,4 @@
-﻿using System.Globalization;
-using System.Linq;
-
-namespace Sitecore.Glimpse
+﻿namespace Sitecore.Glimpse
 {
     public class ItemSummary
     {

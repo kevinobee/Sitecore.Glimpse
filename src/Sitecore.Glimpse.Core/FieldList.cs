@@ -24,7 +24,7 @@ namespace Sitecore.Glimpse
         {
             if (_fields.Exists(x => x.Key.ToString(CultureInfo.InvariantCulture) == key))
             {
-                return _fields.First(x => x.Key.ToString(CultureInfo.InvariantCulture) == key);
+                return _fields.First(x => x.Key.ToString(CultureInfo.InvariantCulture) == key).Value;
             }
             
             return null;
