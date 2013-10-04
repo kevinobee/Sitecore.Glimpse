@@ -5,14 +5,14 @@
     <modules runAllManagedModulesForAllRequests="true">
       <add name="Glimpse" xdt:Transform="Remove" xdt:Locator="Match(name)" />
       <add name="Glimpse" type="Glimpse.AspNet.HttpModule, Glimpse.AspNet" preCondition="integratedMode"
-           xdt:Transform="InsertBefore(/configuration/system.webServer/modules/add[@name='SitecoreRewriteModule'])"/>
+           xdt:Transform="InsertBefore(/configuration/system.webServer/modules/add[@name='SitecoreHttpModule'])"/>
     </modules>
   </system.webServer>
   <system.web>
     <httpModules>
       <add name="Glimpse" xdt:Transform="Remove" xdt:Locator="Match(name)" />
       <add name="Glimpse" type="Glimpse.AspNet.HttpModule, Glimpse.AspNet" 
-           xdt:Transform="InsertBefore(/configuration/system.web/httpModules/add[@name='SitecoreRewriteModule'])"/>
+           xdt:Transform="InsertBefore(/configuration/system.web/httpModules/add[@name='SitecoreHttpModule'])"/>
     </httpModules>
   </system.web>
 </configuration>
