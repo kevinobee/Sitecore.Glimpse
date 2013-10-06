@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-
+using Sitecore.Data.Fields;
 using Sitecore.Data.Items;
 using Sitecore.Layouts;
 
@@ -17,7 +17,8 @@ namespace Sitecore.Glimpse.Infrastructure
             _logger = logger;
         }
 
-        public SitecoreRequest() : this(new TraceLogger())
+        public SitecoreRequest()
+            : this(new TraceLogger())
         {
         }
 
@@ -420,17 +421,25 @@ namespace Sitecore.Glimpse.Infrastructure
             foreach (var group in groupedFields)
             {
                 var results = new List<object[]>
-                {
-                    new object[] { "Field Title", "Field Type", "Value", "Contains Standard Value", "Unversioned", "Shared" }
-                };
+                    {
+                        !FeaturesSupported.Clones
+
+                            ? new object[]
+                                {
+                                    "Field Title", "Field Type", "Value", "Contains Standard Value", "Unversioned",
+                                    "Shared"
+                                }
+                            : new object[]
+                                {
+                                    "Field Title", "Field Type", "Value", "Contains Standard Value", "Inherits Value",
+                                    "Unversioned", "Shared"
+                                }
+                    };
 
                 results.AddRange(
                     group.OrderBy(f => f.Sortorder)
-                        .Select(f =>
-                            new object[] { !string.IsNullOrEmpty(f.Title) ? f.Title : f.DisplayName, f.Type, f.Value, f.ContainsStandardValue, f.Unversioned, f.Shared }));
+                    .Select(f => FeaturesSupported.Clones ? ParseFieldInfoWithCloneData(f) : ParseFieldInfo(f)));
 
-                // TODO f.InheritsValueFromOtherItem not in 6.2
-                 
                 result.Add(new object[] 
                 {
                     string.Format("{0}", group.Key.Section), results
@@ -438,6 +447,16 @@ namespace Sitecore.Glimpse.Infrastructure
             }
 
             return result;
+        }
+
+        private static object[] ParseFieldInfo(Field f)
+        {
+            return new object[] { !string.IsNullOrEmpty(f.Title) ? f.Title : f.DisplayName, f.Type, f.Value, f.ContainsStandardValue, f.Unversioned, f.Shared };
+        }
+
+        private static object[] ParseFieldInfoWithCloneData(Field f)
+        {
+            return new object[] { !string.IsNullOrEmpty(f.Title) ? f.Title : f.DisplayName, f.Type, f.Value, f.ContainsStandardValue, f.InheritsValueFromOtherItem, f.Unversioned, f.Shared };
         }
 
         private static FieldList GetExtendedProperties(Item item)
@@ -470,10 +489,8 @@ namespace Sitecore.Glimpse.Infrastructure
             data.AddField("Sort order", item.Appearance.Sortorder);
             data.AddField("Style", item.Appearance.Style);
 
-            // TODO not supported in 6.2
-//            data.AddField("Is Clone", item.IsClone);
-//            data.AddField("Is Item Clone", item.IsItemClone);
-//            data.AddField("Source Uri", item.SourceUri);
+            if (FeaturesSupported.Clones) AddCloneFields(item, data);
+
             data.AddField("Created", item.Statistics.Created);
             data.AddField("Created By", item.Statistics.CreatedBy);
             data.AddField("Updated", item.Statistics.Updated);
@@ -481,6 +498,13 @@ namespace Sitecore.Glimpse.Infrastructure
             data.AddField("Revision", item.Statistics.Revision);
 
             return data;
+        }
+
+        private static void AddCloneFields(Item item, FieldList data)
+        {
+            data.AddField("Is Clone", item.IsClone);
+            data.AddField("Is Item Clone", item.IsItemClone);
+            data.AddField("Source Uri", item.SourceUri);
         }
     }
 }

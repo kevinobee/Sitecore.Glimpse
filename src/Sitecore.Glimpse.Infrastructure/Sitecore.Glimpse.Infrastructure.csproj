@@ -53,6 +53,7 @@
       <Link>Properties\CommonVersionInfo.cs</Link>
     </Compile>
     <Compile Include="CachingSitecoreRepository.cs" />
+    <Compile Include="FeaturesSupported.cs" />
     <Compile Include="ISitecoreRepository.cs" />
     <Compile Include="SitecoreAnalyticsForRequest.cs" />
     <Compile Include="SitecoreRepository.cs" />
