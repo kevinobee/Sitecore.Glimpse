@@ -38,4 +38,8 @@ namespace Sitecore.Glimpse
             return _requestData.ContainsKey(key) ? _requestData[key] : null;
         }
     }
+
+    public class RequestDataNotLoaded : RequestData
+    {
+    }
 }

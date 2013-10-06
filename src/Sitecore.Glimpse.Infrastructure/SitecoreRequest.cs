@@ -32,7 +32,7 @@ namespace Sitecore.Glimpse.Infrastructure
                 _logger.Write(string.Format("Failed to load Sitecore Glimpse data - {0}", exception.Message));
             }
 
-            return null;
+            return new RequestDataNotLoaded();
         }
 
         private static RequestData GetSitecoreData()
@@ -413,25 +413,27 @@ namespace Sitecore.Glimpse.Infrastructure
             item.Fields.ReadAll();
 
             var groupedFields = item.Fields
-                .GroupBy(f => new { f.SectionSortorder, f.SectionDisplayName })
+                .GroupBy(f => new { f.SectionSortorder, f.Section })
                 .OrderBy(g => g.Key.SectionSortorder)
-                .ThenBy(g => g.Key.SectionDisplayName);
+                .ThenBy(g => g.Key.Section);
 
             foreach (var group in groupedFields)
             {
                 var results = new List<object[]>
                 {
-                    new object[] { "Field Title", "Field Type", "Value", "Contains Standard Value", "Inherits Value", "Unversioned", "Shared" }
+                    new object[] { "Field Title", "Field Type", "Value", "Contains Standard Value", "Unversioned", "Shared" }
                 };
 
                 results.AddRange(
                     group.OrderBy(f => f.Sortorder)
                         .Select(f =>
-                            new object[] { !string.IsNullOrEmpty(f.Title) ? f.Title : f.DisplayName, f.Type, f.Value, f.ContainsStandardValue, f.InheritsValueFromOtherItem, f.Unversioned, f.Shared }));
+                            new object[] { !string.IsNullOrEmpty(f.Title) ? f.Title : f.DisplayName, f.Type, f.Value, f.ContainsStandardValue, f.Unversioned, f.Shared }));
 
+                // TODO f.InheritsValueFromOtherItem not in 6.2
+                 
                 result.Add(new object[] 
                 {
-                    string.Format("{0}", group.Key.SectionDisplayName), results
+                    string.Format("{0}", group.Key.Section), results
                 });
             }
 
@@ -467,9 +469,11 @@ namespace Sitecore.Glimpse.Infrastructure
             data.AddField("Read Only", item.Appearance.ReadOnly);
             data.AddField("Sort order", item.Appearance.Sortorder);
             data.AddField("Style", item.Appearance.Style);
-            data.AddField("Is Clone", item.IsClone);
-            data.AddField("Is Item Clone", item.IsItemClone);
-            data.AddField("Source Uri", item.SourceUri);
+
+            // TODO not supported in 6.2
+//            data.AddField("Is Clone", item.IsClone);
+//            data.AddField("Is Item Clone", item.IsItemClone);
+//            data.AddField("Source Uri", item.SourceUri);
             data.AddField("Created", item.Statistics.Created);
             data.AddField("Created By", item.Statistics.CreatedBy);
             data.AddField("Updated", item.Statistics.Updated);

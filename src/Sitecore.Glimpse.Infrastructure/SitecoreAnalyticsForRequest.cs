@@ -34,8 +34,8 @@ namespace Sitecore.Glimpse.Infrastructure
             {
                 _logger.Write(string.Format("Failed to load Sitecore Analytics Glimpse data - {0}", exception.Message));
             }
-            
-            return null;
+
+            return new RequestDataNotLoaded();
         }
 
         private RequestData GetAnalyticsData()

@@ -26,7 +26,7 @@ namespace Sitecore.Glimpse
             {
                 var sitecoreData = _sitecoreRequest.GetData();
 
-                if (! sitecoreData.HasData()) return null;
+                if (!sitecoreData.HasData()) return null;
 
                 var itemSummary = new ItemSummary(sitecoreData).Create();
 
