@@ -125,7 +125,7 @@ namespace Sitecore.Glimpse.Infrastructure
             return pages;
         }
 
-        private string GetCampaign()  // TODO how do we demo a campaign with OfficeCore
+        private string GetCampaign()
         {
             if (!Tracker.CurrentVisit.IsCampaignIdNull())
             {

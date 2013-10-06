@@ -33,12 +33,29 @@
   <Target Name="Build" DependsOnTargets="Init">
     <MSBuild Projects="$(ProjectRoot)\$(ProjectName).sln"
              Targets="Clean;ReBuild"
-             Properties="Configuration=$(Configuration);OutDir=$(BuildResultsPath)\" />
+             Properties="Configuration=$(Configuration)" />
+
+    <ItemGroup>
+      <Net35Libs 
+        Include="$(ProjectRoot)\src\*.Net35\bin\$(Configuration)\*.dll; $(ProjectRoot)\src\*.Net35\bin\$(Configuration)\*.pdb" />
+      
+      <Net40Libs 
+        Include="$(ProjectRoot)\src\*\bin\$(Configuration)\*.dll; $(ProjectRoot)\src\*\bin\$(Configuration)\*.pdb;" 
+        Exclude="$(ProjectRoot)\src\*.Net35\**\*.dlll; $(ProjectRoot)\src\*.Net35\**\*.pdb;"/>
+    </ItemGroup>
+    
+    <Copy
+      SourceFiles="@(Net35Libs)"
+      DestinationFolder="$(BuildResultsPath)\lib\net35\" />
+
+    <Copy
+      SourceFiles="@(Net40Libs)"
+      DestinationFolder="$(BuildResultsPath)\lib\net40\" />
   </Target>
 
   <Target Name="RunCodeAnalysis" DependsOnTargets="Init" Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v11.0\CodeAnalysis\fxcoptask.dll')">
     <ItemGroup>
-      <AnalysisProjects Include="$(ProjectRoot)\src\**\*.csproj" />
+      <AnalysisProjects Include="$(ProjectRoot)\src\**\*.csproj" Exclude="$(ProjectRoot)\src\*.Net35\*.csproj" />
     </ItemGroup>
 
     <MSBuild Projects="%(AnalysisProjects.Identity)"
@@ -74,7 +91,7 @@
 
   <Target Name="RunUnitTests" DependsOnTargets="Build">
     <ItemGroup>
-      <TestAssemblies Include="$(BuildResultsPath)\*.Test.dll" Exclude="$(BuildResultsPath)\*.Intg.Test.dll" />
+      <TestAssemblies Include="$(ProjectRoot)\tests\unit-test\**\bin\$(Configuration)\*.Test.dll"/>
     </ItemGroup>
 
     <xunit

@@ -23,7 +23,7 @@
             return string.Format("{0} [ {1} ]", fullPath, templateName);
         }
 
-        private FieldList GetKeyValue(DataKey key)  // TODO refactor
+        private FieldList GetKeyValue(DataKey key)
         {
             return (FieldList)_sitecoreData.GetKeyValue(key);
         }

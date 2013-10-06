@@ -23,7 +23,8 @@ namespace Sitecore.Glimpse.Infrastructure
 
         public bool IsGoal(Guid pageEventDefinitionId)
         {
-            return _wrappedRepository.IsGoal(pageEventDefinitionId);  // TODO is pass-thru the right thing to do here?
+            // TODO add caching to this call rather than pass thru
+            return _wrappedRepository.IsGoal(pageEventDefinitionId);
         }
 
         public Item GetItem(string itemId)

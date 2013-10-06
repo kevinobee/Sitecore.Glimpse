@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Sitecore.Glimpse.Infrastructure</RootNamespace>
-    <AssemblyName>Sitecore.Glimpse.Infrastructure.Net35</AssemblyName>
+    <AssemblyName>Sitecore.Glimpse.Infrastructure</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />

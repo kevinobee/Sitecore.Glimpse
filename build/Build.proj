@@ -29,8 +29,8 @@
     </PropertyGroup>
     <ItemGroup>
       <ProjectSrcAssemblies 
-          Include="$(BuildResultsPath)\Sitecore*.dll; " 
-          Exclude="@(LibFiles -> '$(BuildResultsPath)\%(Identity)'); $(BuildResultsPath)\*.Test.dll;" />
+          Include="$(BuildResultsPath)\lib\net40\Sitecore*.dll; " 
+          Exclude="@(LibFiles -> '$(BuildResultsPath)\lib\net40\%(Identity)')" />
     </ItemGroup>
 
     <Copy

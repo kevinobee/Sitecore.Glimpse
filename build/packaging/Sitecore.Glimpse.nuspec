@@ -9,7 +9,7 @@
     <iconUrl>https://secure.gravatar.com/avatar/dd3d0f6dd07cbf52325c74c293866410</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Sitecore Glimpse</description>
-    <releaseNotes>Analytics tab added for DMS support and updated Glimpse dependencies</releaseNotes>
+    <releaseNotes>Support for Sitecore versions back to 6.2 and NET 3.5 added</releaseNotes>
     <tags>Sitecore Glimpse Debugger</tags>
     <language>en-GB</language>
     <dependencies>
@@ -18,16 +18,22 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="..\..\artifacts\Build\Sitecore.Glimpse.dll" target="lib\net40" />
-    <file src="..\..\artifacts\Build\Sitecore.Glimpse.pdb" target="lib\net40" />
-    <file src="..\..\artifacts\Build\Sitecore.Glimpse.Core.dll" target="lib\net40" />
-    <file src="..\..\artifacts\Build\Sitecore.Glimpse.Core.pdb" target="lib\net40" />
-    <file src="..\..\artifacts\Build\Sitecore.Glimpse.Infrastructure.dll" target="lib\net40" />
-    <file src="..\..\artifacts\Build\Sitecore.Glimpse.Infrastructure.pdb" target="lib\net40" />
+    <!-- NET 3.5 -->
+    <file src="..\..\artifacts\Build\lib\net35\Sitecore.Glimpse.dll" target="lib\net35" />
+    <file src="..\..\artifacts\Build\lib\net35\Sitecore.Glimpse.pdb" target="lib\net35" />
+    <file src="..\..\artifacts\Build\lib\net35\Sitecore.Glimpse.Core.dll" target="lib\net35" />
+    <file src="..\..\artifacts\Build\lib\net35\Sitecore.Glimpse.Core.pdb" target="lib\net35" />
+    <file src="..\..\artifacts\Build\lib\net35\Sitecore.Glimpse.Infrastructure.dll" target="lib\net35" />
+    <file src="..\..\artifacts\Build\lib\net35\Sitecore.Glimpse.Infrastructure.pdb" target="lib\net35" />
 
-    <file src="..\..\artifacts\Build\*.Net35.pdb" target="lib\net35" />
-    <file src="..\..\artifacts\Build\*.Net35.dll" target="lib\net35" />
-    
+    <!-- NET 4.0 -->
+    <file src="..\..\artifacts\Build\lib\net40\Sitecore.Glimpse.dll" target="lib\net40" />
+    <file src="..\..\artifacts\Build\lib\net40\Sitecore.Glimpse.pdb" target="lib\net40" />
+    <file src="..\..\artifacts\Build\lib\net40\Sitecore.Glimpse.Core.dll" target="lib\net40" />
+    <file src="..\..\artifacts\Build\lib\net40\Sitecore.Glimpse.Core.pdb" target="lib\net40" />
+    <file src="..\..\artifacts\Build\lib\net40\Sitecore.Glimpse.Infrastructure.dll" target="lib\net40" />
+    <file src="..\..\artifacts\Build\lib\net40\Sitecore.Glimpse.Infrastructure.pdb" target="lib\net40" />
+       
     <file src="..\..\src\Sitecore.Glimpse\content\**\*" target="content" />
   </files>
 </package>

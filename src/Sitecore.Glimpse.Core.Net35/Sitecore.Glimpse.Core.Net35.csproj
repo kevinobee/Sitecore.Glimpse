@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Sitecore.Glimpse.Core</RootNamespace>
-    <AssemblyName>Sitecore.Glimpse.Core.Net35</AssemblyName>
+    <AssemblyName>Sitecore.Glimpse.Core</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
