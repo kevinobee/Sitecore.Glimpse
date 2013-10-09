@@ -244,8 +244,7 @@ namespace Sitecore.Glimpse.Test.Analytics
             dynamic data = _sut.GetData(null);
 
             string summaryRow = data.Rows[0].Columns[1].Data;
-            Assert.Contains("[Income - High] ", summaryRow);
-            Assert.Contains("[Product Interest - Bar] ", summaryRow);
+            Assert.Equal("Product Interest: Bar, Income: High", summaryRow);
         }
     }
 }
