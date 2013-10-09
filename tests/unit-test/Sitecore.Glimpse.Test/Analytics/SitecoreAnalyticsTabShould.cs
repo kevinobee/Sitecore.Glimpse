@@ -189,7 +189,7 @@ namespace Sitecore.Glimpse.Test.Analytics
             requestData.Add(DataKey.Profiles, new[]
                 {
                     new Profile { Name = "Foo", Dimension = "Product Interest", IsMatch = false },
-                    new Profile { Name = "Bar", Dimension = "Product Interest", IsMatch = false },
+                    new Profile { Name = "Bar", Dimension = "Product Interest", IsMatch = false }
                 });
 
             _requestDataProvider.Setup(x => x.GetData()).Returns(requestData);
@@ -211,7 +211,7 @@ namespace Sitecore.Glimpse.Test.Analytics
             requestData.Add(DataKey.Profiles, new[]
                 {
                     new Profile { Name = "Foo", Dimension = "Product Interest", IsMatch = false },
-                    new Profile { Name = "Bar", Dimension = "Product Interest", IsMatch = true },
+                    new Profile { Name = "Bar", Dimension = "Product Interest", IsMatch = true }
                 });
 
             _requestDataProvider.Setup(x => x.GetData()).Returns(requestData);
@@ -220,6 +220,33 @@ namespace Sitecore.Glimpse.Test.Analytics
 
             var sectionFound = data.Rows.Any(x => x.Columns.First().Data.ToString().Contains("Profiles"));
             Assert.True(sectionFound);
+        }
+
+        [Fact]
+        public void Display_multiple_dimensions_for_profiles_section()
+        {
+            var requestData = new RequestData();
+            requestData.Add(DataKey.IsNewVisitor, true);
+            requestData.Add(DataKey.EngagementValue, 0);
+            requestData.Add(DataKey.TrafficType, "Returning");
+
+            requestData.Add(DataKey.Profiles, new[]
+                {
+                    new Profile { Name = "Foo", Dimension = "Product Interest", IsMatch = false },
+                    new Profile { Name = "Bar", Dimension = "Product Interest", IsMatch = true },
+                    new Profile { Name = "Low", Dimension = "Income", IsMatch = false },
+                    new Profile { Name = "Medium", Dimension = "Income", IsMatch = false },
+                    new Profile { Name = "High", Dimension = "Income", IsMatch = true }
+                });
+
+            _requestDataProvider.Setup(x => x.GetData()).Returns(requestData);
+
+            var data = (TabSection) _sut.GetData(null);
+
+            var profileData =  (TabSection) data.Rows.ElementAt(2).Columns.ElementAt(1).Data;
+            var incomeTitleCell = profileData.Rows.ElementAt(2).Columns.ElementAt(0).Data;
+
+            Assert.Equal("Income", incomeTitleCell);
         }
 
         [Fact]
@@ -236,7 +263,7 @@ namespace Sitecore.Glimpse.Test.Analytics
                     new Profile { Name = "Bar", Dimension = "Product Interest", IsMatch = true },
                     new Profile { Name = "Low", Dimension = "Income", IsMatch = false },
                     new Profile { Name = "Medium", Dimension = "Income", IsMatch = false },
-                    new Profile { Name = "High", Dimension = "Income", IsMatch = true },
+                    new Profile { Name = "High", Dimension = "Income", IsMatch = true }
                 });
 
             _requestDataProvider.Setup(x => x.GetData()).Returns(requestData);
