@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following 
@@ -10,3 +11,5 @@ using System.Runtime.InteropServices;
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 [assembly: Guid("9f857888-3a3e-4cc0-8a84-350ec4a4f832")]
+
+[assembly: InternalsVisibleTo("Sitecore.Glimpse.Infrastructure.Test")]

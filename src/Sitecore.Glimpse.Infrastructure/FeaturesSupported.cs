@@ -3,16 +3,28 @@ using Sitecore.Data.Items;
 
 namespace Sitecore.Glimpse.Infrastructure
 {
-    static class FeaturesSupported
+    internal static class FeaturesSupported
     {
-        private static FileVersionInfo _version;
+        private static ProductVersion _version;
 
-        private static FileVersionInfo Version
+        public static ProductVersion Version
         {
             get
             {
-                return _version ?? (_version = FileVersionInfo.GetVersionInfo(typeof (Item).Assembly.Location));
+                return _version ?? (_version = GetVersionInfo());
             }
+
+            set { _version = value; }
+        }
+
+        private static ProductVersion GetVersionInfo()
+        {
+            var fileVersion = FileVersionInfo.GetVersionInfo(typeof (Item).Assembly.Location);
+            return new ProductVersion
+                {
+                    MajorPart = fileVersion.ProductMajorPart,
+                    MinorPart = fileVersion.ProductMinorPart
+                };
         }
 
         /// <summary>
@@ -20,7 +32,18 @@ namespace Sitecore.Glimpse.Infrastructure
         /// </summary>
         public static bool Clones
         {
-            get { return ((Version.ProductMajorPart >= 6) && (Version.ProductMinorPart >= 3)); }
+            get
+            {
+                if (Version.MajorPart >= 7) return true;
+
+                return ((Version.MajorPart >= 6) && (Version.MinorPart >= 3));
+            }
         }
+    }
+
+    class ProductVersion
+    {
+        public int MajorPart { get; set; }
+        public int MinorPart { get; set; }
     }
 }
