@@ -24,9 +24,6 @@
   </ItemGroup>
 
   <Target Name="RunSmokeTests" DependsOnTargets="Build">
-    <PropertyGroup>
-      <TestPackagePath>$(ProjectRoot)\tests\acceptance-test\package.update</TestPackagePath>
-    </PropertyGroup>
     <ItemGroup>
       <ProjectSrcAssemblies 
           Include="$(BuildResultsPath)\lib\net40\Sitecore*.dll; " 
@@ -37,13 +34,9 @@
           SourceFiles="@(ProjectSrcAssemblies)"
           DestinationFolder="$(TestWebsitePath)\bin"
         />
-
-    <!-- Site root page -->
-    <Exec Command="$(CurlExePath) $(TestWebsiteUrl)" />
-
-    <!-- Glimpse config page -->
-    <Exec Command="$(CurlExePath) $(TestWebsiteUrl)/Glimpse.axd" />
-
+    
+    <Exec Command="$(ProjectRoot)\tests\smoke-test\Sitecore.Glimpse.Smoke.Test\bin\$(Configuration)\Sitecore.Glimpse.Smoke.Test -u $(TestWebsiteUrl)" />
+    
   </Target>
  
 </Project>
