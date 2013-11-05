@@ -16,7 +16,7 @@ namespace Sitecore.Glimpse.Analytics
         {
             var profiles = (Profile[]) RequestData[DataKey.Profiles];
 
-            if ((profiles == null) || (!profiles.Any(x => x.IsMatch))) return null;
+            if (profiles == null) return null;
          
             var section = new TabSection();
 
@@ -39,8 +39,11 @@ namespace Sitecore.Glimpse.Analytics
                     if (i < pc.Count())
                     {
                         var profile = pc[i];
-                        row.Column(profile.Name)
-                            .UnderlineIf(profile.IsMatch);
+
+                        var color = profile.IsMatch ? ColorFormat.Highlight : ColorFormat.Lowlight;
+
+                        row.Column(ColorFormat.Colorize(color, profile.Name))
+                           .Raw();  
                     }
                     else
                     {

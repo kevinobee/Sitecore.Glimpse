@@ -57,6 +57,7 @@
     </Compile>
     <Compile Include="Analytics\AnalticsSummary.cs" />
     <Compile Include="Analytics\AnalyicsOverviewSection.cs" />
+    <Compile Include="ColorFormat.cs" />
     <Compile Include="Analytics\GoalsSection.cs" />
     <Compile Include="Analytics\PageViewsSection.cs" />
     <Compile Include="Analytics\ProfilesSection.cs" />

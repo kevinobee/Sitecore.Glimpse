@@ -197,7 +197,7 @@ namespace Sitecore.Glimpse.Test.Analytics
             var data = (TabSection)_sut.GetData(null);
 
             var sectionFound = data.Rows.Any(x => x.Columns.First().Data.ToString().Contains("Profiles"));
-            Assert.False(sectionFound);
+            Assert.True(sectionFound);
         }
 
         [Fact]
