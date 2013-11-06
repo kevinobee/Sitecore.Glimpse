@@ -13,8 +13,8 @@
     <tags>Sitecore Glimpse Debugger</tags>
     <language>en-GB</language>
     <dependencies>
-      <dependency id="Sitecore.Glimpse" version="0.3.1" />
-      <dependency id="Glimpse.Mvc3" version="1.3.3" />
+      <dependency id="Sitecore.Glimpse" version="0.3.2" />
+      <dependency id="Glimpse.Mvc3" version="1.4.0" />
     </dependencies>
   </metadata>
   <files>

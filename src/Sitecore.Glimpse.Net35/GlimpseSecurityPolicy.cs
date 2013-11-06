@@ -4,7 +4,7 @@
 using Glimpse.AspNet.Extensions;
 using Glimpse.Core.Extensibility;
 
-namespace Sitecore.Glimpse.Net35
+namespace Sitecore.Glimpse
 {
     public class GlimpseSecurityPolicy:IRuntimePolicy
     {
