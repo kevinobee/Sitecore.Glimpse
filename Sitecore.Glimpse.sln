@@ -36,6 +36,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "packaging", "packaging", "{
 		build\packaging\Sitecore.Glimpse.Mvc3.nuspec = build\packaging\Sitecore.Glimpse.Mvc3.nuspec
 		build\packaging\Sitecore.Glimpse.Mvc4.nuspec = build\packaging\Sitecore.Glimpse.Mvc4.nuspec
 		build\packaging\Sitecore.Glimpse.nuspec = build\packaging\Sitecore.Glimpse.nuspec
+		build\packaging\Sitecore.Glimpse.WebForms.nuspec = build\packaging\Sitecore.Glimpse.WebForms.nuspec
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{D11D4F10-B2C8-4E1C-BF78-B192D303D20D}"

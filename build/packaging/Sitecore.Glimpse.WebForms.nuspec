@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Sitecore.Glimpse.WebForms</id>
+    <version>0.0.0</version>
+    <authors>Kevin Obee</authors>
+    <owners>kevinobee</owners>
+    <projectUrl>http://kevinobee.github.io/Sitecore.Glimpse/</projectUrl>
+    <iconUrl>https://secure.gravatar.com/avatar/dd3d0f6dd07cbf52325c74c293866410</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Sitecore Glimpse WebForms</description>
+    <releaseNotes>Extend support for Sitecore WebForms users</releaseNotes>
+    <tags>Sitecore Glimpse Debugger</tags>
+    <language>en-GB</language>
+    <dependencies>
+      <dependency id="Sitecore.Glimpse" version="0.3.2" />
+      <dependency id="Glimpse.WebForms" version="1.0.1" />
+    </dependencies>
+  </metadata>
+  <files>
+  </files>
+</package>
