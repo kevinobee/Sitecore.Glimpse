@@ -9,11 +9,11 @@
     <iconUrl>https://secure.gravatar.com/avatar/dd3d0f6dd07cbf52325c74c293866410</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Sitecore Glimpse MVC4</description>
-    <releaseNotes>MVC4 support added</releaseNotes>
+    <releaseNotes>Glimpse dependencies updated</releaseNotes>
     <tags>Sitecore Glimpse Debugger</tags>
     <language>en-GB</language>
     <dependencies>
-      <dependency id="Sitecore.Glimpse" version="0.3.2" />
+      <dependency id="Sitecore.Glimpse" version="0.4.0" />
       <dependency id="Glimpse.Mvc4" version="1.4.0" />
     </dependencies>
   </metadata>
