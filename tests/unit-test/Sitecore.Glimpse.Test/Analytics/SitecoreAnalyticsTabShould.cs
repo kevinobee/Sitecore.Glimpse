@@ -170,6 +170,9 @@ namespace Sitecore.Glimpse.Test.Analytics
             requestData.Add(DataKey.EngagementValue, 0);
             requestData.Add(DataKey.TrafficType, "Returning");
 
+            var noProfileData = new Profile[] {};
+            requestData.Add(DataKey.Profiles, noProfileData);
+
             _requestDataProvider.Setup(x => x.GetData()).Returns(requestData);
 
             var data = (TabSection)_sut.GetData(null);

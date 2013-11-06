@@ -44,13 +44,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="FeaturesSupportedShould.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\src\Sitecore.Glimpse.Core\Sitecore.Glimpse.Core.csproj">
+      <Project>{7a573b93-5410-4b9c-832e-3b034e49383e}</Project>
+      <Name>Sitecore.Glimpse.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\src\Sitecore.Glimpse.Infrastructure\Sitecore.Glimpse.Infrastructure.csproj">
       <Project>{13d0192c-3e97-44ff-af0f-914f0d254a0d}</Project>
       <Name>Sitecore.Glimpse.Infrastructure</Name>

@@ -16,7 +16,7 @@ namespace Sitecore.Glimpse.Analytics
         {
             var profiles = (Profile[]) RequestData[DataKey.Profiles];
 
-            if (profiles == null) return null;
+            if ((profiles == null) || (profiles.Length == 0)) return null;
          
             var section = new TabSection();
 
