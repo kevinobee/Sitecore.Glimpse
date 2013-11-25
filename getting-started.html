@@ -56,6 +56,8 @@
 
         <p>This project contains the source, corresponding unit tests and build environment for the following NuGet packages:</p>
 
+        <hr/>
+
         <h3>ASP.NET Web Forms</h3>
 
         <p>
@@ -67,6 +69,8 @@
 
         <p><strong>Note:</strong>The Sitecore.Glimpse package has been superseded by Sitecore.Glimpse.WebForms and will be retired in the future.</p>
 
+        <hr/>
+
         <h3>ASP.NET MVC 3</h3>
 
         <p>
@@ -75,6 +79,8 @@
         </p>
 
         <pre><code>install-package Sitecore.Glimpse.Mvc3</code></pre>
+
+        <hr/>
 
         <h3>ASP.NET MVC 4</h3>
 
@@ -85,59 +91,7 @@
 
         <pre><code>install-package Sitecore.Glimpse.Mvc4</code></pre>
 
-        <hr />
-
-        <h2>Working with the Source Code</h2>
-
-        <p>To start working with the Sitecore.Glimpse source code you will need a local copy of the project.</p>
-
-        <h3>
-            <a name="building-the-package" class="anchor" href="#building-the-package"><span
-                    class="octicon octicon-link"></span></a>Building the Package</h3>
-
-        <p>Follow these simple steps:</p>
-
-        <ul>
-            <li><p>Clone this repository to your local file system</p>
-                <pre><code>git clone https://github.com/kevinobee/Sitecore.Glimpse.git</code></pre></li>
-
-            <li><p>You will need to specify the location of your Sitecore assemblies. Edit the <code>build\environment.props</code>
-                file and set the LibsSrcPath to where your Sitecore assemblies are located.</p></li>
-
-            <li><p>From a command prompt type <code>.\build</code> and press Enter. A successful build will have compiled the code,
-                run the unit tests for the project and created the Sitecore.Glimpse NuGet packages in the <code>artifacts\Packages</code> directory.</p></li>
-        </ul>
-
-        <h3>
-            <a name="installing-the-package" class="anchor" href="#installing-the-package"><span
-                    class="octicon octicon-link"></span></a>Installing the Package</h3>
-
-        <p>Ensure that the website project is set to run with .NET Framework 4.0 or 4.5</p>
-
-        <p>Run the following powershell command in the package manager console of the Visual Studio solution for the
-            target website:</p>
-
-<pre><code>install-package Sitecore.Glimpse -Source &lt;path&gt;
-</code></pre>
-
-        <p>Where <code>&lt;path&gt;</code> is the path to the <code>artifacts\Packages\</code> folder that was produced
-            by the build command.</p>
-
-        <p>Installing the package will do the following:</p>
-
-        <ul>
-            <li>Add a module into the ASP.NET pipeline</li>
-            <li>Add a handler endpoint that by default be addressable via /Glimpse.axd</li>
-            <li>A configuration section at the end of your web.config where the behaviour of the extension can be
-                customised
-            </li>
-        </ul>
-
-        <h3>Testing Sitecore.Glimpse</h3>
-
-        <p>Open your website in a browser and navigate to <code>http://&lt;yoursite&gt;/Glimpse.axd</code>
-            and click Turn Glimpse On. When you go to <code>http://&lt;yoursite&gt;/</code> the Glimpse panel
-            should appear in the lower right corner of the browser window.</p>
+        <hr/>
 </section>
 
     <footer>
