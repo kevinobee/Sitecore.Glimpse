@@ -35,6 +35,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "packaging", "packaging", "{
 	ProjectSection(SolutionItems) = preProject
 		build\packaging\Sitecore.Glimpse.Mvc3.nuspec = build\packaging\Sitecore.Glimpse.Mvc3.nuspec
 		build\packaging\Sitecore.Glimpse.Mvc4.nuspec = build\packaging\Sitecore.Glimpse.Mvc4.nuspec
+		build\packaging\Sitecore.Glimpse.Mvc5.nuspec = build\packaging\Sitecore.Glimpse.Mvc5.nuspec
 		build\packaging\Sitecore.Glimpse.nuspec = build\packaging\Sitecore.Glimpse.nuspec
 		build\packaging\Sitecore.Glimpse.WebForms.nuspec = build\packaging\Sitecore.Glimpse.WebForms.nuspec
 	EndProjectSection
