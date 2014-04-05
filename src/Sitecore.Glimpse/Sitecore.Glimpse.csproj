@@ -77,7 +77,9 @@
     <None Include="content\web.config.transform">
       <SubType>Designer</SubType>
     </None>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Sitecore.Glimpse.Core\Sitecore.Glimpse.Core.csproj">

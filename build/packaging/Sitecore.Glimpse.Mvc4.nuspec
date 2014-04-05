@@ -14,7 +14,7 @@
     <language>en-GB</language>
     <dependencies>
       <dependency id="Sitecore.Glimpse" version="0.4.0" />
-      <dependency id="Glimpse.Mvc4" version="1.4.0" />
+      <dependency id="Glimpse.Mvc4" version="1.5.3" />
     </dependencies>
   </metadata>
 </package>
