@@ -20,6 +20,10 @@
         Diagnostics,
         ItemVisualization,
         Language,
-        Culture
+        Culture,
+        Services,
+        License,
+        UserList,
+        VersionInfo
     }
 }

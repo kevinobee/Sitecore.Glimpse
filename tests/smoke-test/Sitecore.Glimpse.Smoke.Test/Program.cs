@@ -1,5 +1,4 @@
-﻿using System;
-using CommandLine;
+﻿using CommandLine;
 
 namespace Sitecore.Glimpse.Smoke.Test
 {

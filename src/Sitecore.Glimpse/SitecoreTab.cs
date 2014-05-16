@@ -36,12 +36,16 @@ namespace Sitecore.Glimpse
 
                 var itemSection = new ItemSection(sitecoreData).Create();
                 var contextSection = new ContextSection(sitecoreData).Create();
+                var serverSection = new ServerSection(sitecoreData).Create();
 
                 if (itemSection != null)
                     plugin.AddRow().Column("Item").Column(itemSection).Selected();
 
                 if (contextSection != null)
                     plugin.AddRow().Column("Context").Column(contextSection).Quiet();
+
+                if (serverSection != null)
+                    plugin.AddRow().Column("Server").Column(serverSection).Quiet();
 
                 return plugin;
             }

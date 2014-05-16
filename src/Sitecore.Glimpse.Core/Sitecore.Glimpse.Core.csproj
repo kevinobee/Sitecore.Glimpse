@@ -56,6 +56,8 @@
     <Compile Include="FieldList.cs" />
     <Compile Include="Model\Analytics\PatternCard.cs" />
     <Compile Include="Model\Analytics\Profile.cs" />
+    <Compile Include="Model\LoggedInUser.cs" />
+    <Compile Include="SystemTime.cs" />
     <Compile Include="RequestData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

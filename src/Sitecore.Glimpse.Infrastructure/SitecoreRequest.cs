@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using Sitecore.Data.Fields;
 using Sitecore.Data.Items;
+using Sitecore.Glimpse.Model;
 using Sitecore.Layouts;
 
 namespace Sitecore.Glimpse.Infrastructure
@@ -52,6 +53,33 @@ namespace Sitecore.Glimpse.Infrastructure
             data.Add(DataKey.ItemVisualization, GetItemVisualization());
             data.Add(DataKey.ItemTemplate, GetItemTemplate());
             data.Add(DataKey.Item, GetItem());
+            data.Add(DataKey.VersionInfo, GetVersionInfo());
+            data.Add(DataKey.License, GetLicense());
+            data.Add(DataKey.UserList, GetUserList());
+
+            return data;
+        }
+
+        private static string GetVersionInfo()
+        {
+            return Configuration.About.VersionInformation();
+        }
+
+        private static LoggedInUser[] GetUserList()
+        {
+            return new CurrentUsers().GetUsers();
+        }
+
+        private static FieldList GetLicense()
+        {
+            var data = new FieldList();
+
+            var license = new LicenseReader().GetInfo();
+            data.AddField(Texts.LicenseID, license.Id);
+            data.AddField(Texts.LicenseHolder, license.Licensee);
+            data.AddField("Country", license.Country);
+            data.AddField("Version", license.Version);
+            data.AddField("Expires", license.Expiration.ToShortDateString());
 
             return data;
         }
@@ -245,7 +273,6 @@ namespace Sitecore.Glimpse.Infrastructure
 
             return groupedResults;
         }
-
 
         private static FieldList GetRequest()
         {
