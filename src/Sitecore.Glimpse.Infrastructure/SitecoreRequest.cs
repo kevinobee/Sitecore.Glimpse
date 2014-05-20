@@ -143,14 +143,13 @@ namespace Sitecore.Glimpse.Infrastructure
         {
             var renderingResults = new List<object[]>
             {
-                new object[] { "Placeholder", "Display Name", "Unique ID", "Rendering ID", "Cacheable", "Conditions", "DataSource", "Parameters", "MultiVariateTest" }
+                new object[] { "Placeholder", "Display Name", "Rendering ID", "Cacheable", "Conditions", "DataSource", "Parameters", "MultiVariateTest" }
             };
 
             renderingResults.AddRange(renderings.Select(rendering => new object[]
                 {
                     rendering.Settings.Placeholder, 
                     GetDisplayName(rendering),
-                    rendering.UniqueId, 
                     rendering.RenderingID.Guid, 
                     rendering.Settings.Caching.Cacheable, 
                     rendering.Settings.Conditions, 
