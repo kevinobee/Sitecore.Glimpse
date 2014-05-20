@@ -54,6 +54,19 @@ namespace Sitecore.Glimpse
         }
     }
 
+    public class PageModeSection : BaseSection
+    {
+        public PageModeSection(RequestData requestData)
+            : base(requestData)
+        {
+        }
+
+        public override TabSection Create()
+        {
+            return CreateSection(DataKey.PageMode);
+        }
+    }
+
     public class DeviceSection : BaseSection
     {
         public DeviceSection(RequestData requestData)

@@ -24,6 +24,7 @@
         Services,
         License,
         UserList,
-        VersionInfo
+        VersionInfo,
+        PageMode
     }
 }

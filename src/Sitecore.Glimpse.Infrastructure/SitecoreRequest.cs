@@ -43,6 +43,7 @@ namespace Sitecore.Glimpse.Infrastructure
 
             data.Add(DataKey.Request, GetRequest());
             data.Add(DataKey.Diagnostics, GetDiagnostics());
+            data.Add(DataKey.PageMode, GetPageMode());
             data.Add(DataKey.Culture, GetCulture());
             data.Add(DataKey.Language, GetLanguage());
             data.Add(DataKey.Domain, GetDomain());
@@ -56,6 +57,21 @@ namespace Sitecore.Glimpse.Infrastructure
             data.Add(DataKey.VersionInfo, GetVersionInfo());
             data.Add(DataKey.License, GetLicense());
             data.Add(DataKey.UserList, GetUserList());
+
+            return data;
+        }
+
+        private static FieldList GetPageMode()
+        {
+            var data = new FieldList();
+
+            data.AddField("IsDebugging", Context.PageMode.IsDebugging);
+            data.AddField("IsNormal", Context.PageMode.IsNormal);
+            data.AddField("IsPageEditor", Context.PageMode.IsPageEditor);
+            data.AddField("IsPageEditorEditing", Context.PageMode.IsPageEditorEditing);
+            data.AddField("IsPreview", Context.PageMode.IsPreview);
+            data.AddField("IsProfiling", Context.PageMode.IsProfiling);
+            data.AddField("IsSimulatedDevicePreviewing", Context.PageMode.IsSimulatedDevicePreviewing);
 
             return data;
         }

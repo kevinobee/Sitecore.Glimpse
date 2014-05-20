@@ -39,6 +39,9 @@ namespace Sitecore.Glimpse
             var diagnosticsSection = new DiagnosticsSection(RequestData).Create();
             if (diagnosticsSection != null) section.AddRow().Column("Diagnostics").Column(diagnosticsSection);
 
+            var pageModeSection = new PageModeSection(RequestData).Create();
+            if (pageModeSection != null) section.AddRow().Column("PageMode").Column(pageModeSection);
+
             return section;
         }
     }
