@@ -3,7 +3,7 @@
 using Sitecore.Glimpse.Model;
 
 using Should;
-using Xunit;
+using Xunit.Extensions;
 
 namespace Sitecore.Glimpse.Core.Test.Model
 {
@@ -17,20 +17,14 @@ namespace Sitecore.Glimpse.Core.Test.Model
             SystemTime.Now = () => _referenceTime;
         }
 
-        [Fact]
-        public void should_show_user_to_be_active_if_last_request_less_than_two_hours_old()
+        [Theory]
+        [InlineData(-119, false)]
+        [InlineData(-120, true)]
+        public void user_active_reporting(double minutes, bool isInactive)
         {
-            var user = new LoggedInUser("sessionId", "name", DateTime.Now.AddHours(-3), _referenceTime.AddMinutes(-119), false);
+            var user = new LoggedInUser("sessionId", "name", DateTime.Now.AddHours(-3), _referenceTime.AddMinutes(minutes), false);
 
-            user.IsInactive().ShouldBeFalse();
-        }
-
-        [Fact]
-        public void should_show_user_to_be_inactive_if_last_request_two_hours_or_more_old()
-        {
-            var user = new LoggedInUser("sessionId", "name", DateTime.Now.AddHours(-3), _referenceTime.AddMinutes(-120), false);
-
-            user.IsInactive().ShouldBeTrue();
+            user.IsInactive().ShouldEqual(isInactive);
         }
     }
 }

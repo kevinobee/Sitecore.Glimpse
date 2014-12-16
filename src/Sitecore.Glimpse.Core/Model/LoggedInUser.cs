@@ -21,7 +21,7 @@ namespace Sitecore.Glimpse.Model
 
         public bool IsInactive()
         {
-            return (SystemTime.Now.Invoke().Subtract(LastRequest).TotalHours >= 2);
+            return ((SystemTime.Now.Invoke().Subtract(LastRequest).TotalHours) >= 2);
         }
     }
 }
