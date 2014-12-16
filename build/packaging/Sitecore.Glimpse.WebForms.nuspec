@@ -14,7 +14,7 @@
     <language>en-GB</language>
     <dependencies>
       <dependency id="Sitecore.Glimpse" version="0.4.0" />
-      <dependency id="Glimpse.WebForms" version="1.0.1" />
+      <dependency id="Glimpse.WebForms" version="1.1.1" />
     </dependencies>
   </metadata>
   <files>
