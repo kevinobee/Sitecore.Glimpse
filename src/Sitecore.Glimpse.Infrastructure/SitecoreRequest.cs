@@ -464,14 +464,7 @@ namespace Sitecore.Glimpse.Infrastructure
             {
                 var results = new List<object[]>
                     {
-                        !FeaturesSupported.Clones
-
-                            ? new object[]
-                                {
-                                    "Field Title", "Field Type", "Value", "Contains Standard Value", "Unversioned",
-                                    "Shared"
-                                }
-                            : new object[]
+                        new object[]
                                 {
                                     "Field Title", "Field Type", "Value", "Contains Standard Value", "Inherits Value",
                                     "Unversioned", "Shared"
@@ -480,7 +473,7 @@ namespace Sitecore.Glimpse.Infrastructure
 
                 results.AddRange(
                     group.OrderBy(f => f.Sortorder)
-                    .Select(f => FeaturesSupported.Clones ? ParseFieldInfoWithCloneData(f) : ParseFieldInfo(f)));
+                    .Select(ParseFieldInfo));
 
                 result.Add(new object[] 
                 {
@@ -492,11 +485,6 @@ namespace Sitecore.Glimpse.Infrastructure
         }
 
         private static object[] ParseFieldInfo(Field f)
-        {
-            return new object[] { !string.IsNullOrEmpty(f.Title) ? f.Title : f.DisplayName, f.Type, f.Value, f.ContainsStandardValue, f.Unversioned, f.Shared };
-        }
-
-        private static object[] ParseFieldInfoWithCloneData(Field f)
         {
             return new object[] { !string.IsNullOrEmpty(f.Title) ? f.Title : f.DisplayName, f.Type, f.Value, f.ContainsStandardValue, f.InheritsValueFromOtherItem, f.Unversioned, f.Shared };
         }
@@ -531,7 +519,7 @@ namespace Sitecore.Glimpse.Infrastructure
             data.AddField("Sort order", item.Appearance.Sortorder);
             data.AddField("Style", item.Appearance.Style);
 
-            if (FeaturesSupported.Clones) AddCloneFields(item, data);
+            AddCloneFields(item, data);
 
             data.AddField("Created", item.Statistics.Created);
             data.AddField("Created By", item.Statistics.CreatedBy);
