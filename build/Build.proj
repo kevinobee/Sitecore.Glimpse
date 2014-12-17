@@ -21,6 +21,21 @@
   <ItemGroup>
     <LibFiles Include="Sitecore.Kernel.dll" />
     <LibFiles Include="Sitecore.Analytics.dll" />
+
+    <!-- Indirect assembly references - required for Code Analysis -->
+    <LibFiles Include="ComponentArt.Web.UI.dll" />
+    <LibFiles Include="ITHit.WebDAV.Server.dll" />
+    <LibFiles Include="HtmlAgilityPack.dll" />
+    <LibFiles Include="Lucene.Net.dll" />
+    <LibFiles Include="Mvp.Xml.dll" />
+    <LibFiles Include="Newtonsoft.Json.dll" />
+    <LibFiles Include="RadEditor.Net2.dll" />
+    <LibFiles Include="Sitecore.Logging.dll" />
+    <LibFiles Include="Sitecore.NVelocity.dll" />
+    <LibFiles Include="Sitecore.Zip.dll" />
+    <LibFiles Include="Stimulsoft.Base.dll" />
+    <LibFiles Include="Stimulsoft.Report.dll" />
+    <LibFiles Include="Telerik.Web.UI.dll" />
   </ItemGroup>
 
   <Target Name="RunSmokeTests" DependsOnTargets="Build">
