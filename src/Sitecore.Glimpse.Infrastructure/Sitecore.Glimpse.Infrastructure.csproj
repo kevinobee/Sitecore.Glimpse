@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\build\environment.props"/> 
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -34,19 +35,19 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Sitecore.Analytics">
-      <HintPath>..\..\lib\Sitecore.Analytics.dll</HintPath>
+      <HintPath>$(LibsSrcPath)\Sitecore.Analytics.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.Analytics.DataAccess">
-      <HintPath>..\..\lib\Sitecore.Analytics.DataAccess.dll</HintPath>
+      <HintPath>$(LibsSrcPath)\Sitecore.Analytics.DataAccess.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.ContentSearch">
-      <HintPath>..\..\..\Speak\sitecore.services\lib\Sitecore.ContentSearch.dll</HintPath>
+      <HintPath>$(LibsSrcPath)\Sitecore.ContentSearch.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.Kernel">
-      <HintPath>..\..\lib\Sitecore.Kernel.dll</HintPath>
+      <HintPath>$(LibsSrcPath)\Sitecore.Kernel.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.Services.Core">
-      <HintPath>..\..\lib\Sitecore.Services.Core.dll</HintPath>
+      <HintPath>$(LibsSrcPath)\Sitecore.Services.Core.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
