@@ -19,12 +19,12 @@
     </metadata>
     <files>
         <!-- NET 4.5 -->
-        <file src="..\..\artifacts\Build\lib\net40\Sitecore.Glimpse.dll" target="lib\net40" />
-        <file src="..\..\artifacts\Build\lib\net40\Sitecore.Glimpse.pdb" target="lib\net40" />
-        <file src="..\..\artifacts\Build\lib\net40\Sitecore.Glimpse.Core.dll" target="lib\net40" />
-        <file src="..\..\artifacts\Build\lib\net40\Sitecore.Glimpse.Core.pdb" target="lib\net40" />
-        <file src="..\..\artifacts\Build\lib\net40\Sitecore.Glimpse.Infrastructure.dll" target="lib\net40" />
-        <file src="..\..\artifacts\Build\lib\net40\Sitecore.Glimpse.Infrastructure.pdb" target="lib\net40" />
+        <file src="..\..\artifacts\Build\lib\Sitecore.Glimpse.dll" target="lib\net45" />
+        <file src="..\..\artifacts\Build\lib\Sitecore.Glimpse.pdb" target="lib\net45" />
+        <file src="..\..\artifacts\Build\lib\Sitecore.Glimpse.Core.dll" target="lib\net45" />
+        <file src="..\..\artifacts\Build\lib\Sitecore.Glimpse.Core.pdb" target="lib\net45" />
+        <file src="..\..\artifacts\Build\lib\Sitecore.Glimpse.Infrastructure.dll" target="lib\net45" />
+        <file src="..\..\artifacts\Build\lib\Sitecore.Glimpse.Infrastructure.pdb" target="lib\net45" />
 
         <file src="..\..\src\Sitecore.Glimpse\content\**\*" target="content" />
     </files>
