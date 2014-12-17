@@ -36,21 +36,13 @@
              Properties="Configuration=$(Configuration)" />
 
     <ItemGroup>
-      <Net35Libs 
-        Include="$(ProjectRoot)\src\*.Net35\bin\$(Configuration)\*.dll; $(ProjectRoot)\src\*.Net35\bin\$(Configuration)\*.pdb" />
-      
-      <Net40Libs 
-        Include="$(ProjectRoot)\src\*\bin\$(Configuration)\*.dll; $(ProjectRoot)\src\*\bin\$(Configuration)\*.pdb;" 
-        Exclude="$(ProjectRoot)\src\*.Net35\**\*.dlll; $(ProjectRoot)\src\*.Net35\**\*.pdb;"/>
+      <Net45Libs 
+        Include="$(ProjectRoot)\src\*\bin\$(Configuration)\*.dll; $(ProjectRoot)\src\*\bin\$(Configuration)\*.pdb;" />
     </ItemGroup>
     
     <Copy
-      SourceFiles="@(Net35Libs)"
-      DestinationFolder="$(BuildResultsPath)\lib\net35\" />
-
-    <Copy
-      SourceFiles="@(Net40Libs)"
-      DestinationFolder="$(BuildResultsPath)\lib\net40\" />
+      SourceFiles="@(Net45Libs)"
+      DestinationFolder="$(BuildResultsPath)\lib\" />
   </Target>
 
   <Target Name="RunCodeAnalysis" DependsOnTargets="Init" Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v11.0\CodeAnalysis\fxcoptask.dll')">

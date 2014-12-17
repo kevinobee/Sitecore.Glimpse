@@ -39,9 +39,22 @@ namespace Sitecore.Glimpse.Infrastructure
                 return ((Version.MajorPart >= 6) && (Version.MinorPart >= 3));
             }
         }
+
+        /// <summary>
+        /// Sitecore support for Clones introduced in 7.5
+        /// </summary>
+        public static bool ServicesClient
+        {
+            get
+            {
+                if (Version.MajorPart >= 8) return true;
+
+                return ((Version.MajorPart >= 7) && (Version.MinorPart >= 5));
+            }
+        }
     }
 
-    class ProductVersion
+    public class ProductVersion
     {
         public int MajorPart { get; set; }
         public int MinorPart { get; set; }

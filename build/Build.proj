@@ -1,57 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Go" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
-  <PropertyGroup>
-    <ProjectName>Sitecore.Glimpse</ProjectName>
-  </PropertyGroup>
-  
-  <Import Project="$(MSBuildProjectDirectory)\versions.targets" />
-  <Import Project="$(MSBuildProjectDirectory)\build.targets" />
+    <PropertyGroup>
+        <ProjectName>Sitecore.Glimpse</ProjectName>
+    </PropertyGroup>
 
-  <!-- Read in environment properties from environment.props if present -->
-  <Import Project="$(MSBuildProjectDirectory)\environment.props" Condition="Exists('$(MSBuildProjectDirectory)\environment.props')" />
+    <Import Project="$(MSBuildProjectDirectory)\versions.targets" />
+    <Import Project="$(MSBuildProjectDirectory)\build.targets" />
 
-  <!-- Provide defaults for values for environment properties if environment.props is not present -->
-  <PropertyGroup>
-    <TestWebsitePath Condition="$(TestWebsitePath) == ''">C:\Websites\glimpsetest\Website</TestWebsitePath>
-    <TestWebsiteUrl Condition="$(TestWebsiteUrl) == ''">http://glimpsetest/</TestWebsiteUrl>
-    <LibsSrcPath Condition="$(LibsSrcPath) == ''">C:\LibsSrc\6\6.6\Update-5</LibsSrcPath>
-  </PropertyGroup>
+    <!-- Read in environment properties from environment.props if present -->
+    <Import Project="$(MSBuildProjectDirectory)\environment.props" Condition="Exists('$(MSBuildProjectDirectory)\environment.props')" />
 
-  <ItemGroup>
-    <LibFiles Include="Sitecore.Kernel.dll" />
-    <LibFiles Include="Sitecore.Analytics.dll" />
+    <!-- Provide defaults for values for environment properties if environment.props is not present -->
+    <PropertyGroup>
+        <TestWebsitePath Condition="$(TestWebsitePath) == ''">C:\Websites\glimpsetest\Website</TestWebsitePath>
+        <TestWebsiteUrl Condition="$(TestWebsiteUrl) == ''">http://glimpsetest/</TestWebsiteUrl>
+        <LibsSrcPath Condition="$(LibsSrcPath) == ''">C:\LibsSrc\7\7.5\141003</LibsSrcPath>
+    </PropertyGroup>
 
-    <!-- Indirect assembly references - required for Code Analysis -->
-    <LibFiles Include="ComponentArt.Web.UI.dll" />
-    <LibFiles Include="ITHit.WebDAV.Server.dll" />
-    <LibFiles Include="HtmlAgilityPack.dll" />
-    <LibFiles Include="Lucene.Net.dll" />
-    <LibFiles Include="Mvp.Xml.dll" />
-    <LibFiles Include="Newtonsoft.Json.dll" />
-    <LibFiles Include="RadEditor.Net2.dll" />
-    <LibFiles Include="Sitecore.Logging.dll" />
-    <LibFiles Include="Sitecore.NVelocity.dll" />
-    <LibFiles Include="Sitecore.Zip.dll" />
-    <LibFiles Include="Stimulsoft.Base.dll" />
-    <LibFiles Include="Stimulsoft.Report.dll" />
-    <LibFiles Include="Telerik.Web.UI.dll" />
-  </ItemGroup>
-
-  <Target Name="RunSmokeTests" DependsOnTargets="Build">
     <ItemGroup>
-      <ProjectSrcAssemblies 
-          Include="$(BuildResultsPath)\lib\net40\Sitecore*.dll; " 
-          Exclude="@(LibFiles -> '$(BuildResultsPath)\lib\net40\%(Identity)')" />
+        <LibFiles Include="Sitecore.Kernel.dll" />
+        <LibFiles Include="Sitecore.Analytics.dll" />
+        <LibFiles Include="Sitecore.Analytics.DataAccess.dll" />
+        <LibFiles Include="Sitecore.Services.Core.dll" />
+
+        <!-- Indirect assembly references - required for Code Analysis -->
+        <LibFiles Include="ComponentArt.Web.UI.dll" />
+        <LibFiles Include="ITHit.WebDAV.Server.dll" />
+        <LibFiles Include="HtmlAgilityPack.dll" />
+        <LibFiles Include="Lucene.Net.dll" />
+        <LibFiles Include="Mvp.Xml.dll" />
+        <LibFiles Include="Newtonsoft.Json.dll" />
+        <LibFiles Include="RadEditor.Net2.dll" />
+        <LibFiles Include="Sitecore.Logging.dll" />
+        <LibFiles Include="Sitecore.NVelocity.dll" />
+        <LibFiles Include="Sitecore.Zip.dll" />
+        <LibFiles Include="Stimulsoft.Base.dll" />
+        <LibFiles Include="Stimulsoft.Report.dll" />
+        <LibFiles Include="Telerik.Web.UI.dll" />
     </ItemGroup>
 
-    <Copy
-          SourceFiles="@(ProjectSrcAssemblies)"
-          DestinationFolder="$(TestWebsitePath)\bin"
+    <Target Name="RunSmokeTests" DependsOnTargets="Build">
+        <ItemGroup>
+            <ProjectSrcAssemblies
+                Include="$(BuildResultsPath)\lib\net40\Sitecore*.dll; "
+                Exclude="@(LibFiles -> '$(BuildResultsPath)\lib\net40\%(Identity)')" />
+        </ItemGroup>
+
+        <Copy
+              SourceFiles="@(ProjectSrcAssemblies)"
+              DestinationFolder="$(TestWebsitePath)\bin"
         />
-    
-    <Exec Command="$(ProjectRoot)\tests\smoke-test\Sitecore.Glimpse.Smoke.Test\bin\$(Configuration)\Sitecore.Glimpse.Smoke.Test -u $(TestWebsiteUrl)" />
-    
-  </Target>
- 
+
+        <Exec Command="$(ProjectRoot)\tests\smoke-test\Sitecore.Glimpse.Smoke.Test\bin\$(Configuration)\Sitecore.Glimpse.Smoke.Test -u $(TestWebsiteUrl)" />
+
+    </Target>
+
 </Project>

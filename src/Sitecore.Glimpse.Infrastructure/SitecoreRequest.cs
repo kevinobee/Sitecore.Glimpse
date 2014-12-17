@@ -56,6 +56,7 @@ namespace Sitecore.Glimpse.Infrastructure
             data.Add(DataKey.Item, GetItem());
             data.Add(DataKey.VersionInfo, GetVersionInfo());
             data.Add(DataKey.License, GetLicense());
+            data.Add(DataKey.Services, GetServices());
             data.Add(DataKey.UserList, GetUserList());
 
             return data;
@@ -98,6 +99,11 @@ namespace Sitecore.Glimpse.Infrastructure
             data.AddField("Expires", license.Expiration.ToShortDateString());
 
             return data;
+        }
+
+        private static SitecoreService[] GetServices()
+        {
+            return new SitecoreServices(null).GetServices();
         }
 
         private static FieldList GetCulture()

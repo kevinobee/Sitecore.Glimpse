@@ -11,18 +11,30 @@ namespace Sitecore.Glimpse
 
         public override TabSection Create()
         {
-            var section = new TabSection("", GetSerctionHeader());
+            var section = new TabSection("", GetSectionHeader());
 
             var licenseSection = new LicenseSection(RequestData).Create();
-            if (licenseSection != null) section.AddRow().Column("License").Column(licenseSection);
+            if (licenseSection != null)
+            {
+                section.AddRow().Column("License").Column(licenseSection);
+            }
 
             var userListSection = new UserListSection(RequestData).Create();
-            if (userListSection != null) section.AddRow().Column("Current Users").Column(userListSection);
+            if (userListSection != null)
+            {
+                section.AddRow().Column("Current Users").Column(userListSection);
+            }
+            
+            var servicesSection = new ServicesSection(RequestData).Create();
+            if (servicesSection != null)
+            {
+                section.AddRow().Column("Sitecore Services").Column(servicesSection);
+            }
 
             return section;
         }
 
-        private string GetSerctionHeader()
+        private string GetSectionHeader()
         {
             var versionInfo = (string)RequestData[DataKey.VersionInfo];
 

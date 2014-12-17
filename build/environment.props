@@ -9,6 +9,6 @@
 
     <TestWebsitePath>C:\Websites\glimpsetest\Website</TestWebsitePath>
     <TestWebsiteUrl>http://glimpsetest</TestWebsiteUrl>
-    <LibsSrcPath>C:\LibsSrc\6\6.6\Update-5</LibsSrcPath>
+    <LibsSrcPath>C:\LibsSrc\7\7.5\141003</LibsSrcPath>
   </PropertyGroup>
 </Project>
