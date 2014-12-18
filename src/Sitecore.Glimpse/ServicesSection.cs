@@ -17,26 +17,21 @@ namespace Sitecore.Glimpse
 
             if ((services == null) || (!services.Any())) return null;
 
-            var section = new TabSection("Class Name", "Route", "Attributes");
+            var section = new TabSection("Controller", "Url", "ES", "Object Type", "Controller Attributes", "Metadata");
 
             foreach (var service in services)
             {
-                var row = section.AddRow()
-                    .Column(service.ClassName)
-                    .Column(service.Route)
-                    .Column(service.Attributes)
-//                  .Column(service.IsAdmin ? "Yes" : "No")
-//                  .Column(service.Created)
-//                  .Column(service.LastRequest);
-                    ;
-//                if (service.IsInactive())
-//                {
-//                    row.ApplyRowStyle("warn");
-//                }
+                section.AddRow()
+                    .Column(service.Controller)
+                    .Column(service.Url)
+                    .Column(service.IsEntityService ? "Yes" : "No")
+                    .Column(service.ObjectType)
+                    .Column(string.Join(", ", service.Attributes)).UnderlineIf(service.CorsEnabled)
+                    .Column(service.Metadata)
+                    .WarnIf(service.CorsEnabled);
             }
 
             return section;
-
         }
     }
 }

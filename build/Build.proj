@@ -23,6 +23,8 @@
         <LibFiles Include="Sitecore.Analytics.dll" />
         <LibFiles Include="Sitecore.Analytics.DataAccess.dll" />
         <LibFiles Include="Sitecore.Services.Core.dll" />
+        <LibFiles Include="Sitecore.Services.Infrastructure.dll" />
+        <LibFiles Include="Sitecore.Services.Infrastructure.Sitecore.dll" />
 
         <!-- Indirect assembly references - required for Code Analysis -->
         <LibFiles Include="ComponentArt.Web.UI.dll" />
@@ -37,6 +39,10 @@
         <LibFiles Include="Sitecore.Zip.dll" />
         <LibFiles Include="Stimulsoft.Base.dll" />
         <LibFiles Include="Stimulsoft.Report.dll" />
+        <LibFiles Include="System.Web.Http.dll" />
+        <LibFiles Include="System.Net.Http.Formatting.dll" />
+        <LibFiles Include="System.Web.WebPages.dll" />
+        <LibFiles Include="System.Web.Http.Cors.dll" />
         <LibFiles Include="Telerik.Web.UI.dll" />
     </ItemGroup>
 
