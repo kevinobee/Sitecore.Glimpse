@@ -3,122 +3,117 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 
-using Sitecore.Analytics;
+using Sitecore;
 using Sitecore.Glimpse.Model.Analytics;
-
+using Sitecore.Analytics;
 namespace Sitecore.Glimpse.Infrastructure
 {
     public class SitecoreAnalyticsForRequest : ISitecoreRequest
     {
         private readonly ILog _logger;
         private readonly ISitecoreRepository _sitecoreRepository;
+        private readonly ITracker _tracker;
 
-        public SitecoreAnalyticsForRequest(ILog logger, ISitecoreRepository sitecoreRepository)
+        public SitecoreAnalyticsForRequest(ILog logger, ISitecoreRepository sitecoreRepository,ITracker tracker)
         {
             _logger = logger;
             _sitecoreRepository = sitecoreRepository;
+            _tracker = tracker;
         }
 
         public SitecoreAnalyticsForRequest() 
-            : this(new TraceLogger(), new CachingSitecoreRepository(new SitecoreRepository()))
+            : this(new TraceLogger(), new CachingSitecoreRepository(new SitecoreRepository()), Tracker.Current)
         {           
         }
 
         public RequestData GetData()
         {
-//            try
-//            {
-//                return GetAnalyticsData();
-//            }
-//            catch (Exception exception)
-//            {
-//                _logger.Write(string.Format("Failed to load Sitecore Analytics Glimpse data - {0}", exception.Message));
-//            }
+            try
+            {
+                return GetAnalyticsData();
+            }
+            catch (Exception exception)
+            {
+                _logger.Write(string.Format("Failed to load Sitecore Analytics Glimpse data - {0}", exception.Message));
+            }
 
             return new RequestDataNotLoaded();
         }
 
-//        private RequestData GetAnalyticsData()
-//        {
-//            if (Tracker.Current != null)
-//            {
-//                Tracker.Current.
-//            }
-//
-//
-//            if (Tracker.CurrentVisit != null)
-//            {
-//                Tracker.Visitor.LoadAll();
-//
-//                var data = new RequestData();
-//
-//                data.Add(DataKey.Profiles, GetProfiles());
-//                data.Add(DataKey.LastPages, GetLastPages(5));
-//                data.Add(DataKey.Goals, GetGoals(5));
-//                data.Add(DataKey.Campaign, GetCampaign());
-//                data.Add(DataKey.TrafficType, GetTrafficType());
-//                data.Add(DataKey.EngagementValue, GetEngagementValue());
-//                data.Add(DataKey.IsNewVisitor, GetVisitType());
-//
-//                return data;
-//            }
-//
-//            return null;
-//        }
+        private RequestData GetAnalyticsData()
+        {
+            if (_tracker.IsActive && _tracker.Interaction != null)
+            {
+                
 
-//        private IEnumerable<Profile> GetProfiles()
-//        {
-//            var patternCards = _sitecoreRepository.GetPatternCards().ToArray();
-// 
-//            var patternMatched = GetAllPatternsMatched(patternCards).ToList();
+                var data = new RequestData();
+
+              //  data.Add(DataKey.Profiles, GetProfiles());
+               // data.Add(DataKey.LastPages, GetLastPages(5));
+                data.Add(DataKey.Goals, GetGoals(5));
+              //  data.Add(DataKey.Campaign, GetCampaign());
+               // data.Add(DataKey.TrafficType, GetTrafficType());
+              //  data.Add(DataKey.EngagementValue, GetEngagementValue());
+              //  data.Add(DataKey.IsNewVisitor, GetVisitType());
+
+                return data;
+            }
+
+            return null;
+        }
+
+        //private IEnumerable<Profile> GetProfiles()
+        //{
+        //    var patternCards = _sitecoreRepository.GetPatternCards().ToArray();
+
+        //    var patternMatched = GetAllPatternsMatched(patternCards).ToList();
+
+        //    var profiles = patternCards.Select(x => new Profile
+        //        {
+        //            Name = x.Name,
+        //            IsMatch = patternMatched.Any(m => m == x.ID),
+        //            Dimension = x.Dimension
+        //        }).ToArray();
+
+        //    return profiles;
+
+        //}
+
+        //private IEnumerable<Guid> GetAllPatternsMatched(PatternCard[] patternCards)
+        //{
+        //    var profileDimesions = patternCards.Select(x => x.Dimension).Distinct();
+
+        //    foreach (var profileDimension in profileDimesions)
+        //    {
+        //        var personaProfile = Tracker.CurrentVisit.Profiles.FirstOrDefault(profile => profile.ProfileName == profileDimension);
+
+        //        if (personaProfile != null)
+        //        {
+        //            personaProfile.UpdatePattern();
+        //            yield return patternCards.First(x => x.ID == personaProfile.PatternId).ID;
+        //        }
+        //    }
+        //}
 //
-//            var profiles =  patternCards.Select(x => new Profile
-//                {
-//                    Name = x.Name, 
-//                    IsMatch = patternMatched.Any(m => m == x.ID),
-//                    Dimension = x.Dimension
-//                }).ToArray();
-//
-//            return profiles;
-//        }
-//
-//        private IEnumerable<Guid> GetAllPatternsMatched(PatternCard[] patternCards)
-//        {
-//            var profileDimesions = patternCards.Select(x => x.Dimension).Distinct();
-//
-//            foreach (var profileDimension in profileDimesions)
-//            {
-//                var personaProfile = Tracker.CurrentVisit.Profiles.FirstOrDefault(profile => profile.ProfileName == profileDimension);
-//
-//                if (personaProfile != null)
-//                {
-//                    personaProfile.UpdatePattern();
-//
-//                    yield return patternCards.First(x => x.ID == personaProfile.PatternId).ID;
-//                }
-//            }
-//        }
-//
-//        private Goal[] GetGoals(int numberOfGoals)
-//        {
-//            if (Tracker.CurrentVisit != null)
-//            {
-//                // TODO: Query the Sitecore Context rather than doing a join on the tables
-//                var pageEvents = Tracker.Visitor.DataContext.PageEvents
-//                    .Where(x => _sitecoreRepository.IsGoal(x.PageEventDefinitionId))
-//                    .OrderByDescending(x => x.DateTime)
-//                    .Take(numberOfGoals)
-//                    .Select(x => new Goal
-//                        {
-//                            Name = _sitecoreRepository.GetItem(x.PageEventDefinitionId).Name, 
-//                            Timestamp = x.DateTime
-//                        });
-//
-//                return pageEvents.ToArray();
-//            }
-//
-//            return null;
-//        }
+        private Goal[] GetGoals(int numberOfGoals)
+        {
+            if (_tracker.Interaction != null)
+            {
+                var pageNo = _tracker.Interaction.CurrentPage.VisitPageIndex;
+
+                var goalList = new List<Goal>();
+
+                while (goalList.Count < numberOfGoals && pageNo > 0)
+                {
+                    var page = _tracker.Interaction.GetPage(pageNo);
+                    var goals = page.PageEvents.Select(ped=> new Goal(){Name = ped.Name, Timestamp=ped.DateTime});
+                    goalList.AddRange(goals);
+                }
+
+                return goalList.Take(numberOfGoals).ToArray();
+            }
+            return null;
+        }
 //
 //        private static PageHolder[] GetLastPages(int numberOfPages)
 //        {
