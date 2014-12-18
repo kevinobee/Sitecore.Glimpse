@@ -48,8 +48,12 @@
     <Compile Include="..\Common\CommonVersionInfo.cs">
       <Link>Properties\CommonVersionInfo.cs</Link>
     </Compile>
+    <Compile Include="Caching\CachingCollectionProvider.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="DataKey.cs" />
+    <Compile Include="Caching\ICache.cs" />
+    <Compile Include="Extensions\TypeExtensions.cs" />
+    <Compile Include="ICollectionProvider.cs" />
     <Compile Include="ILog.cs" />
     <Compile Include="ISitecoreRequest.cs" />
     <Compile Include="Model\Analytics\Goal.cs" />
