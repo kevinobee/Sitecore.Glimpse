@@ -12,17 +12,17 @@ namespace Sitecore.Glimpse.Infrastructure
     {
         private readonly ILog _logger;
         private readonly ISitecoreRepository _sitecoreRepository;
-        private readonly ITracker _tracker;
+        private readonly ITrackerBuilder _trackerBuilder;
 
-        public SitecoreAnalyticsForRequest(ILog logger, ISitecoreRepository sitecoreRepository,ITracker tracker)
+        public SitecoreAnalyticsForRequest(ILog logger, ISitecoreRepository sitecoreRepository, ITrackerBuilder trackerBuilder)
         {
             _logger = logger;
             _sitecoreRepository = sitecoreRepository;
-            _tracker = tracker;
+            _trackerBuilder = trackerBuilder;
         }
 
         public SitecoreAnalyticsForRequest() 
-            : this(new TraceLogger(), new CachingSitecoreRepository(new SitecoreRepository()), Tracker.Current)
+            : this(new TraceLogger(), new CachingSitecoreRepository(new SitecoreRepository()), new SitecoreContextTrackerBuilder())
         {           
         }
 
@@ -42,19 +42,21 @@ namespace Sitecore.Glimpse.Infrastructure
 
         private RequestData GetAnalyticsData()
         {
-            if (_tracker.IsActive && _tracker.Interaction != null)
+            var tracker = _trackerBuilder.Tracker;
+
+            if (tracker.Interaction != null)
             {
                 
 
                 var data = new RequestData();
 
-              //  data.Add(DataKey.Profiles, GetProfiles());
-               // data.Add(DataKey.LastPages, GetLastPages(5));
+                data.Add(DataKey.Profiles, GetProfiles());
+                data.Add(DataKey.LastPages, GetLastPages(5));
                 data.Add(DataKey.Goals, GetGoals(5));
-              //  data.Add(DataKey.Campaign, GetCampaign());
-               // data.Add(DataKey.TrafficType, GetTrafficType());
-              //  data.Add(DataKey.EngagementValue, GetEngagementValue());
-              //  data.Add(DataKey.IsNewVisitor, GetVisitType());
+                data.Add(DataKey.Campaign, GetCampaign());
+                data.Add(DataKey.TrafficType, GetTrafficType());
+                data.Add(DataKey.EngagementValue, GetEngagementValue());
+                data.Add(DataKey.IsNewVisitor, GetVisitType());
 
                 return data;
             }
@@ -62,100 +64,107 @@ namespace Sitecore.Glimpse.Infrastructure
             return null;
         }
 
-        //private IEnumerable<Profile> GetProfiles()
-        //{
-        //    var patternCards = _sitecoreRepository.GetPatternCards().ToArray();
+        private IEnumerable<Profile> GetProfiles()
+        {
+            var patternCards = _sitecoreRepository.GetPatternCards().ToArray();
 
-        //    var patternMatched = GetAllPatternsMatched(patternCards).ToList();
+            var matchedPatterns = GetMatchedPatternCards().ToList();
 
-        //    var profiles = patternCards.Select(x => new Profile
-        //        {
-        //            Name = x.Name,
-        //            IsMatch = patternMatched.Any(m => m == x.ID),
-        //            Dimension = x.Dimension
-        //        }).ToArray();
+            var profiles = patternCards.Select(x => new Profile
+                {
+                    Name = x.Name,
+                    IsMatch = matchedPatterns.Any(m => m == x.ID),
+                    Dimension = x.Dimension
+                }).ToArray();
 
-        //    return profiles;
+            return profiles;
 
-        //}
+        }
 
-        //private IEnumerable<Guid> GetAllPatternsMatched(PatternCard[] patternCards)
-        //{
-        //    var profileDimesions = patternCards.Select(x => x.Dimension).Distinct();
+        private IEnumerable<Guid?> GetMatchedPatternCards()
+        {
+            var profileNames = _trackerBuilder.Tracker.Interaction.Profiles.GetProfileNames();
+           
+            foreach (var profileName in profileNames)
+            {
+                yield return _trackerBuilder.Tracker.Interaction.Profiles[profileName].PatternId;
+            }
+        }
 
-        //    foreach (var profileDimension in profileDimesions)
-        //    {
-        //        var personaProfile = Tracker.CurrentVisit.Profiles.FirstOrDefault(profile => profile.ProfileName == profileDimension);
-
-        //        if (personaProfile != null)
-        //        {
-        //            personaProfile.UpdatePattern();
-        //            yield return patternCards.First(x => x.ID == personaProfile.PatternId).ID;
-        //        }
-        //    }
-        //}
-//
         private Goal[] GetGoals(int numberOfGoals)
         {
-            if (_tracker.Interaction != null)
+
+            var tracker = _trackerBuilder.Tracker;
+
+            if (tracker.Interaction != null)
             {
-                var pageNo = _tracker.Interaction.CurrentPage.VisitPageIndex;
+                var pageNo = tracker.Interaction.CurrentPage.VisitPageIndex;
 
                 var goalList = new List<Goal>();
 
                 while (goalList.Count < numberOfGoals && pageNo > 0)
                 {
-                    var page = _tracker.Interaction.GetPage(pageNo);
+                    var page = tracker.Interaction.GetPage(pageNo);
                     var goals = page.PageEvents.Select(ped=> new Goal(){Name = ped.Name, Timestamp=ped.DateTime});
                     goalList.AddRange(goals);
+                    pageNo--;
                 }
 
                 return goalList.Take(numberOfGoals).ToArray();
             }
             return null;
         }
-//
-//        private static PageHolder[] GetLastPages(int numberOfPages)
-//        {
-//            var pages = Tracker.CurrentVisit.GetPages()
-//                                            .OrderByDescending(p => p.DateTime)
-//                                            .Skip(1)
-//                                            .Take(numberOfPages)
-//                                            .Select(x => new PageHolder(x.PageId, x.DateTime, x.Url)).ToArray();
-//
-//            return pages;
-//        }
-//
-//        private string GetCampaign()
-//        {
-//            if (!Tracker.CurrentVisit.IsCampaignIdNull())
-//            {
-//                var campaignId = Tracker.CurrentVisit.CampaignId.ToString();
-//                var campaign = _sitecoreRepository.GetItem(campaignId);
-//                return campaign.Name;
-//            }
-//
-//            return null;
-//        }
-//
-//        private string GetTrafficType()
-//        {
-//            var trafficTypes = _sitecoreRepository.GetItem(Constants.Sitecore.Analytics.Templates.TrafficTypes);
-//            var items = trafficTypes.Axes.GetDescendants()
-//                                         .FirstOrDefault(p => p.Fields["Value"].Value == Tracker.CurrentVisit.TrafficType.ToString(CultureInfo.InvariantCulture));
-//            
-//            return items != null ? items.Name : null;
-//        }
-//
-//        private static string GetEngagementValue()
-//        {
-//            return Tracker.CurrentVisit.Value.ToString(CultureInfo.InvariantCulture);
-//        }
-//
-//        private static string GetVisitType()
-//        {
-//            var visitCount = Tracker.Visitor.VisitCount;
-//            return visitCount > 1 ? "Returning" : "New";
-//        }
+
+        private PageHolder[] GetLastPages(int numberOfPages)
+        {
+            var pages = _trackerBuilder.Tracker.Interaction.GetPages()
+                                            .OrderByDescending(p => p.DateTime)
+                                            .Skip(1)
+                                            .Take(numberOfPages)
+                                            .Select(x => new PageHolder(x.Item.Id, x.DateTime, x.Url.ToString())).ToArray();
+
+            return pages;
+        }
+
+        private string GetCampaign()
+        {
+            var campaignId = _trackerBuilder.Tracker.Interaction.CampaignId;
+
+            if (campaignId != null)
+            {
+                var campaign = _sitecoreRepository.GetItem(campaignId.ToString());
+                if (campaign != null)
+                {
+                    return campaign.Name;
+                }
+                else
+                {
+                    return campaignId.ToString();
+                }
+            }
+
+            return null;
+        }
+
+        private string GetTrafficType()
+        {
+            //todo get through analytics items
+            var trafficTypes = _sitecoreRepository.GetItem(Constants.Sitecore.Analytics.Templates.TrafficTypes);
+            var items = trafficTypes.Axes.GetDescendants()
+                                         .FirstOrDefault(p => p.Fields["Value"].Value == _trackerBuilder.Tracker.Interaction.TrafficType.ToString(CultureInfo.InvariantCulture));
+
+            return items != null ? items.Name : null;
+        }
+
+        private string GetEngagementValue()
+        {
+            return _trackerBuilder.Tracker.Interaction.Value.ToString(CultureInfo.InvariantCulture);
+        }
+
+        private string GetVisitType()
+        {
+            var visitCount = _trackerBuilder.Tracker.Interaction.ContactVisitIndex;
+            return visitCount > 1 ? "returning" : "new";
+        }
     }
 }

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\..\build\environment.props"/> 
+  <Import Project="..\..\build\environment.props" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -74,8 +74,10 @@
     <Compile Include="CurrentUsers.cs" />
     <Compile Include="FeaturesSupported.cs" />
     <Compile Include="ISitecoreRepository.cs" />
+    <Compile Include="ITrackerBuilder.cs" />
     <Compile Include="LicenseReader.cs" />
     <Compile Include="SitecoreAnalyticsForRequest.cs" />
+    <Compile Include="SitecoreContextTrackerBuilder.cs" />
     <Compile Include="SitecoreRepository.cs" />
     <Compile Include="SitecoreRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
