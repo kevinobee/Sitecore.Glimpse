@@ -19,7 +19,7 @@ namespace Sitecore.Glimpse.Analytics
 
             var profiles = (Profile[]) _sitecoreData[DataKey.Profiles];
 
-            if ((profiles == null) || (profiles.Length == 0)) return null;
+            if ((profiles == null) || (profiles.Length == 0)) return defaultInsight;
 
             var matchedProfiles = profiles.Where(p => !string.IsNullOrEmpty(p.PatternCard));
             

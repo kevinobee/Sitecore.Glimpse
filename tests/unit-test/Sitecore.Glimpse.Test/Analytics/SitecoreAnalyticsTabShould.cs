@@ -181,100 +181,74 @@ namespace Sitecore.Glimpse.Test.Analytics
             Assert.False(sectionFound);
         }
 
-        //[Fact]
-        //public void Include_profiles_section_if_no_matching_profiles_recorded()
-        //{
-        //    var requestData = new RequestData();
-        //    requestData.Add(DataKey.IsNewVisitor, true);
-        //    requestData.Add(DataKey.EngagementValue, 0);
-        //    requestData.Add(DataKey.TrafficType, "Returning");
+        [Fact]
+        public void Include_profiles_section_if_no_matching_profiles_recorded()
+        {
+            var requestData = new RequestData();
+            requestData.Add(DataKey.IsNewVisitor, true);
+            requestData.Add(DataKey.EngagementValue, 0);
+            requestData.Add(DataKey.TrafficType, "Returning");
 
-        //    requestData.Add(DataKey.Profiles, new[]
-        //        {
-        //            new Profile { Name = "Foo", Dimension = "Product Interest", IsMatch = false },
-        //            new Profile { Name = "Bar", Dimension = "Product Interest", IsMatch = false }
-        //        });
+            requestData.Add(DataKey.Profiles, new[]
+                {
+                    new Profile { Name = "Foo", PatternCard = string.Empty, Values = "values here" },
+                    new Profile { Name = "Bar", PatternCard = string.Empty, Values = "values here" }
+                });
 
-        //    _requestDataProvider.Setup(x => x.GetData()).Returns(requestData);
+            _requestDataProvider.Setup(x => x.GetData()).Returns(requestData);
 
-        //    var data = (TabSection)_sut.GetData(null);
+            var data = (TabSection)_sut.GetData(null);
 
-        //    var sectionFound = data.Rows.Any(x => x.Columns.First().Data.ToString().Contains("Profiles"));
-        //    Assert.True(sectionFound);
-        //}
+            var sectionFound = data.Rows.Any(x => x.Columns.First().Data.ToString().Contains("Profiles"));
+            Assert.True(sectionFound);
+        }
 
-        //[Fact]
-        //public void Include_profiles_section_if_profiles_recorded()
-        //{
-        //    var requestData = new RequestData();
-        //    requestData.Add(DataKey.IsNewVisitor, true);
-        //    requestData.Add(DataKey.EngagementValue, 0);
-        //    requestData.Add(DataKey.TrafficType, "Returning");
+        [Fact]
+        public void Include_profiles_section_if_profiles_recorded()
+        {
+            var requestData = new RequestData();
+            requestData.Add(DataKey.IsNewVisitor, true);
+            requestData.Add(DataKey.EngagementValue, 0);
+            requestData.Add(DataKey.TrafficType, "Returning");
 
-        //    requestData.Add(DataKey.Profiles, new[]
-        //        {
-        //            new Profile { Name = "Foo", Dimension = "Product Interest", IsMatch = false },
-        //            new Profile { Name = "Bar", Dimension = "Product Interest", IsMatch = true }
-        //        });
+            requestData.Add(DataKey.Profiles, new[]
+                {
+                    new Profile { Name = "Foo", PatternCard = "pattern card 1", Values = "values here" },
+                    new Profile { Name = "Bar", PatternCard = string.Empty, Values = "values here" }
+                });
 
-        //    _requestDataProvider.Setup(x => x.GetData()).Returns(requestData);
+            _requestDataProvider.Setup(x => x.GetData()).Returns(requestData);
 
-        //    var data = (TabSection)_sut.GetData(null);
+            var data = (TabSection)_sut.GetData(null);
 
-        //    var sectionFound = data.Rows.Any(x => x.Columns.First().Data.ToString().Contains("Profiles"));
-        //    Assert.True(sectionFound);
-        //}
+            var sectionFound = data.Rows.Any(x => x.Columns.First().Data.ToString().Contains("Profiles"));
+            Assert.True(sectionFound);
+        }
 
-        //[Fact]
-        //public void Display_multiple_dimensions_for_profiles_section()
-        //{
-        //    var requestData = new RequestData();
-        //    requestData.Add(DataKey.IsNewVisitor, true);
-        //    requestData.Add(DataKey.EngagementValue, 0);
-        //    requestData.Add(DataKey.TrafficType, "Returning");
 
-        //    requestData.Add(DataKey.Profiles, new[]
-        //        {
-        //            new Profile { Name = "Foo", Dimension = "Product Interest", IsMatch = false },
-        //            new Profile { Name = "Bar", Dimension = "Product Interest", IsMatch = true },
-        //            new Profile { Name = "Low", Dimension = "Income", IsMatch = false },
-        //            new Profile { Name = "Medium", Dimension = "Income", IsMatch = false },
-        //            new Profile { Name = "High", Dimension = "Income", IsMatch = true }
-        //        });
 
-        //    _requestDataProvider.Setup(x => x.GetData()).Returns(requestData);
+        [Fact]
+        public void Show_matched_patters_as_first_row_of_tab_data()
+        {
+            var requestData = new RequestData();
+            requestData.Add(DataKey.IsNewVisitor, true);
+            requestData.Add(DataKey.EngagementValue, 0);
+            requestData.Add(DataKey.TrafficType, "Returning");
 
-        //    var data = (TabSection) _sut.GetData(null);
+            requestData.Add(DataKey.Profiles, new[]
+                {
+                    new Profile { Name = "Foo", PatternCard  = "Pattern Card", Values = "values" },
+                    new Profile { Name = "Bar", PatternCard = null, Values =  "values" },
+                    new Profile { Name = "Non", PatternCard = string.Empty, Values = "values" },
+                      new Profile { Name = "Plus", PatternCard = "Another pattern card", Values = "values" }
+                });
 
-        //    var profileData =  (TabSection) data.Rows.ElementAt(2).Columns.ElementAt(1).Data;
-        //    var incomeTitleCell = profileData.Rows.ElementAt(2).Columns.ElementAt(0).Data;
+            _requestDataProvider.Setup(x => x.GetData()).Returns(requestData);
 
-        //    Assert.Equal("Income", incomeTitleCell);
-        //}
+            dynamic data = _sut.GetData(null);
 
-        //[Fact]
-        //public void Show_matched_patters_as_first_row_of_tab_data()
-        //{
-        //    var requestData = new RequestData();
-        //    requestData.Add(DataKey.IsNewVisitor, true);
-        //    requestData.Add(DataKey.EngagementValue, 0);
-        //    requestData.Add(DataKey.TrafficType, "Returning");
-
-        //    requestData.Add(DataKey.Profiles, new[]
-        //        {
-        //            new Profile { Name = "Foo", Dimension = "Product Interest", IsMatch = false },
-        //            new Profile { Name = "Bar", Dimension = "Product Interest", IsMatch = true },
-        //            new Profile { Name = "Low", Dimension = "Income", IsMatch = false },
-        //            new Profile { Name = "Medium", Dimension = "Income", IsMatch = false },
-        //            new Profile { Name = "High", Dimension = "Income", IsMatch = true }
-        //        });
-
-        //    _requestDataProvider.Setup(x => x.GetData()).Returns(requestData);
-
-        //    dynamic data = _sut.GetData(null);
-
-        //    string summaryRow = data.Rows[0].Columns[1].Data;
-        //    Assert.Equal("Product Interest: Bar, Income: High", summaryRow);
-        //}
+            string summaryRow = data.Rows[0].Columns[1].Data;
+            Assert.Equal("Pattern Card, Another pattern card", summaryRow);
+        }
     }
 }
