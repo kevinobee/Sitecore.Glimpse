@@ -12,14 +12,22 @@ namespace Sitecore.Glimpse.Infrastructure
     public class SitecoreRequest : ISitecoreRequest
     {
         private readonly ILog _logger;
+        private readonly IEnumerable<SitecoreService> _serviceClients;
+        private readonly IEnumerable<LoggedInUser> _users;
 
-        public SitecoreRequest(ILog logger)
+        public SitecoreRequest(ILog logger, IEnumerable<SitecoreService> serviceClients, IEnumerable<LoggedInUser> users)
         {
+            if (logger == null) throw new ArgumentNullException("logger");
+            if (serviceClients == null) throw new ArgumentNullException("serviceClients");
+            if (users == null) throw new ArgumentNullException("users");
+
             _logger = logger;
+            _serviceClients = serviceClients;
+            _users = users;
         }
 
         public SitecoreRequest()
-            : this(new TraceLogger())
+            : this(new TraceLogger(), ApplicationContainer.SitecoreService(), ApplicationContainer.CurrentUsers())
         {
         }
 
@@ -37,7 +45,7 @@ namespace Sitecore.Glimpse.Infrastructure
             return new RequestDataNotLoaded();
         }
 
-        private static RequestData GetSitecoreData()
+        private RequestData GetSitecoreData()
         {
             var data = new RequestData();
 
@@ -56,8 +64,8 @@ namespace Sitecore.Glimpse.Infrastructure
             data.Add(DataKey.Item, GetItem());
             data.Add(DataKey.VersionInfo, GetVersionInfo());
             data.Add(DataKey.License, GetLicense());
-            data.Add(DataKey.Services, GetServices());
-            data.Add(DataKey.UserList, GetUserList());
+            data.Add(DataKey.Services, _serviceClients.ToArray());
+            data.Add(DataKey.UserList, _users.ToArray());
 
             return data;
         }
@@ -82,11 +90,6 @@ namespace Sitecore.Glimpse.Infrastructure
             return Configuration.About.VersionInformation();
         }
 
-        private static LoggedInUser[] GetUserList()
-        {
-            return new CurrentUsers().GetUsers();
-        }
-
         private static FieldList GetLicense()
         {
             var data = new FieldList();
@@ -99,11 +102,6 @@ namespace Sitecore.Glimpse.Infrastructure
             data.AddField("Expires", license.Expiration.ToShortDateString());
 
             return data;
-        }
-
-        private static SitecoreService[] GetServices()
-        {
-            return new SitecoreServices(null).GetServices();
         }
 
         private static FieldList GetCulture()

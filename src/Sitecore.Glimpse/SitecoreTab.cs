@@ -45,7 +45,7 @@ namespace Sitecore.Glimpse
                     plugin.AddRow().Column("Context").Column(contextSection).Quiet();
 
                 if (serverSection != null)
-                    plugin.AddRow().Column("Server").Column(serverSection).Quiet();
+                    plugin.AddRow().Column("Server").Column(serverSection);
 
                 return plugin;
             }

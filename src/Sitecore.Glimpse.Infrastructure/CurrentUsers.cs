@@ -1,26 +1,29 @@
 ﻿using System.Collections.Generic;
-
+using System.Linq;
 using Sitecore.Glimpse.Model;
 using Sitecore.Web.Authentication;
 
 namespace Sitecore.Glimpse.Infrastructure
 {
-    internal class CurrentUsers
+    internal class CurrentUsers : ICollectionProvider<LoggedInUser>
     {
-        public LoggedInUser[] GetUsers()
+        public ICollection<LoggedInUser> Collection { get { return GetUsers(); } }
+
+        private static ICollection<LoggedInUser> GetUsers()
         {
-            var sessions = DomainAccessGuard.Sessions;
+            return DomainAccessGuard.Sessions.Select(GetSitecoreUser).ToArray();
+        }
 
-            var users = new List<LoggedInUser>();
+        private static LoggedInUser GetSitecoreUser(DomainAccessGuard.Session session)
+        {
+            var sitecoreUser = Security.Accounts.User.FromName(session.UserName, false);
 
-            foreach (var session in sessions)
-            {
-                var sitecoreUser = Security.Accounts.User.FromName(session.UserName, false);
-
-                users.Add(new LoggedInUser(session.SessionID, session.UserName, session.Created, session.LastRequest, sitecoreUser.IsAdministrator));
-            }
-
-            return users.ToArray();
+            return new LoggedInUser(
+                            session.SessionID, 
+                            session.UserName, 
+                            session.Created, 
+                            session.LastRequest,
+                            sitecoreUser.IsAdministrator);
         }
     }
 }
