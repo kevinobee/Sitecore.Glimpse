@@ -19,21 +19,15 @@ namespace Sitecore.Glimpse.Analytics
 
             var profiles = (Profile[]) _sitecoreData[DataKey.Profiles];
 
-            if ((profiles == null) || (!profiles.Any(x => x.IsMatch))) return defaultInsight;
+            if ((profiles == null) || (profiles.Length == 0)) return null;
 
-            var matchingProfiles = profiles.Where(x => x.IsMatch).Select(x => new {x.Name, x.Dimension});
-
-            var builder = new StringBuilder();
-            foreach (var matchingProfile in matchingProfiles)
-            {
-                if (builder.Length > 0)
-                {
-                    builder.Append(", ");
-                }
-                builder.AppendFormat("{0}: {1}", matchingProfile.Dimension, matchingProfile.Name);
-            }
-
-            return builder.ToString();
+            var matchedProfiles = profiles.Where(p => !string.IsNullOrEmpty(p.PatternCard));
+            
+            if(!matchedProfiles.Any()) return defaultInsight;
+            
+            return matchedProfiles.Select(p => p.PatternCard)
+                .Aggregate((acu, ele) => acu += ", "+ele );
+            
         }
     }
 }

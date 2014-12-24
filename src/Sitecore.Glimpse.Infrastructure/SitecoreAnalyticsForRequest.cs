@@ -66,18 +66,19 @@ namespace Sitecore.Glimpse.Infrastructure
 
         private IEnumerable<Profile> GetProfiles()
         {
-            var patternCards = _sitecoreRepository.GetPatternCards().ToArray();
 
-            var matchedPatterns = GetMatchedPatternCards().ToList();
+            var analyticsProfiles = _trackerBuilder.Tracker.Interaction.Profiles;
+            
+            var returnList = new List<Profile>();
+            
+            foreach (var profileName in analyticsProfiles.GetProfileNames())
+            {
+                var profile = analyticsProfiles[profileName];
+                returnList.Add(new Profile() { Name = profileName, PatternCard = profile.PatternLabel,Values = profile.ToString()});
+            }
+                
 
-            var profiles = patternCards.Select(x => new Profile
-                {
-                    Name = x.Name,
-                    IsMatch = matchedPatterns.Any(m => m == x.ID),
-                    Dimension = x.Dimension
-                }).ToArray();
-
-            return profiles;
+            return returnList.ToArray();
 
         }
 
@@ -121,7 +122,7 @@ namespace Sitecore.Glimpse.Infrastructure
                                             .OrderByDescending(p => p.DateTime)
                                             .Skip(1)
                                             .Take(numberOfPages)
-                                            .Select(x => new PageHolder(x.Item.Id, x.DateTime, x.Url.ToString())).ToArray();
+                                            .Select(x => new PageHolder(x.VisitPageIndex,x.Item.Id, x.DateTime, x.Url.ToString())).ToArray();
 
             return pages;
         }

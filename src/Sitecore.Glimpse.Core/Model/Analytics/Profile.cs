@@ -2,8 +2,8 @@
 {
     public class Profile
     {
+        public string Values { get; set; }
         public string Name { get; set; }
-        public string Dimension { get; set; }
-        public bool IsMatch { get; set; } 
+        public string PatternCard { get; set; } 
     }
 }

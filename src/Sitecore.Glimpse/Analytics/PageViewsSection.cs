@@ -15,11 +15,11 @@ namespace Sitecore.Glimpse.Analytics
 
             if ((lastPages == null) || (lastPages.Length == 0)) return null;
 
-            var section = new TabSection("Id", "Timestamp", "Url");
+            var section = new TabSection("#","Id", "Timestamp", "Url");
 
             foreach (var pageHolder in lastPages)
             {
-                section.AddRow().Column(pageHolder.Id).Column(pageHolder.Date).Column(pageHolder.Url);
+                section.AddRow().Column(pageHolder.Num).Column(pageHolder.Id).Column(pageHolder.Date).Column(pageHolder.Url);
             }
 
             return section;
