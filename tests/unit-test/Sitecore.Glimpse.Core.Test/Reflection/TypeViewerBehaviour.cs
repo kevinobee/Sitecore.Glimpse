@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Web.Http;
 using Sitecore.Glimpse.Reflection;
 using Should;
 using Xunit;
@@ -53,12 +54,6 @@ namespace Sitecore.Glimpse.Core.Test.Reflection
         public void should_return_inherited_public_methods_via_base()
         {
             _sut.Base.Methods.Count(x => x.Name == "InheritedPublicMethod").ShouldEqual(1);
-        }
-
-        [Fact]
-        public void hides_entity_service_generic_base_class()
-        {
-            _sut.Base.Base.Base.ShouldBeNull();
         }
 
         [Fact]
@@ -136,7 +131,7 @@ namespace Sitecore.Glimpse.Core.Test.Reflection
     {
     }
 
-    public abstract class MyServicesBaseApiController<T> 
+    public abstract class MyServicesBaseApiController<T> : ApiController
     {
         public void InheritedPublicMethod()
         {
