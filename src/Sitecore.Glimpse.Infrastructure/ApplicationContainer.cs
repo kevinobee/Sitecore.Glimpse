@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Web.Http.Dispatcher;
-
 using Sitecore.Glimpse.Infrastructure.Caching;
 using Sitecore.Glimpse.Infrastructure.Reflection;
 using Sitecore.Glimpse.Model;

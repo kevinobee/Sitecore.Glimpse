@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-
-using Sitecore.Analytics;
 using Sitecore.Glimpse.Model.Analytics;
 
 namespace Sitecore.Glimpse.Infrastructure
