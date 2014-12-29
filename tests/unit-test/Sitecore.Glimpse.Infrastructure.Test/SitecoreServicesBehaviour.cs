@@ -3,7 +3,6 @@ using System.Linq;
 using System.Net.Http;
 using Moq;
 using Should;
-using Sitecore.Glimpse.Model;
 using Sitecore.Services.Core;
 using Sitecore.Services.Core.Configuration;
 using Sitecore.Services.Core.Model;
@@ -19,26 +18,26 @@ namespace Sitecore.Glimpse.Infrastructure.Test
         private readonly Mock<IControllerNameGenerator> _nameGenerator;
         private readonly Mock<ITypeProvider> _typeProvider;
         private readonly Mock<IMetaDataBuilder> _metadataBuilder;
-        private readonly Mock<IServicesConfiguration> _servicesConfiguration;
 
         public SitecoreServicesBehaviour()
         {
             _typeProvider = new Mock<ITypeProvider>();
             _nameGenerator = new Mock<IControllerNameGenerator>();
             _metadataBuilder = new Mock<IMetaDataBuilder>();
-            _servicesConfiguration = new Mock<IServicesConfiguration>();
+            
+            var servicesConfiguration = new Mock<IServicesConfiguration>();
 
             _sut = new SitecoreServices(
                             _typeProvider.Object, 
                             _nameGenerator.Object, 
                             _metadataBuilder.Object, 
-                            _servicesConfiguration.Object);
+                            servicesConfiguration.Object);
 
             _typeProvider.SetupGet(x => x.Types).Returns(new[] { typeof(TestController), typeof(TestService) });
 
             _nameGenerator.Setup(x => x.GetName((It.IsAny<Type>()))).Returns("foo.bar");
 
-            _servicesConfiguration.SetupGet(x => x.Configuration)
+            servicesConfiguration.SetupGet(x => x.Configuration)
                 .Returns(new ServicesSettingsConfiguration
                 {
                     Services =
@@ -76,7 +75,6 @@ namespace Sitecore.Glimpse.Infrastructure.Test
 
             service.IsEntityService.ShouldBeFalse();
             service.Metadata.ShouldBeNull();
-            service.ObjectType.ShouldBeNull();
         }
 
         [Fact]
