@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Sitecore.Glimpse.Extensions;
+using Newtonsoft.Json;
+using Sitecore.Glimpse.Infrastructure.Extensions;
 using Sitecore.Glimpse.Model;
+using Sitecore.Glimpse.Reflection;
 using Sitecore.Services.Core;
 using Sitecore.Services.Core.Configuration;
 using Sitecore.Services.Infrastructure.Services;
@@ -39,11 +41,16 @@ namespace Sitecore.Glimpse.Infrastructure
 
         private SitecoreService BuildSitecoreService(Type controllerType)
         {
+            var controller = new TypeViewer(
+                                    controllerType, 
+                                    TypeExtensions.IsRootType, 
+                                    TypeExtensions.IsRootAttribute);
+
             var service = new SitecoreService
             {
                 Controller = RemoveControllerSuffix(controllerType.FullName),
                 Url = GetRouteFromType(controllerType),
-                Attributes = controllerType.GetAttributes().ToArray()
+                Definition = controller.ToJson()
             };
 
             var entityService = controllerType.GetGenericInterface(typeof(IEntityService<>));
@@ -53,7 +60,6 @@ namespace Sitecore.Glimpse.Infrastructure
                 var pocoObject = entityService.GetGenericArguments()[0];
 
                 service.IsEntityService = true;
-                service.ObjectType = pocoObject.FullName;
                 service.Metadata = GetMetadata(pocoObject);
             }
 
@@ -64,12 +70,21 @@ namespace Sitecore.Glimpse.Infrastructure
         {
             try
             {
-                return _metaDataBuilder.Parse(type);
+                var metadata = _metaDataBuilder.Parse(type);
+
+                return FormatJsonMetadata(metadata);
             }
             catch (Exception exception)
             {
                 return exception.Message;
             }
+        }
+
+        private static string FormatJsonMetadata(string value)
+        {
+            var metadataObject = JsonConvert.DeserializeObject<Dictionary<string, object>>(value);
+
+            return JsonConvert.SerializeObject(metadataObject, Formatting.Indented);
         }
 
         private string GetRouteFromType(Type controllerType)

@@ -19,7 +19,7 @@ namespace Sitecore.Glimpse.Core.Test.Model
         [InlineData(true, new[] { "SomeAttribute", "EnableCorsAttribute" })]
         public void cors_enabled_when_enable_cors_attribute_present(bool isCorsEnabled, string[] attributes)
         {
-            _sut.Attributes = attributes;
+            _sut.Definition = string.Join(", ", attributes);
 
             _sut.CorsEnabled.ShouldEqual(isCorsEnabled);
         }

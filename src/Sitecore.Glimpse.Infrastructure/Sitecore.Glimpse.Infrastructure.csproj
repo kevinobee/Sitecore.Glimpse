@@ -89,6 +89,7 @@
     <Compile Include="CachingSitecoreRepository.cs" />
     <Compile Include="CachingSitecoreServices.cs" />
     <Compile Include="Caching\WebCacheAdapter.cs" />
+    <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="Reflection\ControllerAssemblyScanner.cs" />
     <Compile Include="CurrentUsers.cs" />
     <Compile Include="FeaturesSupported.cs" />
