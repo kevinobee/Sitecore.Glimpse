@@ -16,6 +16,7 @@ namespace Sitecore.Glimpse.Infrastructure.Test.Extensions
         [InlineData(typeof(ActionFilterAttribute), true)]
         [InlineData(typeof(ActionNameAttribute), true)]
         [InlineData(typeof(EnableCorsAttribute), false)]
+        [InlineData(typeof(AuthorizationFilterAttribute), true)]
         public void Root_attribute_checks(Type attributeType, bool isRoot)
         {
             TypeExtensions.IsRootAttribute(attributeType).ShouldEqual(isRoot);

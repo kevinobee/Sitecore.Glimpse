@@ -24,7 +24,8 @@ namespace Sitecore.Glimpse.Infrastructure.Extensions
                 typeof(Attribute), 
                 typeof(FilterAttribute),
                 typeof(ActionFilterAttribute),
-                typeof(ActionNameAttribute)
+                typeof(ActionNameAttribute),
+                typeof(AuthorizationFilterAttribute)
             };
 
             return ((type.BaseType == null) || (rootTypes.Contains(type)));
@@ -35,11 +36,12 @@ namespace Sitecore.Glimpse.Infrastructure.Extensions
             var rootTypes = new[]
             {
                 typeof(object), 
+                typeof(System.Web.Http.ApiController), 
                 typeof(ServicesApiController), 
                 typeof(EntityServiceBase<>)
             };
 
-            return ((type.BaseType == null) || (rootTypes.Any(x => x.Name == type.BaseType.Name)));
+            return ((type.BaseType == null) || (rootTypes.Any(x => x.Name == type.Name)) || (rootTypes.Any(x => x.Name == type.BaseType.Name)));
         }
     }
 }
