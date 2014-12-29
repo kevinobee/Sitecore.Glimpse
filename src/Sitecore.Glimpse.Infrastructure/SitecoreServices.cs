@@ -18,10 +18,7 @@ namespace Sitecore.Glimpse.Infrastructure
         private readonly IMetaDataBuilder _metaDataBuilder;
         private readonly IServicesConfiguration _servicesConfiguration;
 
-        public SitecoreServices(ITypeProvider typeProvider, 
-                                IControllerNameGenerator controllerNameGenerator, 
-                                IMetaDataBuilder metaDataBuilder, 
-                                IServicesConfiguration servicesConfiguration) 
+        public SitecoreServices(ITypeProvider typeProvider, IControllerNameGenerator controllerNameGenerator, IMetaDataBuilder metaDataBuilder, IServicesConfiguration servicesConfiguration) 
         {
             if (typeProvider == null) throw new ArgumentNullException("typeProvider");
             if (controllerNameGenerator == null) throw new ArgumentNullException("controllerNameGenerator");
@@ -89,9 +86,15 @@ namespace Sitecore.Glimpse.Infrastructure
 
         private string GetRouteFromType(Type controllerType)
         {
-            var name = _controllerNameGenerator.GetName(controllerType);
+            if (ServicesControllerAttribute.IsPresentOn(controllerType))
+            {
+                var name = _controllerNameGenerator.GetName(controllerType);
 
-            return string.Concat(_servicesConfiguration.Configuration.Services.Routes.RouteBase, name.Replace('.', '/'));
+                return string.Concat(_servicesConfiguration.Configuration.Services.Routes.RouteBase,
+                    name.Replace('.', '/'));
+            }
+            
+            return "See Routes tab for details";
         }
 
         private static string RemoveControllerSuffix(string name)

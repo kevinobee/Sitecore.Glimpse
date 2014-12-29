@@ -78,11 +78,23 @@ namespace Sitecore.Glimpse.Infrastructure.Test
         }
 
         [Fact]
-        public void should_call_name_generator_to_set_url_for_services()
+        public void calls_name_generator_to_set_url_for_services_when_ServicesController_attribute_is_on_controller()
         {
             var sitecoreServices = _sut.Collection;
 
             _nameGenerator.Verify(x => x.GetName(It.IsAny<Type>()));
+        }
+
+        [Fact]
+        public void url_is_from_route_tab_for_services_when_ServicesController_attribute_is_not_on_controller()
+        {
+            _typeProvider.SetupGet(x => x.Types).Returns(new[] { typeof(NonServicesTestController) });
+
+            var sitecoreServices = _sut.Collection;
+
+            sitecoreServices.Single(x => x.Definition.Contains(typeof(NonServicesTestController).Name))
+                            .Url
+                            .ShouldEqual("See Routes tab for details");
         }
 
         [Fact]
@@ -94,7 +106,12 @@ namespace Sitecore.Glimpse.Infrastructure.Test
         }
     }
 
+    [ServicesController]
     public class TestController : ServicesApiController
+    {
+    }
+
+    public class NonServicesTestController : ServicesApiController
     {
     }
 
