@@ -70,12 +70,14 @@
     <Compile Include="ICollectionProvider.cs" />
     <Compile Include="ILog.cs" />
     <Compile Include="ISitecoreRequest.cs" />
+    <Compile Include="ITypeProvider.cs" />
     <Compile Include="Model\Analytics\Goal.cs" />
     <Compile Include="Model\Analytics\PageHolder.cs" />
     <Compile Include="Model\Analytics\Pattern.cs" />
     <Compile Include="FieldList.cs" />
     <Compile Include="Model\Analytics\PatternCard.cs" />
     <Compile Include="Model\Analytics\Profile.cs" />
+    <Compile Include="Model\Controller.cs" />
     <Compile Include="Model\LoggedInUser.cs" />
     <Compile Include="Model\SitecoreService.cs" />
     <Compile Include="Reflection\AttributeViewer.cs" />

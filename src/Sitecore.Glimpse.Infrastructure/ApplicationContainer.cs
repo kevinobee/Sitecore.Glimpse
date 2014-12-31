@@ -21,7 +21,7 @@ namespace Sitecore.Glimpse.Infrastructure
 
         public static IEnumerable<SitecoreService> SitecoreService()
         {
-            var typeProvider = new ControllerAssemblyScanner();
+            var typeProvider = GetServicesControllerScanner();
 
             var nameGenerator = new NamespaceQualifiedUniqueNameGenerator(DefaultHttpControllerSelector.ControllerSuffix);
 
@@ -34,6 +34,11 @@ namespace Sitecore.Glimpse.Infrastructure
                                             servicesConfiguration);
 
             return new CachingSitecoreServices(internalService, new WebCacheAdapter()).Collection;
+        }
+
+        private static ServicesControllerAssemblyScanner GetServicesControllerScanner()
+        {
+            return new ServicesControllerAssemblyScanner(GetAssemblyScanner());
         }
 
         public static IEnumerable<LoggedInUser> CurrentUsers()
@@ -66,9 +71,19 @@ namespace Sitecore.Glimpse.Infrastructure
             return new SitecoreLogger();
         }
 
-        private static Assembly[] GetSiteAssemblies()
+        private static Assembly[] GetSiteAssemblies() 
         {
             return _siteAssemblies ?? (_siteAssemblies = AppDomain.CurrentDomain.GetAssemblies());
+        }
+
+        private static ITypeProvider GetAssemblyScanner()
+        {
+            return new AssemblyScanner();    
+        }
+
+        public static IEnumerable<Controller> Controllers()
+        {
+            return new Controllers(GetAssemblyScanner(), GetServicesControllerScanner()).Collection;
         }
     }
 }

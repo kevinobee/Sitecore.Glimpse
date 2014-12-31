@@ -25,7 +25,11 @@ namespace Sitecore.Glimpse.Infrastructure.Extensions
                 typeof(FilterAttribute),
                 typeof(ActionFilterAttribute),
                 typeof(ActionNameAttribute),
-                typeof(AuthorizationFilterAttribute)
+                typeof(AuthorizationFilterAttribute),
+                typeof(System.Web.Mvc.ActionFilterAttribute),
+                typeof(System.Web.Mvc.AcceptVerbsAttribute),
+                typeof(System.Web.Mvc.FilterAttribute),
+                typeof(System.Web.Mvc.ActionMethodSelectorAttribute)
             };
 
             return ((type.BaseType == null) || (rootTypes.Contains(type)));
@@ -38,7 +42,8 @@ namespace Sitecore.Glimpse.Infrastructure.Extensions
                 typeof(object), 
                 typeof(System.Web.Http.ApiController), 
                 typeof(ServicesApiController), 
-                typeof(EntityServiceBase<>)
+                typeof(EntityServiceBase<>),
+                typeof(System.Web.Mvc.Controller)
             };
 
             return ((type.BaseType == null) || (rootTypes.Any(x => x.Name == type.Name)) || (rootTypes.Any(x => x.Name == type.BaseType.Name)));
