@@ -35,15 +35,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "lib", "lib", "{BFDC90B2-65F
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "packaging", "packaging", "{05F4023A-A4F6-4844-8175-8D7E04C63913}"
 	ProjectSection(SolutionItems) = preProject
-		build\packaging\Sitecore.Glimpse.Mvc3.nuspec = build\packaging\Sitecore.Glimpse.Mvc3.nuspec
-		build\packaging\Sitecore.Glimpse.Mvc4.nuspec = build\packaging\Sitecore.Glimpse.Mvc4.nuspec
 		build\packaging\Sitecore.Glimpse.Mvc5.nuspec = build\packaging\Sitecore.Glimpse.Mvc5.nuspec
-		build\packaging\Sitecore.Glimpse.nuspec = build\packaging\Sitecore.Glimpse.nuspec
-		build\packaging\Sitecore.Glimpse.WebForms.nuspec = build\packaging\Sitecore.Glimpse.WebForms.nuspec
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{D11D4F10-B2C8-4E1C-BF78-B192D303D20D}"
 	ProjectSection(SolutionItems) = preProject
+		License.txt = License.txt
 		README.md = README.md
 	EndProjectSection
 EndProject
@@ -61,17 +58,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Glimpse.Infrastruc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Glimpse.Core", "src\Sitecore.Glimpse.Core\Sitecore.Glimpse.Core.csproj", "{7A573B93-5410-4B9C-832E-3B034E49383E}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Legacy Support", "Legacy Support", "{A4B47B75-E43B-4822-ACF1-C4839D2BD5E9}"
-	ProjectSection(SolutionItems) = preProject
-		src\ReadMe.txt = src\ReadMe.txt
-	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Glimpse.Core.Net35", "src\Sitecore.Glimpse.Core.Net35\Sitecore.Glimpse.Core.Net35.csproj", "{3B0EF085-E7E7-4279-8F76-6A3FC0C56906}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Glimpse.Infrastructure.Net35", "src\Sitecore.Glimpse.Infrastructure.Net35\Sitecore.Glimpse.Infrastructure.Net35.csproj", "{16ABEE19-32F7-4AA4-A463-25174C604E5A}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Glimpse.Net35", "src\Sitecore.Glimpse.Net35\Sitecore.Glimpse.Net35.csproj", "{FD7992E7-615D-4FFB-879D-7407F07C1FEA}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Glimpse.Infrastructure.Test", "tests\unit-test\Sitecore.Glimpse.Infrastructure.Test\Sitecore.Glimpse.Infrastructure.Test.csproj", "{C3D4E476-50BD-49AA-A0AF-82F4FB7FFFC2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "smoke test", "smoke test", "{3928C791-5A3E-4647-8666-B6D1D71991BA}"
@@ -79,6 +65,11 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Glimpse.Smoke.Test", "tests\smoke-test\Sitecore.Glimpse.Smoke.Test\Sitecore.Glimpse.Smoke.Test.csproj", "{FDC463E9-4672-4F06-9DF2-610914056C60}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Glimpse.Core.Test", "tests\unit-test\Sitecore.Glimpse.Core.Test\Sitecore.Glimpse.Core.Test.csproj", "{FE331CB1-09E4-43EB-AE96-D4D120074CCC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{20C6FBE0-1C3A-4B70-ABF8-9A8AD2E6F902}"
+	ProjectSection(SolutionItems) = preProject
+		Performance1.psess = Performance1.psess
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -102,18 +93,6 @@ Global
 		{7A573B93-5410-4B9C-832E-3B034E49383E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7A573B93-5410-4B9C-832E-3B034E49383E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7A573B93-5410-4B9C-832E-3B034E49383E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3B0EF085-E7E7-4279-8F76-6A3FC0C56906}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3B0EF085-E7E7-4279-8F76-6A3FC0C56906}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3B0EF085-E7E7-4279-8F76-6A3FC0C56906}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3B0EF085-E7E7-4279-8F76-6A3FC0C56906}.Release|Any CPU.Build.0 = Release|Any CPU
-		{16ABEE19-32F7-4AA4-A463-25174C604E5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{16ABEE19-32F7-4AA4-A463-25174C604E5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{16ABEE19-32F7-4AA4-A463-25174C604E5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{16ABEE19-32F7-4AA4-A463-25174C604E5A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FD7992E7-615D-4FFB-879D-7407F07C1FEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FD7992E7-615D-4FFB-879D-7407F07C1FEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FD7992E7-615D-4FFB-879D-7407F07C1FEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FD7992E7-615D-4FFB-879D-7407F07C1FEA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C3D4E476-50BD-49AA-A0AF-82F4FB7FFFC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C3D4E476-50BD-49AA-A0AF-82F4FB7FFFC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C3D4E476-50BD-49AA-A0AF-82F4FB7FFFC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -138,12 +117,12 @@ Global
 		{0E821D5A-760E-4D95-9F45-63840E6BED6B} = {F0717179-F14B-4667-8D5A-5980EC935F0F}
 		{13D0192C-3E97-44FF-AF0F-914F0D254A0D} = {F0717179-F14B-4667-8D5A-5980EC935F0F}
 		{7A573B93-5410-4B9C-832E-3B034E49383E} = {F0717179-F14B-4667-8D5A-5980EC935F0F}
-		{3B0EF085-E7E7-4279-8F76-6A3FC0C56906} = {A4B47B75-E43B-4822-ACF1-C4839D2BD5E9}
-		{16ABEE19-32F7-4AA4-A463-25174C604E5A} = {A4B47B75-E43B-4822-ACF1-C4839D2BD5E9}
-		{FD7992E7-615D-4FFB-879D-7407F07C1FEA} = {A4B47B75-E43B-4822-ACF1-C4839D2BD5E9}
 		{C3D4E476-50BD-49AA-A0AF-82F4FB7FFFC2} = {923D9377-9025-425B-9698-1A38947CA973}
 		{3928C791-5A3E-4647-8666-B6D1D71991BA} = {2A29E5BC-9DE1-4299-AFD9-86F1CC77B921}
 		{FDC463E9-4672-4F06-9DF2-610914056C60} = {3928C791-5A3E-4647-8666-B6D1D71991BA}
 		{FE331CB1-09E4-43EB-AE96-D4D120074CCC} = {923D9377-9025-425B-9698-1A38947CA973}
+	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
 	EndGlobalSection
 EndGlobal
