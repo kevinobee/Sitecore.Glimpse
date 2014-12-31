@@ -14,6 +14,7 @@ namespace Sitecore.Glimpse.Infrastructure.Test.Extensions
         [InlineData(typeof(ServicesApiController), true)]
         [InlineData(typeof(ApiController), true)]
         [InlineData(typeof(EntityServiceBase<>), true)]
+        [InlineData(typeof(System.Web.Mvc.Controller), true)]        
         public void Root_type_checks(Type type, bool isRoot)
         {
             TypeExtensions.IsRootType(type).ShouldEqual(isRoot);

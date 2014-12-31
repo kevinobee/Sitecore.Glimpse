@@ -67,6 +67,7 @@
     <Compile Include="Analytics\SitecoreAnalyticsTab.cs" />
     <Compile Include="BaseSection.cs" />
     <Compile Include="ContextSection.cs" />
+    <Compile Include="ControllersSection.cs" />
     <Compile Include="GlimpseSecurityPolicy.cs" />
     <Compile Include="ItemSection.cs" />
     <Compile Include="ItemSummary.cs" />

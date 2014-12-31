@@ -14,20 +14,23 @@ namespace Sitecore.Glimpse.Infrastructure
         private readonly ILog _logger;
         private readonly IEnumerable<SitecoreService> _serviceClients;
         private readonly IEnumerable<LoggedInUser> _users;
+        private readonly IEnumerable<Controller> _controllers;
 
-        public SitecoreRequest(ILog logger, IEnumerable<SitecoreService> serviceClients, IEnumerable<LoggedInUser> users)
+        public SitecoreRequest(ILog logger, IEnumerable<SitecoreService> serviceClients, IEnumerable<LoggedInUser> users, IEnumerable<Controller> controllers)
         {
             if (logger == null) throw new ArgumentNullException("logger");
             if (serviceClients == null) throw new ArgumentNullException("serviceClients");
             if (users == null) throw new ArgumentNullException("users");
+            if (controllers == null) throw new ArgumentNullException("controllers");
 
             _logger = logger;
             _serviceClients = serviceClients;
             _users = users;
+            _controllers = controllers;
         }
 
         public SitecoreRequest()
-            : this(new TraceLogger(), ApplicationContainer.SitecoreService(), ApplicationContainer.CurrentUsers())
+            : this(new TraceLogger(), ApplicationContainer.SitecoreService(), ApplicationContainer.CurrentUsers(), ApplicationContainer.Controllers())
         {
         }
 
@@ -65,6 +68,7 @@ namespace Sitecore.Glimpse.Infrastructure
             data.Add(DataKey.VersionInfo, GetVersionInfo());
             data.Add(DataKey.License, GetLicense());
             data.Add(DataKey.Services, _serviceClients.ToArray());
+            data.Add(DataKey.Controllers, _controllers.ToArray());
             data.Add(DataKey.UserList, _users.ToArray());
 
             return data;

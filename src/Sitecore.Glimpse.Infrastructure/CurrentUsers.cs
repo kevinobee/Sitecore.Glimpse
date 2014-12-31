@@ -7,11 +7,9 @@ namespace Sitecore.Glimpse.Infrastructure
 {
     internal class CurrentUsers : ICollectionProvider<LoggedInUser>
     {
-        public ICollection<LoggedInUser> Collection { get { return GetUsers(); } }
-
-        private static ICollection<LoggedInUser> GetUsers()
+        public ICollection<LoggedInUser> Collection
         {
-            return DomainAccessGuard.Sessions.Select(GetSitecoreUser).ToArray();
+            get { return DomainAccessGuard.Sessions.Select(GetSitecoreUser).ToArray(); }
         }
 
         private static LoggedInUser GetSitecoreUser(DomainAccessGuard.Session session)
