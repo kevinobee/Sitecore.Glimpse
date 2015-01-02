@@ -1,0 +1,80 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Sitecore.Glimpse - Sitecore 8.0 Notes</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+</head>
+<body>
+
+<div id="header">
+    <nav>
+        <li class="fork"><a href="https://github.com/kevinobee/Sitecore.Glimpse">View On GitHub</a></li>
+        <li class="downloads"><a href="https://github.com/kevinobee/Sitecore.Glimpse/zipball/master">ZIP</a></li>
+        <li class="downloads"><a href="https://github.com/kevinobee/Sitecore.Glimpse/tarball/master">TAR</a></li>
+        <li class="title">DOWNLOADS</li>
+    </nav>
+</div>
+<!-- end header -->
+
+<div class="wrapper">
+    <section>
+        <div id="title">
+            <h1><a href="/Sitecore.Glimpse/">Sitecore.Glimpse</a></h1>
+
+            <p>Web diagnostics for Sitecore</p>
+            <hr>
+            <span class="credits left">Project maintained by <a href="https://github.com/kevinobee">kevinobee</a></span>
+            <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a
+                    href="https://twitter.com/michigangraham">mattgraham</a></span>
+        </div>
+
+        <h1>
+            <a name="getting-started" class="anchor" href="#getting-started"><span
+                    class="octicon octicon-link"></span></a>Sitecore 8.0 Notes
+        </h1>
+
+        <p>This page will explain how install Sitecore.Glimpse.Mvc5 into a Sitecore 8.0 project.</p>
+
+        <h3>Background</h3>
+
+        <p>
+            The Sitecore 8.0 release deploys Ninject in the bin\social folder.
+            The Glimpse HTTP module in added to the <strong>system.web\httpModules</strong> configuration section ahead of the <strong>SitecoreHttpModule</strong> when the Sitecore.Glimpse.Mvc5 package is installed.
+            After rebuilding the site HTTP requests will raise an unhandled exception associated with the ILogManager.
+        </p>
+
+        <p><img src="images/ILogManager-Activation-Error.PNG" alt="ILogManager exception details"></p>
+
+
+        <h3>Temporary Workaround</h3>
+
+        <p>As a workaround for this exception consider renaming or removing the <strong></strong>bin\social\ninject.dll</strong> so that it is not picked up as a system assembly. Note this will disable the social functions within Sitecore but will permit Glimpse to run without raising exceptions.</p>
+
+</section>
+
+    <footer>
+        <nav>
+            <a href="/Sitecore.Glimpse/" title="Back to the Home page"><b>HOME</b></a> | <a href="#" title="To the top of this page"><b>BACK TO TOP</b></a>
+        </nav>
+    </footer>
+
+</div>
+<!--[if !IE]>
+<script>fixScale(document);</script><![endif]-->
+
+</body>
+</html>
