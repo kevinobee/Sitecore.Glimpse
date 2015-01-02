@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Sitecore.Glimpse - Getting Started</title>
+    <title>Sitecore.Glimpse - Getting Started with Older Versions</title>
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
@@ -44,32 +44,48 @@
 
         <h1>
             <a name="getting-started" class="anchor" href="#getting-started"><span
-                    class="octicon octicon-link"></span></a>Getting Started
+                    class="octicon octicon-link"></span></a>Getting Started (Older Versions)
         </h1>
 
-        <p>This page will explain how to get started with Sitecore.Glimpse.</p>
+        <p>This page will explain how to get started with Sitecore.Glimpse using versions of Sitecore earlier than 7.5.</p>
 
-        <p>You can either pull the latest packages from the NuGet gallery straight into your Visual Studio project
-            or if you wish to work with your own copy of the Sitecore.Glimpse code then clone the <a href="https://github.com/kevinobee/Sitecore.Glimpse">GitHub repository</a> to get the latest code.</p>
+        <h3>ASP.NET MVC 4</h3>
 
-        <p>This project contains the source, corresponding unit tests and build environment for the following NuGet packages:</p>
+        <p>
+            Sitecore 7.2 supports ASP.NET MVC4. To install Sitecore.Glimpse for MVC 4, run the following command in the Package Manager Console
+        </p>
+
+        <pre><code>install-package Sitecore.Glimpse.Mvc4</code></pre>
+
+        <p>
+            For those wanting to run Sitecore with MVC 4 on 7.0 or earlier there are <a href="http://herskind.co.uk/blog/2012/10/sitecore-66-mvc4">blog posts</a> available that describe the required configuration updates.
+        </p>
 
         <hr/>
 
-        <h2>Installing packages from the NuGet Gallery</h2>
+        <h3>ASP.NET MVC 3</h3>
 
-        <p>Sitecore 7.5 and above are supported by a single NuGet package which can be added to your project.</p>
+        <p>
+            Sitecore 6.6 and Sitecore 7.0 support ASP.NET MVC3. To install Sitecore.Glimpse to report on MVC features, run the following command in the
+            Package Manager Console
+        </p>
 
-        <p>Run the following command in the <a href="http://docs.nuget.org/docs/start-here/using-the-package-manager-console">
+        <pre><code>install-package Sitecore.Glimpse.Mvc3</code></pre>
+
+        <hr/>
+
+        <h3>ASP.NET Web Forms</h3>
+
+        <p>
+            To install Sitecore.Glimpse.WebForms for an ASP.NET Web Forms project in Sitecore 7.2 and earlier, run the following command in the <a href="http://docs.nuget.org/docs/start-here/using-the-package-manager-console">
             Package Manager Console</a>
         </p>
 
-        <pre><code>install-package Sitecore.Glimpse.Mvc5</code></pre>
+        <pre><code>install-package Sitecore.Glimpse.WebForms</code></pre>
 
-        <h3>Support for older versions of Sitecore</h3>
+        <p><strong>Note:</strong>The Sitecore.Glimpse package has been superseded by Sitecore.Glimpse.WebForms and will be retired in the future.</p>
 
-        <p>For information on how to use Sitecore.Glimpse with versions of Sitecore prior to 7.5 please refer to our <a href="older-versions.html" title="Support for versions prior to Sitecore 7.5">
-            older versions</a> page.</p>
+        <hr/>
 
 </section>
 
