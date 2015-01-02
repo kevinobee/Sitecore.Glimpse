@@ -34,6 +34,8 @@
         <LibFiles Include="Mvp.Xml.dll" />
         <LibFiles Include="Newtonsoft.Json.dll" />
         <LibFiles Include="RadEditor.Net2.dll" />
+        <LibFiles Include="Sitecore.ContentSearch.dll" />
+        <LibFiles Include="Sitecore.ContentSearch.Linq.dll" />
         <LibFiles Include="Sitecore.Logging.dll" />
         <LibFiles Include="Sitecore.NVelocity.dll" />
         <LibFiles Include="Sitecore.Zip.dll" />
