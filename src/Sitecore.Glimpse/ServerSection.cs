@@ -31,6 +31,12 @@ namespace Sitecore.Glimpse
                 section.AddRow().Column("Sitecore Services").Column(servicesSection);
             }
 
+            var controllersSection = new ControllersSection(RequestData).Create();
+            if (controllersSection != null)
+            {
+                section.AddRow().Column("Controllers").Column(controllersSection);
+            }
+
             return section;
         }
 

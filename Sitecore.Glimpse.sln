@@ -65,6 +65,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Glimpse.Smoke.Test
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Glimpse.Core.Test", "tests\unit-test\Sitecore.Glimpse.Core.Test\Sitecore.Glimpse.Core.Test.csproj", "{FE331CB1-09E4-43EB-AE96-D4D120074CCC}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{20C6FBE0-1C3A-4B70-ABF8-9A8AD2E6F902}"
+	ProjectSection(SolutionItems) = preProject
+		Performance1.psess = Performance1.psess
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -115,5 +120,8 @@ Global
 		{3928C791-5A3E-4647-8666-B6D1D71991BA} = {2A29E5BC-9DE1-4299-AFD9-86F1CC77B921}
 		{FDC463E9-4672-4F06-9DF2-610914056C60} = {3928C791-5A3E-4647-8666-B6D1D71991BA}
 		{FE331CB1-09E4-43EB-AE96-D4D120074CCC} = {923D9377-9025-425B-9698-1A38947CA973}
+	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
 	EndGlobalSection
 EndGlobal

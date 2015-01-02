@@ -25,6 +25,7 @@
         License,
         UserList,
         VersionInfo,
-        PageMode
+        PageMode,
+        Controllers
     }
 }
