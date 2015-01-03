@@ -5,11 +5,13 @@
         <version>0.0.0</version>
         <authors>Kevin Obee</authors>
         <owners>kevinobee</owners>
+        <licenseUrl>http://www.opensource.org/licenses/apache2.0</licenseUrl>
         <projectUrl>http://kevinobee.github.io/Sitecore.Glimpse/</projectUrl>
         <iconUrl>https://secure.gravatar.com/avatar/dd3d0f6dd07cbf52325c74c293866410</iconUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
-        <description>Sitecore Glimpse MVC5</description>
-        <releaseNotes>Sitecore.Services and Controller sections added to Sitecore tab.</releaseNotes>
+        <description>Sitecore.Glimpse.MVC5 is a Glimpse plugin for debugging and gaining diagnostics from Sitecore powered websites</description>
+        <summary>Sitecore plugin for Glimpse.</summary>
+        <releaseNotes>Minor release to fix Sitecore Analytics tab with 7.5 API</releaseNotes>
         <tags>Sitecore Glimpse Debugger</tags>
         <language>en-GB</language>
         <dependencies>
