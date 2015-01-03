@@ -32,7 +32,7 @@
         <LibFiles Include="HtmlAgilityPack.dll" />
         <LibFiles Include="Lucene.Net.dll" />
         <LibFiles Include="Mvp.Xml.dll" />
-        <LibFiles Include="Newtonsoft.Json.dll" />
+<!-- TODO        <LibFiles Include="Newtonsoft.Json.dll" />-->
         <LibFiles Include="RadEditor.Net2.dll" />
         <LibFiles Include="Sitecore.Logging.dll" />
         <LibFiles Include="Sitecore.NVelocity.dll" />
