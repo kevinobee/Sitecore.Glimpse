@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Sitecore.Glimpse
 {
-    public interface ITypeProvider  // TODO use this
+    public interface ITypeProvider
     {
         IQueryable<Type> Types { get; }
     }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Web.Http;
 using Sitecore.Glimpse.Reflection;
 using Should;
 using Xunit;
@@ -130,7 +131,7 @@ namespace Sitecore.Glimpse.Core.Test.Reflection
     {
     }
 
-    public abstract class MyServicesBaseApiController<T> 
+    public abstract class MyServicesBaseApiController<T> : ApiController
     {
         public void InheritedPublicMethod()
         {

@@ -3,9 +3,9 @@ using System.Web.Http;
 using System.Web.Http.Cors;
 using System.Web.Http.Filters;
 using Should;
-using Should.Core.Exceptions;
 using Sitecore.Glimpse.Infrastructure.Extensions;
 using Xunit.Extensions;
+
 
 namespace Sitecore.Glimpse.Infrastructure.Test.Extensions
 {

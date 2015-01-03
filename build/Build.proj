@@ -21,7 +21,9 @@
     <ItemGroup>
         <LibFiles Include="Sitecore.Kernel.dll" />
         <LibFiles Include="Sitecore.Analytics.dll" />
+        <LibFiles Include="Sitecore.Analytics.Core.dll" />
         <LibFiles Include="Sitecore.Analytics.DataAccess.dll" />
+        <LibFiles Include="Sitecore.Analytics.Model.dll" />
         <LibFiles Include="Sitecore.Services.Core.dll" />
         <LibFiles Include="Sitecore.Services.Infrastructure.dll" />
         <LibFiles Include="Sitecore.Services.Infrastructure.Sitecore.dll" />
@@ -32,8 +34,11 @@
         <LibFiles Include="HtmlAgilityPack.dll" />
         <LibFiles Include="Lucene.Net.dll" />
         <LibFiles Include="Mvp.Xml.dll" />
-<!-- TODO        <LibFiles Include="Newtonsoft.Json.dll" />-->
+        <LibFiles Include="Newtonsoft.Json.dll" />
         <LibFiles Include="RadEditor.Net2.dll" />
+        <LibFiles Include="Sitecore.Analytics.Processing.dll" />
+        <LibFiles Include="Sitecore.ContentSearch.dll" />
+        <LibFiles Include="Sitecore.ContentSearch.Linq.dll" />
         <LibFiles Include="Sitecore.Logging.dll" />
         <LibFiles Include="Sitecore.NVelocity.dll" />
         <LibFiles Include="Sitecore.Zip.dll" />
