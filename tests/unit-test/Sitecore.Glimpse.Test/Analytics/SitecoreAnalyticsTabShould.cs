@@ -114,7 +114,7 @@ namespace Sitecore.Glimpse.Test.Analytics
 
             requestData.Add(DataKey.LastPages, new[]
                 {
-                    new PageHolder(Guid.NewGuid(), DateTime.Now, "http://microsoft.com/")
+                    new PageHolder(1,Guid.NewGuid(), DateTime.Now, "http://microsoft.com/")
                 } );
 
             _requestDataProvider.Setup(x => x.GetData()).Returns(requestData);
@@ -191,8 +191,8 @@ namespace Sitecore.Glimpse.Test.Analytics
 
             requestData.Add(DataKey.Profiles, new[]
                 {
-                    new Profile { Name = "Foo", Dimension = "Product Interest", IsMatch = false },
-                    new Profile { Name = "Bar", Dimension = "Product Interest", IsMatch = false }
+                    new Profile { Name = "Foo", PatternCard = string.Empty, Values = "values here" },
+                    new Profile { Name = "Bar", PatternCard = string.Empty, Values = "values here" }
                 });
 
             _requestDataProvider.Setup(x => x.GetData()).Returns(requestData);
@@ -213,8 +213,8 @@ namespace Sitecore.Glimpse.Test.Analytics
 
             requestData.Add(DataKey.Profiles, new[]
                 {
-                    new Profile { Name = "Foo", Dimension = "Product Interest", IsMatch = false },
-                    new Profile { Name = "Bar", Dimension = "Product Interest", IsMatch = true }
+                    new Profile { Name = "Foo", PatternCard = "pattern card 1", Values = "values here" },
+                    new Profile { Name = "Bar", PatternCard = string.Empty, Values = "values here" }
                 });
 
             _requestDataProvider.Setup(x => x.GetData()).Returns(requestData);
@@ -225,32 +225,7 @@ namespace Sitecore.Glimpse.Test.Analytics
             Assert.True(sectionFound);
         }
 
-        [Fact]
-        public void Display_multiple_dimensions_for_profiles_section()
-        {
-            var requestData = new RequestData();
-            requestData.Add(DataKey.IsNewVisitor, true);
-            requestData.Add(DataKey.EngagementValue, 0);
-            requestData.Add(DataKey.TrafficType, "Returning");
 
-            requestData.Add(DataKey.Profiles, new[]
-                {
-                    new Profile { Name = "Foo", Dimension = "Product Interest", IsMatch = false },
-                    new Profile { Name = "Bar", Dimension = "Product Interest", IsMatch = true },
-                    new Profile { Name = "Low", Dimension = "Income", IsMatch = false },
-                    new Profile { Name = "Medium", Dimension = "Income", IsMatch = false },
-                    new Profile { Name = "High", Dimension = "Income", IsMatch = true }
-                });
-
-            _requestDataProvider.Setup(x => x.GetData()).Returns(requestData);
-
-            var data = (TabSection) _sut.GetData(null);
-
-            var profileData =  (TabSection) data.Rows.ElementAt(2).Columns.ElementAt(1).Data;
-            var incomeTitleCell = profileData.Rows.ElementAt(2).Columns.ElementAt(0).Data;
-
-            Assert.Equal("Income", incomeTitleCell);
-        }
 
         [Fact]
         public void Show_matched_patters_as_first_row_of_tab_data()
@@ -262,11 +237,10 @@ namespace Sitecore.Glimpse.Test.Analytics
 
             requestData.Add(DataKey.Profiles, new[]
                 {
-                    new Profile { Name = "Foo", Dimension = "Product Interest", IsMatch = false },
-                    new Profile { Name = "Bar", Dimension = "Product Interest", IsMatch = true },
-                    new Profile { Name = "Low", Dimension = "Income", IsMatch = false },
-                    new Profile { Name = "Medium", Dimension = "Income", IsMatch = false },
-                    new Profile { Name = "High", Dimension = "Income", IsMatch = true }
+                    new Profile { Name = "Foo", PatternCard  = "Pattern Card", Values = "values" },
+                    new Profile { Name = "Bar", PatternCard = null, Values =  "values" },
+                    new Profile { Name = "Non", PatternCard = string.Empty, Values = "values" },
+                      new Profile { Name = "Plus", PatternCard = "Another pattern card", Values = "values" }
                 });
 
             _requestDataProvider.Setup(x => x.GetData()).Returns(requestData);
@@ -274,7 +248,7 @@ namespace Sitecore.Glimpse.Test.Analytics
             dynamic data = _sut.GetData(null);
 
             string summaryRow = data.Rows[0].Columns[1].Data;
-            Assert.Equal("Product Interest: Bar, Income: High", summaryRow);
+            Assert.Equal("Pattern Card, Another pattern card", summaryRow);
         }
     }
 }
