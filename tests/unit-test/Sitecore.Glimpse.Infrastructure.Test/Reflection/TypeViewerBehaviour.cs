@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Http;
-using Sitecore.Glimpse.Reflection;
 using Should;
+using Sitecore.Glimpse.Infrastructure.Reflection;
 using Xunit;
 
-namespace Sitecore.Glimpse.Core.Test.Reflection
+namespace Sitecore.Glimpse.Infrastructure.Test.Reflection
 {
     public class TypeViewerBehaviour
     {
@@ -13,17 +13,7 @@ namespace Sitecore.Glimpse.Core.Test.Reflection
 
         public TypeViewerBehaviour()
         {
-            _sut = new TypeViewer(typeof (MyServicesApiController), IsRootType, IsRootAttribute);
-        }
-
-        private bool IsRootType(Type type)
-        {
-            return type == null || type.BaseType == null;
-        }
-
-        private bool IsRootAttribute(Type type)
-        {
-            return type == null || type.BaseType == null;
+            _sut = new TypeViewer(typeof (MyServicesApiController));
         }
 
         [Fact]
@@ -91,7 +81,51 @@ namespace Sitecore.Glimpse.Core.Test.Reflection
         {
             _sut.ToJson().ShouldContain("MyCors");
         }
+
+        [Fact]
+        public void has_class_attribute_returns_false_by_default()
+        {
+            _sut.HasClassAttribute(typeof(ValidateHttpAntiForgeryToken).Name).ShouldBeFalse();
+        }
+
+        [Fact]
+        public void has_class_attribute_returns_true_when_attribute_defined_on_class()
+        {
+            _sut.HasClassAttribute(typeof(MyCorsAttribute).Name).ShouldBeTrue();
+        }
+
+        [Fact]
+        public void has_class_attribute_returns_true_when_attribute_defined_on_base_class()
+        {
+            _sut.HasClassAttribute(typeof(AnotherAttribute).Name).ShouldBeTrue();
+        }
+
+        [Fact]
+        public void has_method_attribute_returns_false_by_default()
+        {
+            _sut.HasMethodAttribute(typeof(AnotherAttribute).Name)
+                .ShouldBeFalse();
+        }
+
+        [Fact]
+        public void has_method_attribute_returns_true_when_attribute_defined_on_a_class_method()
+        {
+            _sut.HasMethodAttribute(typeof(MyValidationAttribute).Name)
+                .ShouldBeTrue();
+        }
+
+        [Fact]
+        public void has_method_attribute_returns_true_when_attribute_defined_on_a_base_class_method()
+        {
+            _sut.HasMethodAttribute(typeof(AppliedToBaseClassMethodAttribute).Name)
+                .ShouldBeTrue();
+        }
     }
+
+    public class ValidateHttpAntiForgeryToken : Attribute
+    {
+    }
+
 
     [MyCors("*", "*", "*")]
     public class MyServicesApiController : MyServicesBaseApiController<MyEntity>
@@ -102,6 +136,7 @@ namespace Sitecore.Glimpse.Core.Test.Reflection
             return null;
         }
 
+        [MyValidation]
         public bool GetFoo()
         {
             return true;
@@ -127,15 +162,26 @@ namespace Sitecore.Glimpse.Core.Test.Reflection
         }
     }
 
-    public class DenyAnonymousUserAttribute : Attribute
+    public class MyValidationAttribute : Attribute
     {
     }
 
+    [Another]
     public abstract class MyServicesBaseApiController<T> : ApiController
     {
+        [AppliedToBaseClassMethodAttribute]
         public void InheritedPublicMethod()
         {
         } 
+    }
+
+    public class AnotherAttribute : Attribute
+    {
+    }
+
+
+    public class AppliedToBaseClassMethodAttribute : Attribute
+    {
     }
 
     public class MyEntity

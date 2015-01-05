@@ -67,11 +67,10 @@
     <Compile Include="Model\Analytics\PatternCard.cs" />
     <Compile Include="Model\Analytics\Profile.cs" />
     <Compile Include="Model\Controller.cs" />
+    <Compile Include="Model\ControllerType.cs" />
+    <Compile Include="Model\Csrf.cs" />
     <Compile Include="Model\LoggedInUser.cs" />
     <Compile Include="Model\SitecoreService.cs" />
-    <Compile Include="Reflection\AttributeViewer.cs" />
-    <Compile Include="Reflection\MethodViewer.cs" />
-    <Compile Include="Reflection\TypeViewer.cs" />
     <Compile Include="SystemTime.cs" />
     <Compile Include="RequestData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

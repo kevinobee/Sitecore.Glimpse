@@ -14,5 +14,12 @@
         }
 
         public string Definition { get; set; }
+
+        public Csrf CsrfProtection { get; set; }
+
+        public SitecoreService()
+        {
+            CsrfProtection = Csrf.None;
+        }
     }
 }

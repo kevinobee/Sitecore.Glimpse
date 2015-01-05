@@ -1,21 +1,19 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
+using Sitecore.Glimpse.Infrastructure.Extensions;
 
-namespace Sitecore.Glimpse.Reflection
+namespace Sitecore.Glimpse.Infrastructure.Reflection
 {
     public class MethodViewer
     {
         private readonly MethodInfo _methodInfo;
-        private readonly Func<Type, bool> _isRootAttribute;
 
-        public MethodViewer(MethodInfo methodInfo, Func<Type, bool> isRootAttribute)
+        public MethodViewer(MethodInfo methodInfo)
         {
             if (methodInfo == null) throw new ArgumentNullException("methodInfo");
-            if (isRootAttribute == null) throw new ArgumentNullException("isRootAttribute");
 
             _methodInfo = methodInfo;
-            _isRootAttribute = isRootAttribute;
         }
 
         public string Name { get { return _methodInfo.Name; } }
@@ -25,10 +23,10 @@ namespace Sitecore.Glimpse.Reflection
             get
             {
                 return _methodInfo.GetCustomAttributes(false)
-                    .Select(x => x.GetType())
-                    .Where(x => !_isRootAttribute(x))
-                    .Select(x => new AttributeViewer(x, _isRootAttribute))
-                    .ToArray();
+                                  .Select(x => x.GetType())
+                                  .Where(x => ! x.IsRootAttribute())
+                                  .Select(x => new AttributeViewer(x))
+                                  .ToArray();
             } 
         }
 

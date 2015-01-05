@@ -3,40 +3,33 @@ using System.Linq;
 using System.Reflection;
 using Newtonsoft.Json;
 
-namespace Sitecore.Glimpse.Reflection
+using Sitecore.Glimpse.Infrastructure.Extensions;
+
+namespace Sitecore.Glimpse.Infrastructure.Reflection
 {
     public class TypeViewer
     {
         private readonly Type _type;
-        private readonly Func<Type, bool> _isRootType;
-        private readonly Func<Type, bool> _isRootAttribute;
 
-        public TypeViewer(Type type, Func<Type, bool> isRootType, Func<Type, bool> isRootAttribute)
+        public TypeViewer(Type type)
         {
             if (type == null) throw new ArgumentNullException("type");
-            if (isRootType == null) throw new ArgumentNullException("isRootType");
-            if (isRootAttribute == null) throw new ArgumentNullException("isRootAttribute");
 
             _type = type;
-            _isRootType = isRootType;
-            _isRootAttribute = isRootAttribute;
         }
-        
+
         public string Name
         {
-            get
-            {
-                return _type.FullName;
-            }
+            get { return _type.FullName; }
         }
 
         public TypeViewer Base
         {
             get
             {
-                return !_isRootType(_type) 
-                            ? new TypeViewer(_type.BaseType, _isRootType, _isRootAttribute) 
-                            : null;
+                return !_type.IsRootType()
+                    ? new TypeViewer(_type.BaseType)
+                    : null;
             }
         }
 
@@ -50,10 +43,10 @@ namespace Sitecore.Glimpse.Reflection
             get
             {
                 return _type.GetCustomAttributes(false)
-                                  .Select(x => x.GetType())
-                                  .Where(x => ! _isRootAttribute(x))
-                                  .Select(x => new AttributeViewer(x, _isRootAttribute))
-                                  .ToArray();
+                    .Select(x => x.GetType())
+                    .Where(x => ! x.IsRootAttribute())
+                    .Select(x => new AttributeViewer(x))
+                    .ToArray();
             }
         }
 
@@ -67,9 +60,9 @@ namespace Sitecore.Glimpse.Reflection
             get
             {
                 return _type.GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly)
-                            .Where(mi => !IsPropertyAccessor(mi))
-                            .Select(mi => new MethodViewer(mi, _isRootAttribute))
-                            .ToArray();
+                    .Where(mi => !IsPropertyAccessor(mi))
+                    .Select(mi => new MethodViewer(mi))
+                    .ToArray();
             }
         }
 
@@ -87,6 +80,27 @@ namespace Sitecore.Glimpse.Reflection
         {
             return methodInfo.IsSpecialName &&
                    (methodInfo.Name.StartsWith("set_") || methodInfo.Name.StartsWith("get_"));
+        }
+
+        public bool HasClassAttribute(string typeName)
+        {
+            if (Attributes.Any(x => x.UnderlyingType.Name == typeName))
+            {
+                return true;
+            }
+
+            return Base != null && Base.HasClassAttribute(typeName);
+        }
+
+        public bool HasMethodAttribute(string typeName)
+        {
+            if (Methods.Any(m => m.Attributes
+                                  .Any(x => x.UnderlyingType.Name == typeName)))
+            {
+                return true;
+            }
+
+            return Base != null && Base.HasMethodAttribute(typeName);
         }
     }
 }

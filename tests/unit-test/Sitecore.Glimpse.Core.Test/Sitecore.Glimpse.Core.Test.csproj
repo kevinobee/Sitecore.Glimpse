@@ -68,8 +68,6 @@
     <Compile Include="Model\LoggedInUserBehaviour.cs" />
     <Compile Include="Model\SitecoreServiceBehaviour.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Reflection\AttributeViewerBehaviour.cs" />
-    <Compile Include="Reflection\TypeViewerBehaviour.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

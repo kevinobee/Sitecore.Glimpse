@@ -80,6 +80,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Reflection\AttributeViewerBehaviour.cs" />
+    <Compile Include="Reflection\TypeViewerBehaviour.cs" />
     <Compile Include="TestStubs.cs" />
     <Compile Include="ControllersBehaviour.cs" />
     <Compile Include="Extensions\GetGenericInterfaceBehaviour.cs" />

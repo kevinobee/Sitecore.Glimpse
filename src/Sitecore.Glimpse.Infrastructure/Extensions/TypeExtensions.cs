@@ -16,7 +16,7 @@ namespace Sitecore.Glimpse.Infrastructure.Extensions
                        .FirstOrDefault(i => i.GetGenericTypeDefinition() == interfaceType);
         }
 
-        public static bool IsRootAttribute(Type type)
+        public static bool IsRootAttribute(this Type type)
         {
             var rootTypes = new[]
             {
@@ -35,7 +35,7 @@ namespace Sitecore.Glimpse.Infrastructure.Extensions
             return ((type.BaseType == null) || (rootTypes.Contains(type)));
         }
 
-        public static bool IsRootType(Type type)
+        public static bool IsRootType(this Type type)
         {
             var rootTypes = new[]
             {

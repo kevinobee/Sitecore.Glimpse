@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
 using Sitecore.Glimpse.Infrastructure.Extensions;
+using Sitecore.Glimpse.Infrastructure.Reflection;
 using Sitecore.Glimpse.Model;
-using Sitecore.Glimpse.Reflection;
 using Sitecore.Services.Core;
 using Sitecore.Services.Core.Configuration;
 using Sitecore.Services.Infrastructure.Services;
@@ -38,16 +38,14 @@ namespace Sitecore.Glimpse.Infrastructure
 
         private SitecoreService BuildSitecoreService(Type controllerType)
         {
-            var controller = new TypeViewer(
-                                    controllerType, 
-                                    TypeExtensions.IsRootType, 
-                                    TypeExtensions.IsRootAttribute);
+            var controller = new TypeViewer(controllerType);
 
             var service = new SitecoreService
             {
                 Controller = RemoveControllerSuffix(controllerType.FullName),
                 Url = GetRouteFromType(controllerType),
-                Definition = controller.ToJson()
+                Definition = controller.ToJson(),
+                CsrfProtection = controller.CheckForMitigations(ControllerType.WebAPI)
             };
 
             var entityService = controllerType.GetGenericInterface(typeof(IEntityService<>));

@@ -17,7 +17,7 @@ namespace Sitecore.Glimpse
 
             if ((services == null) || (!services.Any())) return null;
 
-            var section = new TabSection("Controller", "Url", "ES", "Definition", "Metadata");
+            var section = new TabSection("Controller", "Url", "ES", "CSRF Protection", "Definition", "Metadata");
 
             foreach (var service in services)
             {
@@ -25,6 +25,7 @@ namespace Sitecore.Glimpse
                     .Column(service.Controller)
                     .Column(service.Url)
                     .Column(service.IsEntityService ? "Yes" : "No")
+                    .Column(service.CsrfProtection.ToString())
                     .Column(service.Definition)
                     .Column(service.Metadata)
                     .WarnIf(service.CorsEnabled);

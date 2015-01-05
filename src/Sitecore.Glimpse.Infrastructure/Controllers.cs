@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using Sitecore.Glimpse.Infrastructure.Extensions;
+using Sitecore.Glimpse.Infrastructure.Reflection;
 using Sitecore.Glimpse.Model;
-using Sitecore.Glimpse.Reflection;
 
 namespace Sitecore.Glimpse.Infrastructure
 {
@@ -36,21 +36,29 @@ namespace Sitecore.Glimpse.Infrastructure
                 var controllers = _typeProvider.Types
                                     .Where(x => ! x.IsAbstract)
                                     .Where(x => !services.Contains(x))
-                                    .Where(x => GetControllerType(x) != null);
+                                    .Select(x => new ControllerWrapper
+                                    {
+                                        Type = x, 
+                                        ControllerType = GetControllerType(x)
+                                    })
+                                    .Where(x => x.ControllerType != null);
 
-                return controllers.Select(x => new Controller(
-                                                        x.FullName, 
-                                                        GetControllerType(x).Value,
-                                                        GetDefinition(x)))
-                                   .ToArray();
+                return controllers.Select(x => BuildController(x))
+                                  .ToArray();
             }
         }
 
-        private static string GetDefinition(Type type)
+        private static Controller BuildController(ControllerWrapper wrapper)
         {
-            return new TypeViewer(type, 
-                                  TypeExtensions.IsRootType, 
-                                  TypeExtensions.IsRootAttribute).ToJson();
+            System.Diagnostics.Debug.Assert(wrapper.ControllerType.HasValue);
+            
+            var typeViewer = new TypeViewer(wrapper.Type);
+
+            return new Controller(
+                wrapper.Type.FullName,
+                wrapper.ControllerType.Value,
+                typeViewer.ToJson(),
+                typeViewer.CheckForMitigations(wrapper.ControllerType.Value));
         }
 
         private static ControllerType? GetControllerType(Type type)
@@ -68,5 +76,11 @@ namespace Sitecore.Glimpse.Infrastructure
             return potentialDescendant.IsSubclassOf(potentialBase)
                    || potentialDescendant == potentialBase;
         }
+    }
+
+    internal class ControllerWrapper
+    {
+        public ControllerType? ControllerType { get; set; }
+        public Type Type { get; set; }
     }
 }

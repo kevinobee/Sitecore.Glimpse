@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Glimpse.Core.Tab.Assist;
 using Sitecore.Glimpse.Model;
 
@@ -18,13 +17,14 @@ namespace Sitecore.Glimpse
 
             if ((controllers == null) || (!controllers.Any())) return null;
 
-            var section = new TabSection("Controller", "Type", "Definition");
+            var section = new TabSection("Controller", "Type", "CSRF Protection", "Definition");
 
             foreach (var controller in controllers)
             {
                 section.AddRow()
                     .Column(controller.Name)
                     .Column(controller.ControllerType.ToString())
+                    .Column(controller.CsrfProtection.ToString())
                     .Column(controller.Definition);
             }
 

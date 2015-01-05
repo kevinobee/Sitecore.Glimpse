@@ -1,6 +1,7 @@
 ﻿using Ploeh.AutoFixture.Xunit;
 using Should;
 using Sitecore.Glimpse.Model;
+using Xunit;
 using Xunit.Extensions;
 
 namespace Sitecore.Glimpse.Core.Test.Model
@@ -22,6 +23,12 @@ namespace Sitecore.Glimpse.Core.Test.Model
             _sut.Definition = string.Join(", ", attributes);
 
             _sut.CorsEnabled.ShouldEqual(isCorsEnabled);
+        }
+
+        [Fact]
+        public void csrf_none_by_default()
+        {
+            _sut.CsrfProtection.ShouldEqual(Csrf.None);
         }
     }
 }
