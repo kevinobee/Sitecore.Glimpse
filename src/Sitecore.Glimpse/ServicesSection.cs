@@ -17,7 +17,7 @@ namespace Sitecore.Glimpse
 
             if ((services == null) || (!services.Any())) return null;
 
-            var section = new TabSection("Controller", "Url", "ES", "authorise", "CSRF Protection", "Definition", "Metadata");
+            var section = new TabSection("Controller", "Url", "ES", "Authorise", "CSRF Protection", "Definition", "Metadata");
 
             foreach (var service in services)
             {
