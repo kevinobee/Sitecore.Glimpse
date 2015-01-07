@@ -17,14 +17,15 @@ namespace Sitecore.Glimpse
 
             if ((services == null) || (!services.Any())) return null;
 
-            var section = new TabSection("Controller", "Url", "ES", "CSRF Protection", "Definition", "Metadata");
+            var section = new TabSection("Controller", "Url", "ES", "authorise", "CSRF Protection", "Definition", "Metadata");
 
             foreach (var service in services)
             {
                 section.AddRow()
-                    .Column(service.Controller)
+                    .Column(service.Name)
                     .Column(service.Url)
                     .Column(service.IsEntityService ? "Yes" : "No")
+                    .Column(service.Authorise ? "Yes" : "No")
                     .Column(service.CsrfProtection.ToString())
                     .Column(service.Definition)
                     .Column(service.Metadata)

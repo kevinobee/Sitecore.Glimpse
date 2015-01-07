@@ -1,8 +1,7 @@
 ﻿namespace Sitecore.Glimpse.Model
 {
-    public class SitecoreService
+    public class SitecoreService : ControllerBase
     {
-        public string Controller { get; set; }
         public string Url { get; set; }
         public string Metadata { get; set; }
 
@@ -12,10 +11,6 @@
         {
             get { return (!string.IsNullOrEmpty(Definition)) && Definition.Contains("EnableCors"); }
         }
-
-        public string Definition { get; set; }
-
-        public Csrf CsrfProtection { get; set; }
 
         public SitecoreService()
         {

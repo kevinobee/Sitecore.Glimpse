@@ -58,7 +58,8 @@ namespace Sitecore.Glimpse.Infrastructure
                 wrapper.Type.FullName,
                 wrapper.ControllerType.Value,
                 typeViewer.ToJson(),
-                typeViewer.CheckForMitigations(wrapper.ControllerType.Value));
+                typeViewer.CheckForMitigations(wrapper.ControllerType.Value),
+                typeViewer.CheckForAuthorise(wrapper.ControllerType.Value));
         }
 
         private static ControllerType? GetControllerType(Type type)

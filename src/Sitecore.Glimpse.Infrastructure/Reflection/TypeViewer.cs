@@ -84,7 +84,7 @@ namespace Sitecore.Glimpse.Infrastructure.Reflection
 
         public bool HasClassAttribute(string typeName)
         {
-            if (Attributes.Any(x => x.UnderlyingType.Name == typeName))
+            if (Attributes.ContainsType(typeName))
             {
                 return true;
             }
@@ -94,8 +94,7 @@ namespace Sitecore.Glimpse.Infrastructure.Reflection
 
         public bool HasMethodAttribute(string typeName)
         {
-            if (Methods.Any(m => m.Attributes
-                                  .Any(x => x.UnderlyingType.Name == typeName)))
+            if (Methods.Any(method => method.Attributes.ContainsType(typeName)))
             {
                 return true;
             }

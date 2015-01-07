@@ -3,6 +3,7 @@ using System.Linq;
 using System.Web.Http;
 using Should;
 using Sitecore.Glimpse.Infrastructure.Reflection;
+using Sitecore.Glimpse.Infrastructure.Test.Extensions;
 using Xunit;
 
 namespace Sitecore.Glimpse.Infrastructure.Test.Reflection
@@ -120,6 +121,13 @@ namespace Sitecore.Glimpse.Infrastructure.Test.Reflection
             _sut.HasMethodAttribute(typeof(AppliedToBaseClassMethodAttribute).Name)
                 .ShouldBeTrue();
         }
+
+        [Fact]
+        public void has_method_attribute_returns_true_when_attribute_is_derived_from_search_type()
+        {
+            _sut.HasMethodAttribute(typeof(AuthorizeAttribute).Name)
+                .ShouldBeTrue();
+        }
     }
 
     public class ValidateHttpAntiForgeryToken : Attribute
@@ -131,6 +139,7 @@ namespace Sitecore.Glimpse.Infrastructure.Test.Reflection
     public class MyServicesApiController : MyServicesBaseApiController<MyEntity>
     {
         [Obsolete]
+        [SomeAuthorization]
         public string Get()
         {
             return null;

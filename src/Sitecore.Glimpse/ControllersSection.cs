@@ -17,13 +17,14 @@ namespace Sitecore.Glimpse
 
             if ((controllers == null) || (!controllers.Any())) return null;
 
-            var section = new TabSection("Controller", "Type", "CSRF Protection", "Definition");
+            var section = new TabSection("Controller", "Type", "Authorise", "CSRF Protection", "Definition");
 
             foreach (var controller in controllers)
             {
                 section.AddRow()
                     .Column(controller.Name)
                     .Column(controller.ControllerType.ToString())
+                    .Column(controller.Authorise ? "Yes" : "No")
                     .Column(controller.CsrfProtection.ToString())
                     .Column(controller.Definition);
             }

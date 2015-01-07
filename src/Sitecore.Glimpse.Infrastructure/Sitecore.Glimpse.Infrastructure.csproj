@@ -105,6 +105,7 @@
     <Compile Include="LicenseReader.cs" />
     <Compile Include="Reflection\AssemblyScanner.cs" />
     <Compile Include="Reflection\AttributeViewer.cs" />
+    <Compile Include="Extensions\AttributeViewerExtensions.cs" />
     <Compile Include="Reflection\FilteredAssemblyScannerBase.cs" />
     <Compile Include="Reflection\MethodViewer.cs" />
     <Compile Include="Reflection\ServicesControllerAssemblyScanner.cs" />

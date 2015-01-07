@@ -42,10 +42,11 @@ namespace Sitecore.Glimpse.Infrastructure
 
             var service = new SitecoreService
             {
-                Controller = RemoveControllerSuffix(controllerType.FullName),
+                Name = RemoveControllerSuffix(controllerType.FullName),
                 Url = GetRouteFromType(controllerType),
                 Definition = controller.ToJson(),
-                CsrfProtection = controller.CheckForMitigations(ControllerType.WebAPI)
+                CsrfProtection = controller.CheckForMitigations(ControllerType.WebAPI),
+                Authorise = controller.CheckForAuthorise(ControllerType.WebAPI)
             };
 
             var entityService = controllerType.GetGenericInterface(typeof(IEntityService<>));
