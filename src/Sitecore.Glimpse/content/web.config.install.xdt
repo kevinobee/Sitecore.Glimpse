@@ -8,11 +8,4 @@
            xdt:Transform="InsertBefore(/configuration/system.webServer/modules/add[@name='SitecoreHttpModule'])"/>
     </modules>
   </system.webServer>
-  <system.web>
-    <httpModules>
-      <add name="Glimpse" xdt:Transform="Remove" xdt:Locator="Match(name)" />
-      <add name="Glimpse" type="Glimpse.AspNet.HttpModule, Glimpse.AspNet" 
-           xdt:Transform="InsertBefore(/configuration/system.web/httpModules/add[@name='SitecoreHttpModule'])"/>
-    </httpModules>
-  </system.web>
 </configuration>
