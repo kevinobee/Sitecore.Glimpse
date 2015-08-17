@@ -15,7 +15,7 @@
     <PropertyGroup>
         <TestWebsitePath Condition="$(TestWebsitePath) == ''">C:\Websites\glimpsetest\Website</TestWebsitePath>
         <TestWebsiteUrl Condition="$(TestWebsiteUrl) == ''">http://glimpsetest/</TestWebsiteUrl>
-        <LibsSrcPath Condition="$(LibsSrcPath) == ''">C:\LibsSrc\7\7.5\141003</LibsSrcPath>
+        <LibsSrcPath Condition="$(LibsSrcPath) == ''">C:\LibsSrc\Sitecore 8.0 rev. 141212</LibsSrcPath>
     </PropertyGroup>
 
     <ItemGroup>
