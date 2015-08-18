@@ -7,8 +7,8 @@
 
      -->    
 
-    <TestWebsitePath>C:\Websites\glimpsetest\Website</TestWebsitePath>
-    <TestWebsiteUrl>http://glimpsetest</TestWebsiteUrl>
-    <LibsSrcPath>C:\LibsSrc\7\7.5\141003</LibsSrcPath>
+    <TestWebsitePath>C:\Websites\scglimpse\Website</TestWebsitePath>
+    <TestWebsiteUrl>http://scglimpse</TestWebsiteUrl>
+    <LibsSrcPath>C:\Websites\sc80rev141212\Website\bin</LibsSrcPath>
   </PropertyGroup>
 </Project>
