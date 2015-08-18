@@ -35,6 +35,10 @@
     <Reference Include="Moq">
       <HintPath>..\..\..\packages\Moq.4.2.1409.1722\lib\net40\Moq.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Ploeh.AutoFixture">
       <HintPath>..\..\..\packages\AutoFixture.3.22.0\lib\net40\Ploeh.AutoFixture.dll</HintPath>
     </Reference>
