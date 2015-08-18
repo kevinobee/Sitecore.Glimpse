@@ -1,5 +1,8 @@
 ﻿<?xml version="1.0"?>
 <configuration>
+  <appSettings>
+  	<add key="Glimpse:DisableAsyncSupport" value="true" />
+  </appSettings>
   <glimpse defaultRuntimePolicy="On" endpointBaseUri="~/Glimpse.axd">
     <runtimePolicies>
       <uris>
