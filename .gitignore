@@ -37,3 +37,5 @@ lib/*.pdb
 
 # WebStorm ignores
 .idea/*
+*.ncrunchproject
+*.ncrunchsolution
