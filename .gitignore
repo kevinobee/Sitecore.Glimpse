@@ -39,3 +39,4 @@ lib/*.pdb
 .idea/*
 *.ncrunchproject
 *.ncrunchsolution
+*.dgml
