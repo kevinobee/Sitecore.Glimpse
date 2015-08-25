@@ -36,3 +36,6 @@ lib/*.pdb
 # Build ignores
 /msbuild.log
 /artifacts
+*.dgml
+*.ncrunchsolution
+*.ncrunchproject
