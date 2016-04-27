@@ -7,6 +7,20 @@
   <UsingTask
     AssemblyFile="$(XunitPath)\xunit.runner.msbuild.dll"
     TaskName="Xunit.Runner.MSBuild.xunit"/>
+
+  <Target Name="CheckPreconditions">
+    <Error
+      Text="Missing TestWebsitePath" 
+      Condition="$(TestWebsitePath) == ''"  /> 
+
+    <Error 
+      Text="Missing TestWebsiteUrl" 
+      Condition="$(TestWebsiteUrl) == ''" />
+
+    <Error 
+      Text="Missing LibsSrcPath" 
+      Condition="$(LibsSrcPath) == ''" />
+  </Target>
   
   <Target Name="CopyLibs">
     <ItemGroup>
@@ -16,10 +30,7 @@
     <Copy
         SourceFiles="@(CopyLibFiles)"
         DestinationFolder="$(LibsDestPath)"
-        OverwriteReadOnlyFiles="true"
         SkipUnchangedFiles="true"
-        Retries="5"
-        RetryDelayMilliseconds="300"
         />
   </Target>
 
@@ -27,7 +38,7 @@
     <RemoveDir Directories="$(ArtifactsPath)"  />
   </Target>
 
-  <Target Name="Init" DependsOnTargets="Clean; CopyLibs">
+  <Target Name="Init" DependsOnTargets="CheckPreconditions; Clean; CopyLibs">
     <MakeDir Directories="$(ArtifactsPath)" Condition="!Exists('$(ArtifactsPath)')" />
     <MakeDir Directories="$(AnalysisResultsPath)" Condition="!Exists('$(AnalysisResultsPath)')" />
     <MakeDir Directories="$(PackageResultsPath)" Condition="!Exists('$(PackageResultsPath)')" />
@@ -46,12 +57,17 @@
     
     <Copy
       SourceFiles="@(Net45Libs)"
-      DestinationFolder="$(BuildResultsPath)\lib\" />
+      DestinationFolder="$(BuildResultsPath)\lib\"
+      SkipUnchangedFiles="true" />
+
   </Target>
 
-  <Target Name="RunCodeAnalysis" DependsOnTargets="Init" Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v11.0\CodeAnalysis\fxcoptask.dll')">
+  <Target Name="RunCodeAnalysis" 
+          DependsOnTargets="Init" 
+          Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v11.0\CodeAnalysis\fxcoptask.dll')">
+
     <ItemGroup>
-      <AnalysisProjects Include="$(ProjectRoot)\src\**\*.csproj" Exclude="$(ProjectRoot)\src\*.Net35\*.csproj" />
+      <AnalysisProjects Include="$(ProjectRoot)\src\**\*.csproj" />
     </ItemGroup>
 
     <MSBuild Projects="%(AnalysisProjects.Identity)"
