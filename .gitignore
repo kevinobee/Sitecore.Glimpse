@@ -37,6 +37,11 @@ lib/*.pdb
 
 # WebStorm ignores
 .idea/*
+
+# NCrunch ignores
 *.ncrunchproject
 *.ncrunchsolution
+nCrunchTemp*
+
+# Visual Studio diagramming files
 *.dgml
