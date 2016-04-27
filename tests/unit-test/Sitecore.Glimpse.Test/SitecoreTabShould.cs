@@ -1,5 +1,8 @@
 ﻿using Glimpse.Core.Extensibility;
 using Moq;
+
+using Should;
+
 using Xunit;
 
 namespace Sitecore.Glimpse.Test
@@ -12,58 +15,63 @@ namespace Sitecore.Glimpse.Test
         public SitecoreTabShould()
         {
             _requestDataProvider = new Mock<ISitecoreRequest>();
+
             _sut = new SitecoreTab(_requestDataProvider.Object);
         }
 
         [Fact]
-        public void Provide_a_sitecore_tab()
+        public void ProvideSitecoreTab()
         {
-            Assert.IsAssignableFrom<ITab>(_sut);
+            _sut.ShouldImplement<ITab>();
         }
     
         [Fact]
-        public void Name_tab_Sitecore()
+        public void NameTabSitecore()
         {
-            Assert.Equal("Sitecore", _sut.Name);
+            _sut.Name
+                .ShouldEqual("Sitecore");
         }
 
         [Fact]
-        public void Implements_Glimpse_IDocumentation()
+        public void ImplementsGlimpseIDocumentation()
         {
-            Assert.IsAssignableFrom<IDocumentation>(_sut);
+            _sut.ShouldImplement<IDocumentation>();
         }
 
         [Fact]
-        public void Return_Wiki_Url_For_IDocumentation()
+        public void ReturnWikiUrlForIDocumentation()
         {
-            Assert.Equal("http://kevinobee.github.io/Sitecore.Glimpse/", _sut.DocumentationUri);
+            _sut.DocumentationUri
+                .ShouldEqual("http://kevinobee.github.io/Sitecore.Glimpse/");
         }
 
         [Fact]
-        public void Returns_null_if_no_data_available()
+        public void ReturnsNullIfNoDataAvailable()
         {
-            _requestDataProvider.Setup(x => x.GetData()).Returns(new RequestData());
+            _requestDataProvider
+                .Setup(x => x.GetData())
+                .Returns(new RequestData());
 
-            var data = _sut.GetData(null);
-
-            Assert.Null(data);
+            _sut.GetData(null)
+                .ShouldBeNull();
         }
 
         [Fact]
-        public void Returns_null_if_Sitecore_Item_not_in_request_data()
+        public void ReturnsNullIfSitecoreItemNotInRequestData()
         {
             var requestData = new RequestData();
             requestData.Add(DataKey.Campaign, "Foo");
 
-            _requestDataProvider.Setup(x => x.GetData()).Returns(requestData);
+            _requestDataProvider
+                .Setup(x => x.GetData())
+                .Returns(requestData);
 
-            var data = _sut.GetData(null);
-
-            Assert.Null(data);
+            _sut.GetData(null)
+                .ShouldBeNull();
         }
 
         [Fact]
-        public void Show_Item_Path_and_Template_as_first_row_of_tab_data()
+        public void ShowItemPathAndTemplateAsFirstRowOfTabData()
         {
             var requestData = new RequestData();
             var fieldList = new FieldList();
@@ -71,13 +79,16 @@ namespace Sitecore.Glimpse.Test
             fieldList.AddField("Template Name", "Bar");
             requestData.Add(DataKey.Item, fieldList);
 
-            _requestDataProvider.Setup(x => x.GetData()).Returns(requestData);
+            _requestDataProvider
+                .Setup(x => x.GetData())
+                .Returns(requestData);
 
             dynamic data = _sut.GetData(null);
 
             string summaryRow = data.Rows[0].Columns[1].Data;
-            Assert.Contains("/sitecore/content/foo", summaryRow);
-            Assert.Contains("Bar", summaryRow);
+
+            summaryRow.ShouldContain("/sitecore/content/foo");
+            summaryRow.ShouldContain("Bar");
         }
     }
 }
