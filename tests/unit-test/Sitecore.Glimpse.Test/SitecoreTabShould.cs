@@ -10,13 +10,20 @@ namespace Sitecore.Glimpse.Test
     public class SitecoreTabShould
     {
         private readonly SitecoreTab _sut;
-        private readonly Mock<ISitecoreRequest> _requestDataProvider;
+
+        private readonly RequestData _requestData;
 
         public SitecoreTabShould()
         {
-            _requestDataProvider = new Mock<ISitecoreRequest>();
+            var requestDataProvider = new Mock<ISitecoreRequest>();
 
-            _sut = new SitecoreTab(_requestDataProvider.Object);
+            _requestData = new RequestData();
+
+            requestDataProvider
+                .Setup(x => x.GetData())
+                .Returns(_requestData);
+
+            _sut = new SitecoreTab(requestDataProvider.Object);
         }
 
         [Fact]
@@ -48,10 +55,6 @@ namespace Sitecore.Glimpse.Test
         [Fact]
         public void ReturnsNullIfNoDataAvailable()
         {
-            _requestDataProvider
-                .Setup(x => x.GetData())
-                .Returns(new RequestData());
-
             _sut.GetData(null)
                 .ShouldBeNull();
         }
@@ -59,12 +62,7 @@ namespace Sitecore.Glimpse.Test
         [Fact]
         public void ReturnsNullIfSitecoreItemNotInRequestData()
         {
-            var requestData = new RequestData();
-            requestData.Add(DataKey.Campaign, "Foo");
-
-            _requestDataProvider
-                .Setup(x => x.GetData())
-                .Returns(requestData);
+            _requestData.Add(DataKey.Campaign, "Foo");
 
             _sut.GetData(null)
                 .ShouldBeNull();
@@ -73,15 +71,11 @@ namespace Sitecore.Glimpse.Test
         [Fact]
         public void ShowItemPathAndTemplateAsFirstRowOfTabData()
         {
-            var requestData = new RequestData();
             var fieldList = new FieldList();
             fieldList.AddField("Full Path", "/sitecore/content/foo");
             fieldList.AddField("Template Name", "Bar");
-            requestData.Add(DataKey.Item, fieldList);
-
-            _requestDataProvider
-                .Setup(x => x.GetData())
-                .Returns(requestData);
+            
+            _requestData.Add(DataKey.Item, fieldList);
 
             dynamic data = _sut.GetData(null);
 

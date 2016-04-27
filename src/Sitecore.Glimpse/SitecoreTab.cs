@@ -17,7 +17,25 @@ namespace Sitecore.Glimpse
 
         public SitecoreTab(ISitecoreRequest sitecoreRequest)
         {
+            if (sitecoreRequest == null)
+            {
+                throw new ArgumentNullException("sitecoreRequest");
+            }
+
             _sitecoreRequest = sitecoreRequest;
+        }
+
+        public override string Name
+        {
+            get { return "Sitecore"; }
+        }
+
+        public string DocumentationUri
+        {
+            get
+            {
+                return Constants.Wiki.Url;
+            }
         }
 
         public override object GetData(ITabContext context)
@@ -26,11 +44,17 @@ namespace Sitecore.Glimpse
             {
                 var sitecoreData = _sitecoreRequest.GetData();
 
-                if (!sitecoreData.HasData()) return null;
+                if (!sitecoreData.HasData())
+                {
+                    return null;
+                }
 
                 var itemSummary = new ItemSummary(sitecoreData).Create();
 
-                if (string.IsNullOrEmpty(itemSummary)) return null;
+                if (string.IsNullOrEmpty(itemSummary))
+                {
+                    return null;
+                }
 
                 var plugin = Plugin.Create("Item", itemSummary);
 
@@ -39,13 +63,19 @@ namespace Sitecore.Glimpse
                 var serverSection = new ServerSection(sitecoreData).Create();
 
                 if (itemSection != null)
+                {
                     plugin.AddRow().Column("Item").Column(itemSection).Selected();
+                }
 
                 if (contextSection != null)
+                {
                     plugin.AddRow().Column("Context").Column(contextSection).Quiet();
+                }
 
                 if (serverSection != null)
+                {
                     plugin.AddRow().Column("Server").Column(serverSection);
+                }
 
                 return plugin;
             }
@@ -54,12 +84,5 @@ namespace Sitecore.Glimpse
                 return new { Exception = ex };
             }
         }
-
-        public override string Name
-        {
-            get { return "Sitecore"; }
-        }
-
-        public string DocumentationUri { get { return Constants.Wiki.Url; } }
     }
 }
