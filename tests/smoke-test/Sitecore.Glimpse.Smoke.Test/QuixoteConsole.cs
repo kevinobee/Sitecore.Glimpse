@@ -93,7 +93,6 @@ namespace Quixote {
 
             using (StreamReader sr = new StreamReader(response.GetResponseStream())) {
                 result.Html = sr.ReadToEnd();
-                sr.Close();
             }
             ParseResult(result);
             return result;
@@ -138,7 +137,6 @@ namespace Quixote {
             // We write the parameters into the request
             using (StreamWriter sw = new StreamWriter(request.GetRequestStream())) {
                 sw.Write(postParams);
-                sw.Close();
             }
             var result = ReadAndLoadResponse(request, cookie);
             result.FormValues = formValues;
