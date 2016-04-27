@@ -16,6 +16,10 @@
     <Copy
         SourceFiles="@(CopyLibFiles)"
         DestinationFolder="$(LibsDestPath)"
+        OverwriteReadOnlyFiles="true"
+        SkipUnchangedFiles="true"
+        Retries="5"
+        RetryDelayMilliseconds="300"
         />
   </Target>
 
@@ -32,7 +36,7 @@
 
   <Target Name="Build" DependsOnTargets="Init">
     <MSBuild Projects="$(ProjectRoot)\$(ProjectName).sln"
-             Targets="Clean;ReBuild"
+             Targets="Build"
              Properties="Configuration=$(Configuration)" />
 
     <ItemGroup>
@@ -51,7 +55,7 @@
     </ItemGroup>
 
     <MSBuild Projects="%(AnalysisProjects.Identity)"
-             Targets="ReBuild"
+             Targets="Build"
              Properties="RunCodeAnalysis=true;Configuration=$(Configuration);OutDir=$(AnalysisResultsPath)\" />
 
     <!-- Remove the build artifacts -->
