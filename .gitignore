@@ -42,6 +42,7 @@ lib/*.pdb
 *.ncrunchproject
 *.ncrunchsolution
 nCrunchTemp*
+_NCrunch*
 
 # Visual Studio diagramming files
 *.dgml
