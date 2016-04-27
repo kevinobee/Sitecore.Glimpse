@@ -18,12 +18,31 @@ namespace Sitecore.Glimpse.Infrastructure
         private readonly IMetaDataBuilder _metaDataBuilder;
         private readonly IServicesConfiguration _servicesConfiguration;
 
-        public SitecoreServices(ITypeProvider typeProvider, IControllerNameGenerator controllerNameGenerator, IMetaDataBuilder metaDataBuilder, IServicesConfiguration servicesConfiguration) 
+        public SitecoreServices(
+                    ITypeProvider typeProvider, 
+                    IControllerNameGenerator controllerNameGenerator, 
+                    IMetaDataBuilder metaDataBuilder, 
+                    IServicesConfiguration servicesConfiguration)
         {
-            if (typeProvider == null) throw new ArgumentNullException("typeProvider");
-            if (controllerNameGenerator == null) throw new ArgumentNullException("controllerNameGenerator");
-            if (metaDataBuilder == null) throw new ArgumentNullException("metaDataBuilder");
-            if (servicesConfiguration == null) throw new ArgumentNullException("servicesConfiguration");
+            if (typeProvider == null)
+            {
+                throw new ArgumentNullException("typeProvider");
+            }
+
+            if (controllerNameGenerator == null)
+            {
+                throw new ArgumentNullException("controllerNameGenerator");
+            }
+
+            if (metaDataBuilder == null)
+            {
+                throw new ArgumentNullException("metaDataBuilder");
+            }
+
+            if (servicesConfiguration == null)
+            {
+                throw new ArgumentNullException("servicesConfiguration");
+            }
 
             _typeProvider = typeProvider;
             _controllerNameGenerator = controllerNameGenerator;
@@ -33,7 +52,40 @@ namespace Sitecore.Glimpse.Infrastructure
 
         public ICollection<SitecoreService> Collection
         {
-            get { return _typeProvider.Types.Select(BuildSitecoreService).Where(x => x != null).ToArray(); }
+            get
+            {
+                return 
+                    _typeProvider.Types
+                                 .Select(BuildSitecoreService)
+                                 .Where(x => x != null)
+                                 .ToArray();
+            }
+        }
+
+        private static string FormatJsonMetadata(string value)
+        {
+            var metadataObject = JsonConvert.DeserializeObject<Dictionary<string, object>>(value);
+
+            return JsonConvert.SerializeObject(metadataObject, Formatting.Indented);
+        }
+
+        private static string RemoveControllerSuffix(string name)
+        {
+            return name.Remove(name.Length - "Controller".Length);
+        }
+
+        private string GetRouteFromType(Type controllerType)
+        {
+            if (!ServicesControllerAttribute.IsPresentOn(controllerType))
+            {
+                return "See Routes tab for details";
+            }
+
+            var name = _controllerNameGenerator.GetName(controllerType);
+
+            return string.Concat(
+                _servicesConfiguration.Configuration.Services.Routes.RouteBase,
+                name.Replace('.', '/'));
         }
 
         private SitecoreService BuildSitecoreService(Type controllerType)
@@ -50,14 +102,16 @@ namespace Sitecore.Glimpse.Infrastructure
             };
 
             var entityService = controllerType.GetGenericInterface(typeof(IEntityService<>));
-            
-            if (entityService != null)
-            {
-                var pocoObject = entityService.GetGenericArguments()[0];
 
-                service.IsEntityService = true;
-                service.Metadata = GetMetadata(pocoObject);
+            if (entityService == null)
+            {
+                return service;
             }
+
+            var pocoObject = entityService.GetGenericArguments()[0];
+
+            service.IsEntityService = true;
+            service.Metadata = GetMetadata(pocoObject);
 
             return service;
         }
@@ -74,31 +128,6 @@ namespace Sitecore.Glimpse.Infrastructure
             {
                 return exception.Message;
             }
-        }
-
-        private static string FormatJsonMetadata(string value)
-        {
-            var metadataObject = JsonConvert.DeserializeObject<Dictionary<string, object>>(value);
-
-            return JsonConvert.SerializeObject(metadataObject, Formatting.Indented);
-        }
-
-        private string GetRouteFromType(Type controllerType)
-        {
-            if (ServicesControllerAttribute.IsPresentOn(controllerType))
-            {
-                var name = _controllerNameGenerator.GetName(controllerType);
-
-                return string.Concat(_servicesConfiguration.Configuration.Services.Routes.RouteBase,
-                    name.Replace('.', '/'));
-            }
-            
-            return "See Routes tab for details";
-        }
-
-        private static string RemoveControllerSuffix(string name)
-        {
-            return name.Remove(name.Length - "Controller".Length);
         }
     }
 }

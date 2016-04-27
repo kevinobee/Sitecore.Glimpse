@@ -9,19 +9,26 @@ namespace Sitecore.Glimpse.Infrastructure
 {
     internal class Controllers : ICollectionProvider<Controller>
     {
+        private static readonly IDictionary<Type, ControllerType> TypeMapper = new Dictionary<Type, ControllerType>
+        {
+            { typeof(System.Web.Http.ApiController), ControllerType.WebAPI },
+            { typeof(System.Web.Mvc.Controller), ControllerType.MVC }
+        };
+
         private readonly ITypeProvider _typeProvider;
         private readonly ITypeProvider _servicesTypeProvider;
 
-        private static readonly IDictionary<Type, ControllerType> TypeMapper = new Dictionary<Type, ControllerType>
-        {
-            { typeof(System.Web.Http.ApiController), ControllerType.WebAPI},
-            { typeof(System.Web.Mvc.Controller), ControllerType.MVC}
-        }; 
-
         public Controllers(ITypeProvider typeProvider, ITypeProvider servicesTypeProvider)
         {
-            if (typeProvider == null) throw new ArgumentNullException("typeProvider");
-            if (servicesTypeProvider == null) throw new ArgumentNullException("servicesTypeProvider");
+            if (typeProvider == null)
+            {
+                throw new ArgumentNullException("typeProvider");
+            }
+
+            if (servicesTypeProvider == null)
+            {
+                throw new ArgumentNullException("servicesTypeProvider");
+            }
 
             _typeProvider = typeProvider;
             _servicesTypeProvider = servicesTypeProvider;
@@ -34,7 +41,7 @@ namespace Sitecore.Glimpse.Infrastructure
                 var services = _servicesTypeProvider.Types.ToArray();
 
                 var controllers = _typeProvider.Types
-                                    .Where(x => ! x.IsAbstract)
+                                    .Where(x => !x.IsAbstract)
                                     .Where(x => !services.Contains(x))
                                     .Select(x => new ControllerWrapper
                                     {
@@ -50,7 +57,9 @@ namespace Sitecore.Glimpse.Infrastructure
 
         private static Controller BuildController(ControllerWrapper wrapper)
         {
-            System.Diagnostics.Debug.Assert(wrapper.ControllerType.HasValue);
+            System.Diagnostics.Debug.Assert(
+                wrapper.ControllerType.HasValue, 
+                "ControllerWrapper.Controller must have a value");
             
             var typeViewer = new TypeViewer(wrapper.Type);
 
@@ -64,9 +73,10 @@ namespace Sitecore.Glimpse.Infrastructure
 
         private static ControllerType? GetControllerType(Type type)
         {
-            foreach (var controllerType in TypeMapper.Keys)
+            foreach (var controllerType in TypeMapper.Keys
+                                                     .Where(controllerType => IsSameOrSubclass(controllerType, type)))
             {
-                if (IsSameOrSubclass(controllerType, type)) return TypeMapper[controllerType];
+                return TypeMapper[controllerType];
             }
 
             return null;
@@ -82,6 +92,7 @@ namespace Sitecore.Glimpse.Infrastructure
     internal class ControllerWrapper
     {
         public ControllerType? ControllerType { get; set; }
+
         public Type Type { get; set; }
     }
 }

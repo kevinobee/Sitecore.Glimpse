@@ -13,15 +13,15 @@ namespace Sitecore.Glimpse.Core.Test.Caching
 
         public CachingCollectionProviderBehaviour()
         {
-            _fieldName = typeof (object).FullName;
+            _fieldName = typeof(object).FullName;
             _innerProvider = new Mock<ICollectionProvider<object>>();
             _cache = new Mock<ICache>();
 
-            _sut = new CachingCollectionProvider<object>(_innerProvider.Object, _cache.Object);            
+            _sut = new CachingCollectionProvider<object>(_innerProvider.Object, _cache.Object);  
         }
 
         [Fact]
-        public void calls_inner_provider_to_get_values()
+        public void CallsInnerProviderToGetValues()
         {
             var data = _sut.Collection;
 
@@ -29,7 +29,7 @@ namespace Sitecore.Glimpse.Core.Test.Caching
         }
 
         [Fact]
-        public void adds_inner_provider_values_to_cache()
+        public void AddsInnerProviderValuesToCache()
         {
             var data = _sut.Collection;
 

@@ -1,5 +1,3 @@
-using System.Linq;
-
 using Glimpse.Core.Tab.Assist;
 using Sitecore.Glimpse.Model.Analytics;
 

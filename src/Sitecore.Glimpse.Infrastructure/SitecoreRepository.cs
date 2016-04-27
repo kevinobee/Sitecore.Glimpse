@@ -23,9 +23,11 @@ namespace Sitecore.Glimpse.Infrastructure
         {
             var profileItem = GetItem(Constants.Sitecore.MarketingCenter.Profiles);
 
-            var selectItems =
-                profileItem.Axes.SelectItems(string.Format(".//*[@@templateid = '{0}']",
-                                                           Constants.Sitecore.Analytics.Templates.PatternCard));
+            var selectItems = profileItem.Axes
+                                         .SelectItems(
+                                            string.Format(
+                                                ".//*[@@templateid = '{0}']",
+                                                Constants.Sitecore.Analytics.Templates.PatternCard));
 
             if (selectItems != null)
             {
@@ -37,7 +39,7 @@ namespace Sitecore.Glimpse.Infrastructure
                     }).ToArray();
             }
             
-            return new PatternCard[] {};
+            return new PatternCard[] { };
         }
 
         public bool IsGoal(Guid pageEventDefinitionId)
@@ -45,11 +47,22 @@ namespace Sitecore.Glimpse.Infrastructure
             return GetItem(pageEventDefinitionId).Fields["IsGoal"].Value == "1";
         }
 
-        private string GetProfileDimension(Item item)
+        private static string GetProfileDimension(Item item)
         {
-            if (item.TemplateID == new ID(Constants.Sitecore.Analytics.Templates.Profile)) return item.Name;  
+            while (true)
+            {
+                if (item.TemplateID == new ID(Constants.Sitecore.Analytics.Templates.Profile))
+                {
+                    return item.Name;
+                }
 
-            return item.Parent == null ? null : GetProfileDimension(item.Parent);
+                if (item.Parent == null)
+                {
+                    return null;
+                }
+
+                item = item.Parent;
+            }
         }
     }
 }

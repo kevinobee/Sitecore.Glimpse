@@ -15,23 +15,28 @@ namespace Sitecore.Glimpse
         {
             var users = (LoggedInUser[])RequestData[DataKey.UserList];
 
-            if ((users == null) || (!users.Any())) return null;
+            if ((users == null) || (!users.Any()))
+            {
+                return null;
+            }
 
             var section = new TabSection("Username", "Session ID", "Admin", "Created", "Last Request");
 
-            foreach (var user in users)
+            foreach (var row in
+                users.Select(user => new 
+                        {
+                            user,
+                            row = section.AddRow()
+                                         .Column(user.Name)
+                                         .Column(user.SessionId)
+                                         .Column(user.IsAdmin ? "Yes" : "No")
+                                         .Column(user.Created)
+                                         .Column(user.LastRequest)
+                        })
+                     .Where(@t => @t.user.IsInactive())
+                     .Select(@t => @t.row))
             {
-                var row = section.AddRow()
-                  .Column(user.Name)
-                  .Column(user.SessionId)
-                  .Column(user.IsAdmin ? "Yes" : "No")
-                  .Column(user.Created)
-                  .Column(user.LastRequest);
-
-                if (user.IsInactive())
-                {
-                    row.ApplyRowStyle("warn");
-                }
+                row.ApplyRowStyle("warn");
             }
 
             return section;

@@ -18,7 +18,7 @@ namespace Sitecore.Glimpse.Infrastructure.Test.Extensions
         [Theory]
         [InlineData(typeof(ICache), null)]
         [InlineData(typeof(ITestFeatures<>), typeof(ITestFeatures<string>))]
-        public void gets_interface_from_type(Type interfaceType, Type expectedType)
+        public void GetsInterfaceFromType(Type interfaceType, Type expectedType)
         {
             _sut.GetGenericInterface(interfaceType).ShouldEqual(expectedType);
         }
@@ -27,7 +27,6 @@ namespace Sitecore.Glimpse.Infrastructure.Test.Extensions
     [Derived]
     internal class DerivedClass : BaseClass
     {
-
     }
 
     [Base]
@@ -43,9 +42,10 @@ namespace Sitecore.Glimpse.Infrastructure.Test.Extensions
     }
 
     internal class DerivedAttribute : BaseAttribute
-    { }
+    {
+    }
 
     internal class BaseAttribute : Attribute
-    { }
-
+    {
+    }
 }

@@ -32,7 +32,9 @@ namespace Sitecore.Glimpse.Infrastructure.Extensions
                 typeof(System.Web.Mvc.ActionMethodSelectorAttribute)
             };
 
-            return ((type.BaseType == null) || (rootTypes.Contains(type)));
+            return 
+                (type.BaseType == null) || 
+                rootTypes.Contains(type);
         }
 
         public static bool IsRootType(this Type type)
@@ -40,13 +42,16 @@ namespace Sitecore.Glimpse.Infrastructure.Extensions
             var rootTypes = new[]
             {
                 typeof(object), 
-                typeof(System.Web.Http.ApiController), 
+                typeof(ApiController), 
                 typeof(ServicesApiController), 
                 typeof(EntityServiceBase<>),
                 typeof(System.Web.Mvc.Controller)
             };
 
-            return ((type.BaseType == null) || (rootTypes.Any(x => x.Name == type.Name)) || (rootTypes.Any(x => x.Name == type.BaseType.Name)));
+            return 
+                (type.BaseType == null) || 
+                rootTypes.Any(x => x.Name == type.Name) || 
+                rootTypes.Any(x => x.Name == type.BaseType.Name);
         }
     }
 }

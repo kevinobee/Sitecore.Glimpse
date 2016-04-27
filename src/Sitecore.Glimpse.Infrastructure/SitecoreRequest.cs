@@ -18,10 +18,25 @@ namespace Sitecore.Glimpse.Infrastructure
 
         public SitecoreRequest(ILog logger, IEnumerable<SitecoreService> serviceClients, IEnumerable<LoggedInUser> users, IEnumerable<Controller> controllers)
         {
-            if (logger == null) throw new ArgumentNullException("logger");
-            if (serviceClients == null) throw new ArgumentNullException("serviceClients");
-            if (users == null) throw new ArgumentNullException("users");
-            if (controllers == null) throw new ArgumentNullException("controllers");
+            if (logger == null)
+            {
+                throw new ArgumentNullException("logger");
+            }
+
+            if (serviceClients == null)
+            {
+                throw new ArgumentNullException("serviceClients");
+            }
+
+            if (users == null)
+            {
+                throw new ArgumentNullException("users");
+            }
+
+            if (controllers == null)
+            {
+                throw new ArgumentNullException("controllers");
+            }
 
             _logger = logger;
             _serviceClients = serviceClients;
@@ -30,7 +45,11 @@ namespace Sitecore.Glimpse.Infrastructure
         }
 
         public SitecoreRequest()
-            : this(new TraceLogger(), ApplicationContainer.SitecoreService(), ApplicationContainer.CurrentUsers(), ApplicationContainer.Controllers())
+            : this(
+                new TraceLogger(), 
+                ApplicationContainer.SitecoreService(), 
+                ApplicationContainer.CurrentUsers(), 
+                ApplicationContainer.Controllers())
         {
         }
 
@@ -306,17 +325,19 @@ namespace Sitecore.Glimpse.Infrastructure
             data.AddField("FilePath", request.FilePath);
             data.AddField("ItemPath", request.ItemPath);
 
-            if (request.QueryString.AllKeys.Any())
+            if (!request.QueryString.AllKeys.Any())
             {
-                var queryString = new FieldList();
-
-                foreach (var key in request.QueryString.AllKeys)
-                {
-                    queryString.AddField(key, request.QueryString.GetValues(key));
-                }
-
-                data.AddField("QueryString", queryString);
+                return data;
             }
+
+            var queryString = new FieldList();
+
+            foreach (var key in request.QueryString.AllKeys)
+            {
+                queryString.AddField(key, request.QueryString.GetValues(key));
+            }
+
+            data.AddField("QueryString", queryString);
 
             return data;
         }

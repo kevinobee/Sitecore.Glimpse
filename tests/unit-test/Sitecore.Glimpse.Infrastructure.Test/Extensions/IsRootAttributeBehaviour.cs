@@ -6,7 +6,6 @@ using Should;
 using Sitecore.Glimpse.Infrastructure.Extensions;
 using Xunit.Extensions;
 
-
 namespace Sitecore.Glimpse.Infrastructure.Test.Extensions
 {
     public class IsRootAttributeBehaviour
@@ -22,9 +21,11 @@ namespace Sitecore.Glimpse.Infrastructure.Test.Extensions
         [InlineData(typeof(System.Web.Mvc.AcceptVerbsAttribute), true)]
         [InlineData(typeof(System.Web.Mvc.FilterAttribute), true)]
         [InlineData(typeof(System.Web.Mvc.ActionMethodSelectorAttribute), true)]
-        public void Root_attribute_checks(Type attributeType, bool isRoot)
+        public void RootAttributeChecks(Type attributeType, bool isRoot)
         {
-            TypeExtensions.IsRootAttribute(attributeType).ShouldEqual(isRoot);
+            attributeType
+                .IsRootAttribute()
+                .ShouldEqual(isRoot);
         }
     }
 }

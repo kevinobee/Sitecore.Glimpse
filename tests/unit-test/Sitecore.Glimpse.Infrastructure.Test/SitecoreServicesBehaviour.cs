@@ -21,56 +21,60 @@ namespace Sitecore.Glimpse.Infrastructure.Test
             _typeProvider = new Mock<ITypeProvider>();
             _nameGenerator = new Mock<IControllerNameGenerator>();
             _metadataBuilder = new Mock<IMetaDataBuilder>();
-            
+
             var servicesConfiguration = new Mock<IServicesConfiguration>();
 
             _sut = new SitecoreServices(
-                            _typeProvider.Object, 
-                            _nameGenerator.Object, 
-                            _metadataBuilder.Object, 
-                            servicesConfiguration.Object);
+                _typeProvider.Object,
+                _nameGenerator.Object,
+                _metadataBuilder.Object,
+                servicesConfiguration.Object);
 
-            _typeProvider
-                .SetupGet(x => x.Types)
+            _typeProvider.SetupGet(x => x.Types)
                 .Returns(new[] { typeof(TestController), typeof(TestService) }.AsQueryable);
 
-            _nameGenerator
-                .Setup(x => x.GetName((It.IsAny<Type>())))
-                .Returns("foo.bar");
+            _nameGenerator.Setup(x => x.GetName(It.IsAny<Type>())).Returns("foo.bar");
 
             servicesConfiguration.SetupGet(x => x.Configuration)
-                .Returns(new ServicesSettingsConfiguration
-                {
-                    Services =
-                        new ServicesSettingsConfiguration.ServiceConfiguration()
+                .Returns(
+                    new ServicesSettingsConfiguration
                         {
-                            Routes =
-                                new ServicesSettingsConfiguration.ServiceConfiguration.RouteConfiguration()
-                                {
-                                    RouteBase = "/baseurl/"
-                                }
-                        }
-                });
+                            Services =
+                                new ServicesSettingsConfiguration.ServiceConfiguration
+                                    {
+                                        Routes =
+                                            new ServicesSettingsConfiguration.ServiceConfiguration.RouteConfiguration
+                                                {
+                                                    RouteBase = "/baseurl/"
+                                                }
+                                    }
+                        });
         }
 
         [Fact]
-        public void should_return_services()
+        public void ShouldReturnServices()
         {
             _sut.Collection.ShouldNotBeNull();
         }
 
         [Fact]
-        public void should_handle_no_services_found()
+        public void ShouldHandleNoServicesFound()
         {
-            _typeProvider.SetupGet(x => x.Types).Returns(new Type[] { }.AsQueryable);
+            _typeProvider
+                .SetupGet(x => x.Types)
+                .Returns(new Type[] { }.AsQueryable);
 
-            _sut.Collection.Count.ShouldEqual(0);
+            _sut.Collection
+                .Count
+                .ShouldEqual(0);
         }
         
         [Fact]
-        public void non_entity_services_should_not_populate_metadata_or_objecttype_properties()
+        public void NonEntityServicesShouldNotPopulateMetadataOrObjecttypeProperties()
         {
-            _typeProvider.SetupGet(x => x.Types).Returns(new[] { typeof(TestController) }.AsQueryable);
+            _typeProvider
+                .SetupGet(x => x.Types)
+                .Returns(new[] { typeof(TestController) }.AsQueryable);
 
             var service = _sut.Collection.First();
 
@@ -79,7 +83,7 @@ namespace Sitecore.Glimpse.Infrastructure.Test
         }
 
         [Fact]
-        public void calls_name_generator_to_set_url_for_services_when_ServicesController_attribute_is_on_controller()
+        public void CallsNameGeneratorToSetUrlForServicesWhenServicesControllerAttributeIsOnController()
         {
             var sitecoreServices = _sut.Collection;
 
@@ -87,7 +91,7 @@ namespace Sitecore.Glimpse.Infrastructure.Test
         }
 
         [Fact]
-        public void url_is_from_route_tab_for_services_when_ServicesController_attribute_is_not_on_controller()
+        public void UrlIsFromRouteTabForServicesWhenServicesControllerAttributeIsNotOnController()
         {
             _typeProvider.SetupGet(x => x.Types).Returns(new[] { typeof(NonServicesTestController) }.AsQueryable);
 
@@ -99,7 +103,7 @@ namespace Sitecore.Glimpse.Infrastructure.Test
         }
 
         [Fact]
-        public void should_call_metadata_builder_to_set_metadata_for_services()
+        public void ShouldCallMetadataBuilderToSetMetadataForServices()
         {
             var sitecoreServices = _sut.Collection;
 

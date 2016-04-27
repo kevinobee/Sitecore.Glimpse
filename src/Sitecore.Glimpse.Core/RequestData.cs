@@ -13,6 +13,7 @@ namespace Sitecore.Glimpse
             {
                 return GetKeyValue(dataKey);
             }
+
             set
             {
                 _requestData[dataKey] = value;
@@ -26,11 +27,9 @@ namespace Sitecore.Glimpse
 
         public bool HasData()
         {
-            if (_requestData == null) return false;
-
-            if (_requestData.All(x => x.Value == null)) return false;
-
-            return true;
+            return 
+                _requestData != null && 
+                _requestData.Any(x => x.Value != null);
         }
 
         public object GetKeyValue(DataKey key)
