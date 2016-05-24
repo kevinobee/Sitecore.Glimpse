@@ -18,6 +18,7 @@
             <dependency id="Glimpse.Mvc5" version="1.5.3" />
             <dependency id="Glimpse.AspNet" version="1.9.2" />
             <dependency id="Microsoft.AspNet.Mvc" version="5.2.3" />
+            <dependency id="Microsoft.AspNet.Cors" version="5.2.3" />
             <dependency id="Microsoft.AspNet.WebApi.Cors" version="5.2.3" />
             <dependency id="Newtonsoft.Json" version="6.0.8" />       
         </dependencies>
