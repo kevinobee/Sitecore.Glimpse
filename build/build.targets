@@ -8,26 +8,11 @@
     AssemblyFile="$(XunitPath)\xunit.runner.msbuild.dll"
     TaskName="Xunit.Runner.MSBuild.xunit"/>
   
-  <Target Name="CopyLibs">
-    <ItemGroup>
-      <CopyLibFiles Include="@(LibFiles -> '$(LibsSrcPath)\%(Identity)')" />
-    </ItemGroup>
-    
-    <Copy
-        SourceFiles="@(CopyLibFiles)"
-        DestinationFolder="$(LibsDestPath)"
-        OverwriteReadOnlyFiles="true"
-        SkipUnchangedFiles="true"
-        Retries="5"
-        RetryDelayMilliseconds="300"
-        />
-  </Target>
-
   <Target Name="Clean">
     <RemoveDir Directories="$(ArtifactsPath)"  />
   </Target>
 
-  <Target Name="Init" DependsOnTargets="Clean; CopyLibs">
+  <Target Name="Init" DependsOnTargets="Clean">
     <MakeDir Directories="$(ArtifactsPath)" Condition="!Exists('$(ArtifactsPath)')" />
     <MakeDir Directories="$(AnalysisResultsPath)" Condition="!Exists('$(AnalysisResultsPath)')" />
     <MakeDir Directories="$(PackageResultsPath)" Condition="!Exists('$(PackageResultsPath)')" />

@@ -99,8 +99,8 @@ namespace Sitecore.Glimpse.Infrastructure
 
             data.AddField("IsDebugging", Context.PageMode.IsDebugging);
             data.AddField("IsNormal", Context.PageMode.IsNormal);
-            data.AddField("IsPageEditor", Context.PageMode.IsPageEditor);
-            data.AddField("IsPageEditorEditing", Context.PageMode.IsPageEditorEditing);
+            data.AddField("IsPageEditor", Context.PageMode.IsExperienceEditor);
+            data.AddField("IsPageEditorEditing", Context.PageMode.IsExperienceEditorEditing);
             data.AddField("IsPreview", Context.PageMode.IsPreview);
             data.AddField("IsProfiling", Context.PageMode.IsProfiling);
             data.AddField("IsSimulatedDevicePreviewing", Context.PageMode.IsSimulatedDevicePreviewing);
@@ -419,7 +419,7 @@ namespace Sitecore.Glimpse.Infrastructure
             data.AddField("LoginPage", site.LoginPage);
             data.AddField("RequireLogin", site.RequireLogin);
             data.AddField("AllowDebug", site.AllowDebug);
-            data.AddField("EnableAnalytics", site.EnableAnalytics);
+//            data.AddField("EnableAnalytics", site.EnableAnalytics);
             data.AddField("EnableDebugger", site.EnableDebugger);
             data.AddField("EnablePreview", site.EnablePreview);
             data.AddField("EnableWorkflow", site.EnableWorkflow);

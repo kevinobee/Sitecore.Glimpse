@@ -25,7 +25,7 @@ namespace Sitecore.Glimpse.Infrastructure
 
             var nameGenerator = new NamespaceQualifiedUniqueNameGenerator(DefaultHttpControllerSelector.ControllerSuffix);
 
-            IServicesConfiguration servicesConfiguration = new ServicesSettingsConfigurationProvider();
+            ConfigurationSettings servicesConfiguration = new ConfigurationSettings();
 
             var internalService = new SitecoreServices(
                                             typeProvider, 
@@ -63,7 +63,7 @@ namespace Sitecore.Glimpse.Infrastructure
             var logger = ResolveLogger();
 
             return new AssemblyScannerValidationMetaDataProvider(
-                            new ValidationMetaDataTypeProvider(GetSiteAssemblies()), logger);
+                            new ValidationMetaDataTypeProvider(GetSiteAssemblies(), logger), logger);
         }
 
         public static ILogger ResolveLogger()
