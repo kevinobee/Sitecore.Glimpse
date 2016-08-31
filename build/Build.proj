@@ -13,49 +13,13 @@
 
     <!-- Provide defaults for values for environment properties if environment.props is not present -->
     <PropertyGroup>
-        <TestWebsitePath Condition="$(TestWebsitePath) == ''">C:\Websites\glimpsetest\Website</TestWebsitePath>
-        <TestWebsiteUrl Condition="$(TestWebsiteUrl) == ''">http://glimpsetest/</TestWebsiteUrl>
-        <LibsSrcPath Condition="$(LibsSrcPath) == ''">C:\Websites\sc80rev141212\Website\bin</LibsSrcPath>
+        <TestWebsitePath Condition="$(TestWebsitePath) == ''">C:\Websites\glimpse\Website</TestWebsitePath>
+        <TestWebsiteUrl Condition="$(TestWebsiteUrl) == ''">http://glimpse/</TestWebsiteUrl>
     </PropertyGroup>
-
-    <ItemGroup>
-        <LibFiles Include="Sitecore.Kernel.dll" />
-        <LibFiles Include="Sitecore.Analytics.dll" />
-        <LibFiles Include="Sitecore.Analytics.Core.dll" />
-        <LibFiles Include="Sitecore.Analytics.DataAccess.dll" />
-        <LibFiles Include="Sitecore.Analytics.Model.dll" />
-        <LibFiles Include="Sitecore.Services.Core.dll" />
-        <LibFiles Include="Sitecore.Services.Infrastructure.dll" />
-        <LibFiles Include="Sitecore.Services.Infrastructure.Sitecore.dll" />
-
-        <!-- Indirect assembly references - required for Code Analysis -->
-        <LibFiles Include="ComponentArt.Web.UI.dll" />
-        <LibFiles Include="ITHit.WebDAV.Server.dll" />
-        <LibFiles Include="HtmlAgilityPack.dll" />
-        <LibFiles Include="Lucene.Net.dll" />
-        <LibFiles Include="Mvp.Xml.dll" />
-        <LibFiles Include="Newtonsoft.Json.dll" />
-        <LibFiles Include="RadEditor.Net2.dll" />
-        <LibFiles Include="Sitecore.Analytics.Processing.dll" />
-        <LibFiles Include="Sitecore.ContentSearch.dll" />
-        <LibFiles Include="Sitecore.ContentSearch.Linq.dll" />
-        <LibFiles Include="Sitecore.Logging.dll" />
-        <LibFiles Include="Sitecore.NVelocity.dll" />
-        <LibFiles Include="Sitecore.Zip.dll" />
-        <LibFiles Include="Stimulsoft.Base.dll" />
-        <LibFiles Include="Stimulsoft.Report.dll" />
-        <LibFiles Include="System.Web.Http.dll" />
-        <LibFiles Include="System.Net.Http.Formatting.dll" />
-        <LibFiles Include="System.Web.WebPages.dll" />
-        <LibFiles Include="System.Web.Http.Cors.dll" />
-        <LibFiles Include="Telerik.Web.UI.dll" />
-    </ItemGroup>
 
     <Target Name="RunSmokeTests" DependsOnTargets="Build">
         <ItemGroup>
-            <ProjectSrcAssemblies
-                Include="$(BuildResultsPath)\lib\net40\Sitecore*.dll; "
-                Exclude="@(LibFiles -> '$(BuildResultsPath)\lib\net40\%(Identity)')" />
+            <ProjectSrcAssemblies Include="$(BuildResultsPath)\lib\net40\Sitecore.Glimpse*.dll;" />
         </ItemGroup>
 
         <Copy
