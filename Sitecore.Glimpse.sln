@@ -16,11 +16,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{2A29E5BC
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "unit test", "unit test", "{923D9377-9025-425B-9698-1A38947CA973}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "lib", "lib", "{BFDC90B2-65F5-4F9E-A49F-9CD8060A2B4B}"
-	ProjectSection(SolutionItems) = preProject
-		lib\README.md = lib\README.md
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{D11D4F10-B2C8-4E1C-BF78-B192D303D20D}"
 	ProjectSection(SolutionItems) = preProject
 		License.txt = License.txt

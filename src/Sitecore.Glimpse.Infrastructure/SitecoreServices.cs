@@ -16,13 +16,13 @@ namespace Sitecore.Glimpse.Infrastructure
         private readonly ITypeProvider _typeProvider;
         private readonly IControllerNameGenerator _controllerNameGenerator;
         private readonly IMetaDataBuilder _metaDataBuilder;
-        private readonly IServicesConfiguration _servicesConfiguration;
+        private readonly ConfigurationSettings _servicesConfiguration;
 
         public SitecoreServices(
                     ITypeProvider typeProvider, 
                     IControllerNameGenerator controllerNameGenerator, 
-                    IMetaDataBuilder metaDataBuilder, 
-                    IServicesConfiguration servicesConfiguration)
+                    IMetaDataBuilder metaDataBuilder,
+                    ConfigurationSettings servicesConfiguration)
         {
             if (typeProvider == null)
             {
@@ -84,7 +84,7 @@ namespace Sitecore.Glimpse.Infrastructure
             var name = _controllerNameGenerator.GetName(controllerType);
 
             return string.Concat(
-                _servicesConfiguration.Configuration.Services.Routes.RouteBase,
+                _servicesConfiguration.WebApi.Routes.RouteBase,
                 name.Replace('.', '/'));
         }
 

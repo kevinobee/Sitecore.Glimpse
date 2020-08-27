@@ -22,33 +22,20 @@ namespace Sitecore.Glimpse.Infrastructure.Test
             _nameGenerator = new Mock<IControllerNameGenerator>();
             _metadataBuilder = new Mock<IMetaDataBuilder>();
 
-            var servicesConfiguration = new Mock<IServicesConfiguration>();
+            var servicesConfiguration = new ConfigurationSettings();
 
             _sut = new SitecoreServices(
                 _typeProvider.Object,
                 _nameGenerator.Object,
                 _metadataBuilder.Object,
-                servicesConfiguration.Object);
+                servicesConfiguration);
 
             _typeProvider.SetupGet(x => x.Types)
                 .Returns(new[] { typeof(TestController), typeof(TestService) }.AsQueryable);
 
             _nameGenerator.Setup(x => x.GetName(It.IsAny<Type>())).Returns("foo.bar");
 
-            servicesConfiguration.SetupGet(x => x.Configuration)
-                .Returns(
-                    new ServicesSettingsConfiguration
-                        {
-                            Services =
-                                new ServicesSettingsConfiguration.ServiceConfiguration
-                                    {
-                                        Routes =
-                                            new ServicesSettingsConfiguration.ServiceConfiguration.RouteConfiguration
-                                                {
-                                                    RouteBase = "/baseurl/"
-                                                }
-                                    }
-                        });
+            servicesConfiguration.WebApi.Routes.RouteBase = "/baseurl/";
         }
 
         [Fact]

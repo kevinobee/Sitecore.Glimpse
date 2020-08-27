@@ -76,7 +76,8 @@ namespace Sitecore.Glimpse.Infrastructure
                                 Name = @t.profileName,
                                 PatternCard = @t.profile.PatternLabel,
                                 Values = @t.profile.ToString()
-                            });
+                            })
+                    .ToArray();
         }
 
         private IEnumerable<Guid?> GetMatchedPatternCards()
