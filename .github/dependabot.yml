@@ -1,0 +1,19 @@
+version: 2
+updates:
+- package-ecosystem: nuget
+  directory: "/"
+  schedule:
+    interval: daily
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: AutoFixture.Xunit
+    versions:
+    - 4.15.0
+    - 4.16.0
+  - dependency-name: AutoFixture
+    versions:
+    - 4.15.0
+    - 4.16.0
+  - dependency-name: Moq
+    versions:
+    - 4.16.0
